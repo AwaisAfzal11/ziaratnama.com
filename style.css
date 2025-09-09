@@ -16,42 +16,26 @@ body, html {
     height: 100vh; /* Full viewport height */
     width: 100%;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
+    justify-content: center;  /* Center horizontally */
+    align-items: flex-end;    /* Align content to the bottom */
+    padding-bottom: 5vh;      /* Add some space from the bottom edge */
     
     /* Background Setup */
     background-color: #000000; /* Crystal black fallback color */
-    /* Add a semi-transparent black overlay for better text readability */
     background-image: 
-        linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
+        linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
         url('ziaranama_under_construction.jpg');
-    background-size: cover; /* Cover the entire area */
-    background-position: center center; /* Center the image */
+    background-size: cover;
+    background-position: center center;
     background-repeat: no-repeat;
-}
-
-.content-wrapper {
-    padding: 20px;
-}
-
-.content-wrapper h1 {
-    font-size: 3.5rem;
-    margin-bottom: 1rem;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-}
-
-.content-wrapper p {
-    font-size: 1.2rem;
-    margin-bottom: 2.5rem;
 }
 
 /* Countdown Timer Styling */
 #countdown {
     display: flex;
     justify-content: center;
-    gap: 20px; /* Space between time blocks */
+    gap: 30px; /* Space between time blocks */
+    text-align: center;
 }
 
 .time-block {
@@ -67,8 +51,8 @@ body, html {
 
 /* The number (e.g., 60, 23, 15) */
 #days, #hours, #minutes, #seconds {
-    font-size: 4rem;
-    font-weight: bold;
+    font-size: 4.5rem;
+    font-weight: 300; /* A slightly thinner font weight */
     line-height: 1;
 }
 
@@ -76,22 +60,20 @@ body, html {
 .time-block .label {
     font-size: 1rem;
     text-transform: uppercase;
-    margin-top: 10px;
-    letter-spacing: 1px;
+    margin-top: 15px;
+    letter-spacing: 2px;
+    font-weight: bold;
 }
 
 /* Media Query for smaller screens */
 @media (max-width: 600px) {
-    .content-wrapper h1 {
-        font-size: 2.5rem;
-    }
-    .time-block span:first-child {
+    #days, #hours, #minutes, #seconds {
         font-size: 2.5rem;
     }
     .time-block {
         min-width: 70px;
     }
     #countdown {
-        gap: 10px;
+        gap: 15px;
     }
 }

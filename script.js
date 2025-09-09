@@ -37,7 +37,8 @@
         // If the count down is finished, write some text and stop the timer
         if (distance < 0) {
             clearInterval(interval);
-            document.getElementById("countdown").innerHTML = "<h2>We are live now!</h2>";
+            // Hide the timer when it's done
+            document.getElementById("countdown").style.display = 'none';
         }
     }, 1000); // Update every second
 })();
