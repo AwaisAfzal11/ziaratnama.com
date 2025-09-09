@@ -1,0 +1,97 @@
+/* Basic Reset and Font Setup */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: white; /* Default text color */
+}
+
+/* Hero Section Styling */
+.hero-section {
+    height: 100vh; /* Full viewport height */
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    
+    /* Background Setup */
+    background-color: #000000; /* Crystal black fallback color */
+    /* Add a semi-transparent black overlay for better text readability */
+    background-image: 
+        linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
+        url('ziaranama_under_construction.jpg');
+    background-size: cover; /* Cover the entire area */
+    background-position: center center; /* Center the image */
+    background-repeat: no-repeat;
+}
+
+.content-wrapper {
+    padding: 20px;
+}
+
+.content-wrapper h1 {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.content-wrapper p {
+    font-size: 1.2rem;
+    margin-bottom: 2.5rem;
+}
+
+/* Countdown Timer Styling */
+#countdown {
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* Space between time blocks */
+}
+
+.time-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 100px;
+}
+
+.time-block span {
+    display: block;
+}
+
+/* The number (e.g., 60, 23, 15) */
+#days, #hours, #minutes, #seconds {
+    font-size: 4rem;
+    font-weight: bold;
+    line-height: 1;
+}
+
+/* The label (e.g., Days, Hours) */
+.time-block .label {
+    font-size: 1rem;
+    text-transform: uppercase;
+    margin-top: 10px;
+    letter-spacing: 1px;
+}
+
+/* Media Query for smaller screens */
+@media (max-width: 600px) {
+    .content-wrapper h1 {
+        font-size: 2.5rem;
+    }
+    .time-block span:first-child {
+        font-size: 2.5rem;
+    }
+    .time-block {
+        min-width: 70px;
+    }
+    #countdown {
+        gap: 10px;
+    }
+}
