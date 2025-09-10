@@ -10,7 +10,7 @@ body, html {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: white;
     /* --- CHANGED: Set a base background color for the entire page --- */
-    background-color: #000000;
+    /* background-color: #000000; */
 }
 
 /* Hero Section Styling */
