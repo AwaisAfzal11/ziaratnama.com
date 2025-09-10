@@ -1,9 +1,10 @@
 (function () {
-    // Set the date we're counting down to (60 days from now)
-    const futureDate = new Date();
-    futureDate.setDate(futureDate.getDate() + 60);
-    const countDownDate = futureDate.getTime();
-
+    // --- THIS IS THE KEY CHANGE ---
+    // Instead of calculating 60 days from "now", we set a fixed, static launch date.
+    // IMPORTANT: Change this string to your real launch date and time!
+    // FORMAT: "Month Day, Year HH:MM:SS"
+    const countDownDate = new Date("January 24, 2025 09:00:00").getTime();
+    
     // Get the HTML elements to update
     const daysEl = document.getElementById("days");
     const hoursEl = document.getElementById("hours");
@@ -28,17 +29,20 @@
         // Helper function to add a leading zero if number is less than 10
         const formatTime = (time) => (time < 10 ? `0${time}` : time);
 
-        // Display the result in the corresponding elements
-        daysEl.innerHTML = formatTime(days);
-        hoursEl.innerHTML = formatTime(hours);
-        minutesEl.innerHTML = formatTime(minutes);
-        secondsEl.innerHTML = formatTime(seconds);
-
-        // If the count down is finished, write some text and stop the timer
-        if (distance < 0) {
+        // If the countdown is still active, display the time
+        if (distance > 0) {
+            daysEl.innerHTML = formatTime(days);
+            hoursEl.innerHTML = formatTime(hours);
+            minutesEl.innerHTML = formatTime(minutes);
+            secondsEl.innerHTML = formatTime(seconds);
+        } else {
+            // If the count down is finished, display zeros and stop the timer
             clearInterval(interval);
-            // Hide the timer when it's done
-            document.getElementById("countdown").style.display = 'none';
+            daysEl.innerHTML = "00";
+            hoursEl.innerHTML = "00";
+            minutesEl.innerHTML = "00";
+            secondsEl.innerHTML = "00";
+            // You could also replace the countdown with a "We are live!" message here.
         }
     }, 1000); // Update every second
 })();
