@@ -16,25 +16,23 @@ body, html {
     height: 100vh; /* Full viewport height */
     width: 100%;
     display: flex;
-    justify-content: center;  /* Center horizontally */
-    align-items: flex-end;    /* Align content to the bottom */
-    padding-bottom: 5vh;      /* Add some space from the bottom edge */
+    justify-content: center;
+    align-items: flex-end;
+    padding-bottom: 5vh;
     
-    /* Background Setup */
-    background-color: #000000; /* Crystal black fallback color */
-    background-image: 
-        linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
-        url('ziaranama_under_construction.jpg');
-    background-size: cover;
-    background-position: center center;
-    background-repeat: no-repeat;
+    /* --- UPDATED BACKGROUND SETUP --- */
+    background-color: #000000; /* Crystal black color for letterboxing */
+    background-image: url('ziaranama_under_construction.jpg'); /* Removed the overlay */
+    background-size: contain; /* CHANGED: Ensures the whole image is visible ("zooms out") */
+    background-position: center center; /* Keeps the contained image centered */
+    background-repeat: no-repeat; /* Prevents the image from tiling */
 }
 
 /* Countdown Timer Styling */
 #countdown {
     display: flex;
     justify-content: center;
-    gap: 30px; /* Space between time blocks */
+    gap: 30px;
     text-align: center;
 }
 
@@ -52,8 +50,10 @@ body, html {
 /* The number (e.g., 60, 23, 15) */
 #days, #hours, #minutes, #seconds {
     font-size: 4.5rem;
-    font-weight: 300; /* A slightly thinner font weight */
+    font-weight: 300;
     line-height: 1;
+    /* ADDED: Shadow for better readability without an overlay */
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
 }
 
 /* The label (e.g., Days, Hours) */
@@ -63,6 +63,8 @@ body, html {
     margin-top: 15px;
     letter-spacing: 2px;
     font-weight: bold;
+    /* ADDED: Shadow for better readability */
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
 }
 
 /* Media Query for smaller screens */
