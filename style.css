@@ -8,12 +8,14 @@
 body, html {
     height: 100%;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: white; /* Default text color */
+    color: white;
+    /* --- CHANGED: Set a base background color for the entire page --- */
+    background-color: #000000;
 }
 
 /* Hero Section Styling */
 .hero-section {
-    height: 100vh; /* Full viewport height */
+    height: 100vh;
     width: 100%;
     display: flex;
     justify-content: center;
@@ -21,11 +23,11 @@ body, html {
     padding-bottom: 5vh;
     
     /* --- UPDATED BACKGROUND SETUP --- */
-    background-color: #000000; /* Crystal black color for letterboxing */
-    background-image: url('ziaranama_under_construction.jpg'); /* Removed the overlay */
-    background-size: contain; /* CHANGED: Ensures the whole image is visible ("zooms out") */
-    background-position: center center; /* Keeps the contained image centered */
-    background-repeat: no-repeat; /* Prevents the image from tiling */
+    /* REMOVED: background-color is now on the body */
+    background-image: url('ziaranama_under_construction.jpg');
+    background-size: cover; /* 'cover' is best for desktop */
+    background-position: center center;
+    background-repeat: no-repeat;
 }
 
 /* Countdown Timer Styling */
@@ -47,28 +49,29 @@ body, html {
     display: block;
 }
 
-/* The number (e.g., 60, 23, 15) */
 #days, #hours, #minutes, #seconds {
     font-size: 4.5rem;
     font-weight: 300;
     line-height: 1;
-    /* ADDED: Shadow for better readability without an overlay */
     text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
 }
 
-/* The label (e.g., Days, Hours) */
 .time-block .label {
     font-size: 1rem;
     text-transform: uppercase;
     margin-top: 15px;
     letter-spacing: 2px;
     font-weight: bold;
-    /* ADDED: Shadow for better readability */
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
 }
 
 /* Media Query for smaller screens */
-@media (max-width: 600px) {
+@media (max-width: 768px) { /* Widened the breakpoint for tablets */
+    /* --- CHANGED: This gives a "zoomed out" feel on mobile --- */
+    .hero-section {
+        background-size: 100% auto; /* Fit image to screen width */
+    }
+
     #days, #hours, #minutes, #seconds {
         font-size: 2.5rem;
     }
