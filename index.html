@@ -3,32 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ziaranama - Coming Soon</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Responsive Image</title>
+    <style>
+        body {
+            margin: 0; /* Removes default browser margin */
+        }
+
+        img {
+            width: 100%; /* Stretches the image to the full width of the screen */
+            height: 100vh; /* Sets the image height to 100% of the viewport height */
+            object-fit: cover; /* Ensures the image covers the area without distortion */
+            display: block; /* Fixes potential small gap below the image */
+        }
+    </style>
 </head>
 <body>
 
-    <section class="hero-section">
-        <div id="countdown">
-            <div class="time-block">
-                <span id="days">00</span>
-                <span class="label">Days</span>
-            </div>
-            <div class="time-block">
-                <span id="hours">00</span>
-                <span class="label">Hours</span>
-            </div>
-            <div class="time-block">
-                <span id="minutes">00</span>
-                <span class="label">Minutes</span>
-            </div>
-            <div class="time-block">
-                <span id="seconds">00</span>
-                <span class="label">Seconds</span>
-            </div>
-        </div>
-    </section>
+    <picture>
+        <!-- This image will be shown on screens 768px wide or smaller -->
+        <source media="(max-width: 768px)" srcset="ziarat_mobile.png">
+        
+        <!-- This is the default image for screens larger than 768px -->
+        <img src="ziarat_desktop.jpg" alt="A scenic view of Ziarat">
+    </picture>
 
-    <script src="script.js"></script>
 </body>
 </html>
