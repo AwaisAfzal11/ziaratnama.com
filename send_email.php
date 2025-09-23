@@ -41,7 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $subject = "New Dealer Registration Form Submission: " . $name;
     
     // Construct the email message
-    $message = "You have a new dealer registration form submission:\n\n"
+    $message = "You have a new Ziaratnama registration form submission:\n\n"
              . "========================================\n"
              . "PERSONAL INFORMATION\n"
              . "========================================\n"
@@ -49,29 +49,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
              . "Email: {$email}\n"
              . "Personal Contact No: {$personal_contact}\n\n"
              
-             . "========================================\n"
-             . "OFFICE INFORMATION\n"
-             . "========================================\n"
-             . "Office Address: {$office_address}\n"
-             . "Office Since (Year): {$office_since}\n"
-             . "Office Ownership: {$office_ownership}\n"
-             . "Ownership Since (Year): {$ownership_since}\n"
-             . "Office Type: {$office_type}\n"
-             . "Office Contact No: {$office_contact}\n\n"
+            //  . "========================================\n"
+            //  . "OFFICE INFORMATION\n"
+            //  . "========================================\n"
+            //  . "Office Address: {$office_address}\n"
+            //  . "Office Since (Year): {$office_since}\n"
+            //  . "Office Ownership: {$office_ownership}\n"
+            //  . "Ownership Since (Year): {$ownership_since}\n"
+            //  . "Office Type: {$office_type}\n"
+            //  . "Office Contact No: {$office_contact}\n\n"
              
              . "========================================\n"
-             . "BUSINESS & EXPERIENCE\n"
+             . "Message\n"
              . "========================================\n"
-             . "Past Business Details: {$past_business}\n"
-             . "Experience in Real Estate: {$real_estate_experience}\n"
-             . "Total Years in Business: {$business_experience_years}\n\n"
+             . "Message: {$past_business}\n"
+            //  . "Experience in Real Estate: {$real_estate_experience}\n"
+            //  . "Total Years in Business: {$business_experience_years}\n\n"
 
-             . "========================================\n"
-             . "EDUCATION & INVESTMENT\n"
-             . "========================================\n"
-             . "Education Level: {$education_level}\n"
-             . "Other Education Details: {$education_other}\n"
-             . "Initial Advertising Investment (PKR): {$investment_capacity}\n";
+            //  . "========================================\n"
+            //  . "EDUCATION & INVESTMENT\n"
+            //  . "========================================\n"
+            //  . "Education Level: {$education_level}\n"
+            //  . "Other Education Details: {$education_other}\n"
+            //  . "Initial Advertising Investment (PKR): {$investment_capacity}\n";
     
     // Set email headers
     $headers = "From: noreply@investinislamabad.com\r\n" .
