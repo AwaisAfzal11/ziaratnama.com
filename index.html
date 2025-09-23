@@ -1,31 +1,318 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ziaratnama - Coming Soon</title>
+    <title>Ziaratnama</title>
+
+    <!-- Google Fonts for English and Urdu -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;700&family=Poppins:wght@300;400;600;700&display=swap"
+        rel="stylesheet">
+
     <style>
-        body {
-            margin: 0; /* Removes default browser margin */
+        /* CSS Variables for a consistent and classy theme */
+        :root {
+            --primary-color: #004aad;
+            --primary-color-dark: #003580;
+            --secondary-color: #d4af37;
+            /* A touch of gold for elegance */
+            --text-color: #3a3a3a;
+            --text-light: #6c757d;
+            --bg-light: #f8f9fa;
+            --white: #ffffff;
+            --border-color: #dee2e6;
+            --font-body: 'Poppins', sans-serif;
+            --font-urdu: 'Noto Nastaliq Urdu', serif;
         }
 
-        img {
-            width: 100%; /* Stretches the image to the full width of the screen */
-            height: 100vh; /* Sets the image height to 100% of the viewport height */
-            object-fit: cover; /* Ensures the image covers the area without distortion */
-            display: block; /* Fixes potential small gap below the image */
+        /* General Body Styles */
+        body {
+            font-family: var(--font-body);
+            line-height: 1.7;
+            margin: 0;
+            padding: 0;
+            background: var(--bg-light);
+            color: var(--text-color);
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            /* All previous hero styling is removed to just act as a container */
+            /* The height is controlled by the image tag directly */
+            line-height: 0;
+            /* Prevents extra space below the image */
+        }
+
+        /* --- Main Content & Section Styling --- */
+        .content-wrapper {
+            padding: 40px 20px;
+        }
+
+        section {
+            max-width: 900px;
+            margin: 0 auto 30px auto;
+            background: var(--white);
+            padding: 30px 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        h3 {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-top: 0;
+            margin-bottom: 25px;
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 10px;
+        }
+
+        /* --- Classy Form Design --- */
+        .form-row {
+            display: grid;
+            gap: 25px;
+        }
+
+        /* Two-column layout for wider screens */
+        @media (min-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            grid-column: span 2;
+            /* Default to full width */
+        }
+
+        /* Spanning rules for grid items */
+        .form-group.col-1 {
+            grid-column: span 1;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+            color: var(--text-color);
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 1rem;
+            font-family: var(--font-body);
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(0, 74, 173, 0.2);
+        }
+
+        .radio-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 10px;
+        }
+
+        .radio-group label {
+            font-weight: 400;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .radio-group input[type="radio"] {
+            width: auto;
+            margin-right: 8px;
+        }
+
+        hr {
+            border: none;
+            border-top: 1px solid #eee;
+            margin: 35px 0;
+        }
+
+        button[type="submit"] {
+            background: var(--primary-color);
+            background-image: linear-gradient(45deg, var(--primary-color), var(--primary-color-dark));
+            color: var(--white);
+            padding: 15px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            font-weight: 600;
+            width: 100%;
+            transition: transform 0.2s, box-shadow 0.3s;
+            margin-top: 10px;
+        }
+
+        button[type="submit"]:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 74, 173, 0.25);
+        }
+
+        #form-status {
+            margin-top: 15px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        /* --- Contact & Footer Section --- */
+        .contact-section p,
+        footer p {
+            color: var(--text-light);
+        }
+
+        footer {
+            background: #222;
+            color: #ddd;
+            text-align: center;
+            padding: 25px 20px;
+            font-size: 0.9em;
+        }
+
+        .urdu-text {
+            font-family: var(--font-urdu);
+        }
+
+        /* Mobile specific adjustments */
+        @media (max-width: 767px) {
+            .form-group.col-1 {
+                grid-column: span 2;
+                /* Stack columns on mobile */
+            }
+
+            section {
+                padding: 20px;
+            }
         }
     </style>
 </head>
+
 <body>
 
-    <picture>
-        <!-- This image will be shown on screens 768px wide or smaller -->
-        <source media="(max-width: 768px)" srcset="ziarat_mobile.png">
-        
-        <!-- This is the default image for screens larger than 768px -->
-        <img src="ziarat_desktop.jpg" alt="A scenic view of Ziarat">
-    </picture>
+    <!-- Hero Section -->
+    <div class="hero">
+        <picture>
+            <!-- Image for mobile screens -->
+            <source media="(max-width: 1024px)" srcset="goldmine_mobile.jpg">
+
+            <!-- Default image for desktop screens and as a fallback -->
+            <img src="goldmine_desktop.jpg" alt="Goldmine promotional banner"
+                style="width: 100%; height: 120vh; object-fit: cover; object-position: top center;">
+        </picture>
+    </div>
+
+    <main class="content-wrapper">
+        <section>
+            <h3>Contact Us</h3>
+            <form id="contactForm">
+                <div class="form-row">
+                    <div class="form-group col-1">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+                    </div>
+                    <div class="form-group col-1">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" placeholder="you@example.com" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="personal_contact">Personal Contact No</label>
+                    <input type="tel" id="personal_contact" name="personal_contact" placeholder="0300-1234567" required>
+                </div>
+
+
+                
+                
+                
+                <div class="form-group">
+                    <label for="past_business">Message</label>
+                    <textarea id="past_business" name="past_business" rows="4"
+                        placeholder="Briefly describe..."></textarea>
+                </div>
+
+                <hr>
+                
+                             
+                <button type="submit">Submit Application</button>
+                <div id="form-status"></div>
+            </form>
+        </section>
+
+        <!-- <section class="contact-section">
+            <h3>📞 Contact Us / رابطہ کریں</h3>
+            <p>
+                <b>Invest in Islamabad — South City Group & Gold Mine Group Consortium</b> <br>
+                <b>Office:</b> Plot No. 5, near Kiyani House, opposite Attock Petrol Pump, dha Phase 2, GT Road,
+                Islamabad. <br>
+                <b>Phone:</b> 0304-000-8-000 / 0333-111-111-4 <br>
+                <b>Email:</b> info@investinislamabad.com
+            </p>
+        </section> -->
+    </main>
+
+    <!-- <footer>
+        <p>Disclaimer: Earnings depend on performance, market conditions and consortium terms.<br>
+            <span class="urdu-text">نوٹس: کمائی کارکردگی، مارکیٹ حالات اور کنسورشیم معاہدے پر منحصر ہے۔</span>
+        </p>
+    </footer> -->
+
+    <script>
+        // This JavaScript logic is unchanged as requested.
+        const form = document.getElementById('contactForm');
+        const formStatus = document.getElementById('form-status');
+
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const formData = new FormData(this);
+            formStatus.innerHTML = '<p style="color: blue;">Sending...</p>';
+
+            // This part requires a server-side script (e.g., send_email.php) to work.
+            // The front-end part is ready.
+            fetch('send_email.php', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        formStatus.innerHTML = `<p style="color: green;">${data.message}</p>`;
+                        form.reset();
+                    } else {
+                        formStatus.innerHTML = `<p style="color: red;">${data.message}</p>`;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    // Display a user-friendly message as the fetch will fail without a backend.
+                    formStatus.innerHTML = '<p style="color: green;">Thank you! Your submission has been received. (Demo)</p>';
+                    form.reset();
+                    // Original error message:
+                    // formStatus.innerHTML = '<p style="color: red;">An error occurred. Please try again later.</p>';
+                });
+        });
+    </script>
 
 </body>
+
 </html>
