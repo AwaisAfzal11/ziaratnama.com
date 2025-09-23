@@ -41,10 +41,9 @@
 
         /* --- Hero Section --- */
         .hero {
-            /* All previous hero styling is removed to just act as a container */
-            /* The height is controlled by the image tag directly */
+            /* This container now just holds the image. */
+            /* line-height: 0 is still good to have. */
             line-height: 0;
-            /* Prevents extra space below the image */
         }
 
         /* --- Main Content & Section Styling --- */
@@ -211,17 +210,12 @@
 
     <!-- Hero Section -->
     <div class="hero">
-
-        <!-- <picture class="fullscreen-image-container">
-            <source media="(max-width: 1024px)" srcset="goldmine_mobile.jpg">
-
-            <img src="goldmine_desktop.jpg" alt="Goldmine promotional banner">
-        </picture> -->
         <picture>
             <source media="(max-width: 1024px)" srcset="goldmine_mobile.jpg">
 
+            <!-- THIS IS THE CORRECTED LINE -->
             <img src="goldmine_desktop.jpg" alt="Goldmine promotional banner"
-                style="width: 100%; height: 120vh; object-fit: cover; object-position: top center;">
+                style="width: 100%; height: auto; display: block;">
         </picture>
     </div>
 
@@ -244,10 +238,6 @@
                     <input type="tel" id="personal_contact" name="personal_contact" placeholder="0300-1234567" required>
                 </div>
 
-
-
-
-
                 <div class="form-group">
                     <label for="past_business">Message</label>
                     <textarea id="past_business" name="past_business" rows="4"
@@ -256,29 +246,11 @@
 
                 <hr>
 
-
                 <button type="submit">Submit Application</button>
                 <div id="form-status"></div>
             </form>
         </section>
-
-        <!-- <section class="contact-section">
-            <h3>📞 Contact Us / رابطہ کریں</h3>
-            <p>
-                <b>Invest in Islamabad — South City Group & Gold Mine Group Consortium</b> <br>
-                <b>Office:</b> Plot No. 5, near Kiyani House, opposite Attock Petrol Pump, dha Phase 2, GT Road,
-                Islamabad. <br>
-                <b>Phone:</b> 0304-000-8-000 / 0333-111-111-4 <br>
-                <b>Email:</b> info@investinislamabad.com
-            </p>
-        </section> -->
     </main>
-
-    <!-- <footer>
-        <p>Disclaimer: Earnings depend on performance, market conditions and consortium terms.<br>
-            <span class="urdu-text">نوٹس: کمائی کارکردگی، مارکیٹ حالات اور کنسورشیم معاہدے پر منحصر ہے۔</span>
-        </p>
-    </footer> -->
 
     <script>
         // This JavaScript logic is unchanged as requested.
@@ -311,8 +283,6 @@
                     // Display a user-friendly message as the fetch will fail without a backend.
                     formStatus.innerHTML = '<p style="color: green;">Thank you! Your submission has been received. (Demo)</p>';
                     form.reset();
-                    // Original error message:
-                    // formStatus.innerHTML = '<p style="color: red;">An error occurred. Please try again later.</p>';
                 });
         });
     </script>
