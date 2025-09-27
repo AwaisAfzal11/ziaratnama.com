@@ -10,7 +10,8 @@ export function Packages() {
  const cashPackages = [
   {
     name: "Economy Package",
-    price: "PKR 270,000 (Per Person)",
+    originalPrice:"PKR 270,000 (Per Person)",
+    price: "PKR 250,000 (Per Person)",
     duration: "14 Days",
     accommodation: "Standard hotels (Quad Sharing – 4 persons per room)",
     meals: "Breakfast included (Lunch & Dinner not included)",
@@ -23,11 +24,14 @@ export function Packages() {
     ],
     bestFor: "Budget-conscious pilgrims",
     popular: false,
-    savings: "Save PKR 30,000"
+
+    savings: "Save PKR 20,000"
   },
   {
     name: "Economy Plus Package",
-    price: "PKR 335,000 (Per Person)",
+    originalPrice:"PKR 350,000 (Per Person)",
+
+    price: "PKR 300,000 (Per Person)",
     duration: "14 Days",
     accommodation: "3★ hotels (Triple Sharing – 3 persons per room)",
     meals: "Breakfast included (Lunch & Dinner not included)",
@@ -40,11 +44,12 @@ export function Packages() {
     ],
     bestFor: "Pilgrims seeking comfort within reasonable budget",
     popular: false,
-    savings: "Save PKR 30,000"
+    savings: "Save PKR 50,000"
   },
   {
     name: "4-Star Package",
-    price: "PKR 425,000 (Per Person)",
+    originalPrice:"PKR 450,000 (Per Person)",
+    price: "PKR 400,000 (Per Person)",
     duration: "14 Days",
     accommodation: "4★ hotels (Single/Double/Triple/Quad room options)",
     meals: "Breakfast included (Lunch & Dinner not included)",
@@ -58,11 +63,12 @@ export function Packages() {
     ],
     bestFor: "Families and comfort seekers",
     popular: true,
-    savings: "Save PKR 40,000"
+    savings: "Save PKR 50,000"
   },
   {
     name: "5-Star Package",
-    price: "PKR 595,000 (Per Person)",
+    originalPrice:"PKR 500,000 (Per Person)",
+    price: "PKR 450,000 (Per Person)",
     duration: "14 Days",
     accommodation: "Luxury 5★ hotels (Near Haram – subject to availability)",
     meals: "Breakfast included (Lunch & Dinner not included)",
@@ -80,7 +86,8 @@ export function Packages() {
   },
   {
     name: "Executive 5-Star Package",
-    price: "To be finalized",
+    originalPrice:"PKR 600,000 (Per Person)",
+    price: "550,000",
     duration: "14 Days",
     accommodation: "Luxury 5★ hotels (within 300–1000m of Haram)",
     meals: "Breakfast included (Lunch & Dinner not included)",
@@ -284,11 +291,11 @@ export function Packages() {
                         {pkg.name}
                       </h3>
                       <div className="space-y-2">
-                        {/* {pkg.originalPrice && (
+                        {pkg.originalPrice && (
                           <div className="text-lg font-['Nunito_Sans'] text-[#0a1219]/50 line-through">
                             {pkg?.originalPrice}
                           </div>
-                        )} */}
+                        )}
                         <div className="text-3xl font-['Playfair_Display'] font-bold text-[#2c5530]">
                           {pkg.price}
                         </div>

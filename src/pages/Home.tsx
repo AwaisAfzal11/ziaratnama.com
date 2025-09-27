@@ -43,13 +43,13 @@ export function Home() {
       name: "Iran",
       subtitle: "🌙 Spiritual Journeys",
       description: "Spiritual journeys to Mashhad (Imam Reza), Qom, and other sacred sites.",
-      image: "https://images.unsplash.com/photo-1638842491977-3c7ff4c484a7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxpc2xhbWljJTIwcGlsZ3JpbWFnZSUyMHNwaXJpdHVhbCUyMGpvdXJuZXl8ZW58MXx8fHwxNzU4Mjk3MjEyfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+      image: "/iran2.jfif"
     },
     {
       name: "Syria",
       subtitle: "🕊 Ziyarats",
       description: "Pilgrimage to the shrines of Sayyida Zainab and Sayyida Ruqayyah in Damascus.",
-      image: "https://images.unsplash.com/photo-1504548840739-580b10ae7715?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxkeW5hbWljdXMlMjBtb3NxdWV8ZW58MXx8fHwxNzU4MzA0NTQ3fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+      image: "/syria.jpg"
     }
   ];
 

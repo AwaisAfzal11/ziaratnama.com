@@ -31,7 +31,7 @@ export function Footer() {
               Making sacred journeys convenient, organized, and memorable. 
               Your trusted partner for Hajj, Umrah, and Ziyarat services.
             </p>
-            <div className="flex space-x-4">
+            {/* <div className="flex space-x-4">
               <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
                 <Button size="sm" variant="outline" className="border-gray-400 text-gray-300 hover:bg-white hover:text-[#dc2626]">
                   <Facebook className="w-4 h-4" />
@@ -47,7 +47,7 @@ export function Footer() {
                   <Twitter className="w-4 h-4" />
                 </Button>
               </a>
-            </div>
+            </div> */}
           </div>
 
           {/* Quick Links */}
@@ -56,7 +56,7 @@ export function Footer() {
               Quick Links
             </h4>
             <div className="space-y-3">
-              <button onClick={() => handleNavigate('/')} className=" cursor-pointer cursor-pointer text-gray-300 hover:text-[#c7941e] transition-colors">Home</button>
+              <button onClick={() => handleNavigate('/')} className=" cursor-pointer  text-gray-300 hover:text-[#c7941e] transition-colors">Home</button>
               <button onClick={() => handleNavigate('/about')} className="block font-['Nunito_Sans'] cursor-pointer text-gray-300 hover:text-[#c7941e] transition-colors">About Us</button>
               <button onClick={() => handleNavigate('/destinations')} className="block font-['Nunito_Sans'] cursor-pointer text-gray-300 hover:text-[#c7941e] transition-colors">Destinations</button>
               <button onClick={() => handleNavigate('/packages')} className="block font-['Nunito_Sans'] cursor-pointer text-gray-300 hover:text-[#c7941e] transition-colors">Packages</button>

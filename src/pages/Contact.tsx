@@ -4,10 +4,46 @@ import { Input } from '../components/ui/input';
 import { Textarea } from '../components/ui/textarea';
 import { Phone, Mail, MapPin, Clock, MessageCircle, Send, User, Calendar } from 'lucide-react';
 import { Link } from 'react-router-dom';
-
-
+import { useState } from "react";
 
 export function Contact() {
+  const [formData, setFormData] = useState({
+    name: "",
+    phone: "",
+    email: "",
+    date: "",
+    package: "",
+    message: "",
+  });
+
+  const [status, setStatus] = useState("");
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus("Sending...");
+
+    try {
+      const response = await fetch("/send_email.php", {
+        method: "POST",
+        body: new URLSearchParams(formData), // sends as form-data
+      });
+
+      const result = await response.text();
+      if (response.ok) {
+        setStatus("✅ Message sent successfully!");
+      } else {
+        setStatus("❌ Failed to send: " + result);
+      }
+    } catch (error) {
+      setStatus("❌ Error sending message.");
+    }
+  };
+
   const contactMethods = [
     {
       icon: <Phone className="w-8 h-8 text-[#c7941e]" />,
@@ -19,7 +55,7 @@ export function Contact() {
     {
       icon: <Mail className="w-8 h-8 text-[#c7941e]" />,
       title: "Email Support",
-      details: "info@ziyaratnama.com",
+      details: "ziaratnama.com@gmail.com",
       description: "Send us detailed inquiries via email",
       available: "Response within 2 hours"
     },
@@ -140,65 +176,74 @@ export function Contact() {
                 </p>
               </CardHeader>
               <CardContent className="p-8">
-                <form className="space-y-6">
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <label className="font-['Nunito_Sans'] font-semibold text-[#1a365d] text-sm">Full Name *</label>
-                      <div className="relative">
-                        <User className="absolute left-3 top-3 w-5 h-5 text-[#0a1219]/40" />
-                        <Input className="pl-10 border-gray-300 focus:border-[#c7941e] focus:ring-[#c7941e]/20" placeholder="Enter your full name" />
-                      </div>
-                    </div>
-                    <div className="space-y-2">
-                      <label className="font-['Nunito_Sans'] font-semibold text-[#1a365d] text-sm">Phone Number *</label>
-                      <div className="relative">
-                        <Phone className="absolute left-3 top-3 w-5 h-5 text-[#0a1219]/40" />
-                        <Input className="pl-10 border-gray-300 focus:border-[#c7941e] focus:ring-[#c7941e]/20" placeholder="Enter your phone number" />
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div className="space-y-2">
-                    <label className="font-['Nunito_Sans'] font-semibold text-[#1a365d] text-sm">Email Address *</label>
-                    <div className="relative">
-                      <Mail className="absolute left-3 top-3 w-5 h-5 text-[#0a1219]/40" />
-                      <Input className="pl-10 border-gray-300 focus:border-[#c7941e] focus:ring-[#c7941e]/20" placeholder="Enter your email address" />
-                    </div>
-                  </div>
-                  
-                  <div className="space-y-2">
-                    <label className="font-['Nunito_Sans'] font-semibold text-[#1a365d] text-sm">Preferred Travel Date</label>
-                    <div className="relative">
-                      <Calendar className="absolute left-3 top-3 w-5 h-5 text-[#0a1219]/40" />
-                      <Input type="date" className="pl-10 border-gray-300 focus:border-[#c7941e] focus:ring-[#c7941e]/20" />
-                    </div>
-                  </div>
-                  
-                  <div className="space-y-2">
-                    <label className="font-['Nunito_Sans'] font-semibold text-[#1a365d] text-sm">Package Interest</label>
-                    <select className="w-full p-3 border border-gray-300 rounded-lg focus:border-[#c7941e] focus:ring-[#c7941e]/20 font-['Nunito_Sans']">
-                      <option>Select a package type</option>
-                      <option>Economy Package</option>
-                      <option>Economy Plus Package</option>
-                      <option>4-Star Package</option>
-                      <option>5-Star Package</option>
-                      <option>Custom Package</option>
-                    </select>
-                  </div>
-                  
-                  <div className="space-y-2">
-                    <label className="font-['Nunito_Sans'] font-semibold text-[#1a365d] text-sm">Message</label>
-                    <Textarea 
-                      className="border-gray-300 focus:border-[#c7941e] focus:ring-[#c7941e]/20 min-h-[120px]" 
-                      placeholder="Tell us about your requirements, questions, or any specific needs..."
-                    />
-                  </div>
-                  
-                  <Button className="w-full bg-gradient-to-r from-[#1a365d] to-[#2c5530] text-white hover:from-[#0f2a44] hover:to-[#1a3321] font-['Nunito_Sans'] font-semibold py-3 shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300">
-                    <Send className="w-5 h-5 mr-2" />
-                    Send Message
-                  </Button>
-                </form>
+                <form className="space-y-6" onSubmit={handleSubmit}>
+  <div className="grid md:grid-cols-2 gap-4">
+    <div className="space-y-2">
+      <label>Full Name *</label>
+      <Input 
+        name="name"
+        value={formData.name}
+        onChange={handleChange}
+        placeholder="Enter your full name" 
+        required
+      />
+    </div>
+    <div className="space-y-2">
+      <label>Phone Number *</label>
+      <Input 
+        name="phone"
+        value={formData.phone}
+        onChange={handleChange}
+        placeholder="Enter your phone number" 
+        required
+      />
+    </div>
+  </div>
+
+  <Input 
+    name="email"
+    type="email"
+    value={formData.email}
+    onChange={handleChange}
+    placeholder="Enter your email address" 
+    required
+  />
+
+  <Input 
+    type="date"
+    name="date"
+    value={formData.date}
+    onChange={handleChange}
+  />
+
+  <select
+    name="package"
+    value={formData.package}
+    onChange={handleChange}
+    required
+  >
+    <option value="">Select a package type</option>
+    <option>Economy Package</option>
+    <option>Economy Plus Package</option>
+    <option>4-Star Package</option>
+    <option>5-Star Package</option>
+    <option>Custom Package</option>
+  </select>
+
+  <Textarea
+    name="message"
+    value={formData.message}
+    onChange={handleChange}
+    placeholder="Tell us about your requirements..."
+  />
+
+  <Button type="submit">Send Message</Button>
+
+  {status && (
+    <p className="mt-3 text-sm text-center">{status}</p>
+  )}
+</form>
+
               </CardContent>
             </Card>
 

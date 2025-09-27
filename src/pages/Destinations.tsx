@@ -68,7 +68,7 @@ export function Destinations() {
       name: "Iran",
       subtitle: "Spiritual Journeys",
       description: "Spiritual journeys to Mashhad (Imam Reza AS), Qom (Bibi Masooma AS), and other significant religious centers. Packages include 3★, 4★, and 5★ hotels with intercity flights or bus transport.",
-      image: "https://images.unsplash.com/photo-1638842491977-3c7ff4c484a7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxpc2xhbWljJTIwcGlsZ3JpbWFnZSUyMHNwaXJpdHVhbCUyMGpvdXJuZXl8ZW58MXx8fHwxNzU4Mjk3MjEyfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+      image: "/iran2.jfif",
       significance: "Iran is home to important shrines of Ahl al-Bayt (AS) and religious centers attracting pilgrims globally.",
       highlights: [
         "Mashhad (Shrine of Imam Ali Raza AS)",
@@ -95,7 +95,7 @@ export function Destinations() {
       name: "Syria",
       subtitle: "Historic Pilgrimages",
       description: "Pilgrimage to the sacred shrines of Sayyida Zainab (AS) and Sayyida Ruqayyah (AS) in Damascus. Packages range from Economy to 4★ hotels, subject to visa & security advisories.",
-      image: "https://images.unsplash.com/photo-1670602328279-82c100b3dfa8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxpc2xhbWljJTIwY2FsbGlncmFwaHklMjBnb2xkJTIwZW1lcmFsZHxlbnwxfHx8fDE3NTgyOTcyMTR8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+      image: "syria.jpg",
       significance: "Syria holds immense spiritual importance due to Islamic history and Ahl al-Bayt (AS) shrines.",
       highlights: [
         "Shrine of Sayyida Zainab (AS) in Damascus",
