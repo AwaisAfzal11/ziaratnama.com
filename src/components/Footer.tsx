@@ -1,4 +1,4 @@
-import { Phone, Mail, MapPin, Facebook, Instagram, Twitter, ArrowRight } from 'lucide-react';
+import { Phone, Mail, MapPin, /*Facebook, Instagram, Twitter,*/ ArrowRight } from 'lucide-react';
 import { Button } from './ui/button';
 import { Link, useNavigate } from 'react-router-dom';
 

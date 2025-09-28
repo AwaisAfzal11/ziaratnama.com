@@ -128,6 +128,7 @@ src/pages/Packages.tsx
 src/pages/Travelism.tsx
 src/styles/globals.css
 src/vite-env.d.ts
+test.txt
 tsconfig.app.json
 tsconfig.json
 tsconfig.node.json
@@ -280,64 +281,6 @@ export default {
     "@tailwindcss/postcss": {},
   }
 }
-</file>
-
-<file path="public/send_email.php">
-<?php
-// Allow from any origin
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Methods: POST");
-header("Access-Control-Allow-Headers: Content-Type");
-header('Content-Type: application/json');
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $data = json_decode(file_get_contents("php://input"), true);
-
-    // Sanitize and assign values
-  $name = filter_var($data["name"] ?? '', FILTER_SANITIZE_STRING);
-    $email = filter_var($data["email"] ?? '', FILTER_SANITIZE_EMAIL);
-    $company = filter_var($data["company"] ?? '', FILTER_SANITIZE_STRING);
-    $phone = filter_var($data["phone"] ?? '', FILTER_SANITIZE_STRING);
-    $service = filter_var($data["service"] ?? '', FILTER_SANITIZE_STRING);
-    $messageContent = filter_var($data["message"] ?? '', FILTER_SANITIZE_STRING);
-
-    if (empty($name) || empty($email) || empty($messageContent)) {
-        echo json_encode(["status" => "error", "message" => "Please fill in all required fields"]);
-        exit;
-    }
-
-    // Email format validation
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        echo json_encode(["status" => "error", "message" => "Invalid email format"]);
-        exit;
-    }
-
-    // Email settings
-    $to = "mindlabs@gmail.com";
-    $subject = "New Inquiry from MindLab Training via Contact Form";
- $emailBody = "New Contact Form Submission:\n\n";
-    $emailBody .= "Name: $name\n";
-    $emailBody .= "Email: $email\n";
-    $emailBody .= "Company: $company\n";
-    $emailBody .= "Phone: $phone\n";
-    $emailBody .= "Service Interested In: $service\n";
-    $emailBody .= "Message: $messageContent\n";
-
-    // Email headers
-    $headers = "From: noreply@mindlabtraining.net\r\n";
-    $headers .= "Reply-To: $email\r\n";
-    $headers .= "X-Mailer: PHP/" . phpversion();
-
-    // Send email
-    if (mail($to, $subject, $message, $headers)) {
-        echo json_encode(["status" => "success", "message" => "Thank you! We will get back to you shortly."]);
-    } else {
-        echo json_encode(["status" => "error", "message" => "Failed to send your message. Please try again later."]);
-    }
-} else {
-    echo json_encode(["status" => "error", "message" => "Method not allowed"]);
-}
-?>
 </file>
 
 <file path="README.md">
@@ -1536,160 +1479,6 @@ export function FinalCTA() {
         </div>
       </div>
     </section>
-  );
-}
-</file>
-
-<file path="src/components/Footer.tsx">
-import { Phone, Mail, MapPin, Facebook, Instagram, Twitter, ArrowRight } from 'lucide-react';
-import { Button } from './ui/button';
-import { Link, useNavigate } from 'react-router-dom';
-
-const Ziarat = '/Ziaratnewlogo1.png';
-
-export function Footer() {
-  const navigate = useNavigate();
-
-  // helper function
-  const handleNavigate = (path: string) => {
-    navigate(path);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  return (
-    <footer className="bg-[#1a365d] text-white">
-      <div className="container mx-auto px-4 py-16">
-        <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-8">
-          {/* Company Info */}
-          <div>
-            <Link to="/" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-              <img
-                src={Ziarat}
-                alt="Ziarat Logo"
-                className='cursor-pointer'
-                style={{ width: "180px", height: "auto", display: "block" }}
-              />
-            </Link>
-            <p className="font-['Nunito_Sans'] text-gray-300 mb-6 leading-relaxed">
-              Making sacred journeys convenient, organized, and memorable. 
-              Your trusted partner for Hajj, Umrah, and Ziyarat services.
-            </p>
-            <div className="flex space-x-4">
-              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
-                <Button size="sm" variant="outline" className="border-gray-400 text-gray-300 hover:bg-white hover:text-[#dc2626]">
-                  <Facebook className="w-4 h-4" />
-                </Button>
-              </a>
-              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
-                <Button size="sm" variant="outline" className="border-gray-400 text-gray-300 hover:bg-white hover:text-[#dc2626]">
-                  <Instagram className="w-4 h-4" />
-                </Button>
-              </a>
-              <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
-                <Button size="sm" variant="outline" className="border-gray-400 text-gray-300 hover:bg-white hover:text-[#dc2626]">
-                  <Twitter className="w-4 h-4" />
-                </Button>
-              </a>
-            </div>
-          </div>
-
-          {/* Quick Links */}
-          <div>
-            <h4 className="font-['Playfair_Display'] font-semibold text-lg mb-4">
-              Quick Links
-            </h4>
-            <div className="space-y-3">
-              <button onClick={() => handleNavigate('/')} className=" cursor-pointer cursor-pointer text-gray-300 hover:text-[#c7941e] transition-colors">Home</button>
-              <button onClick={() => handleNavigate('/about')} className="block font-['Nunito_Sans'] cursor-pointer text-gray-300 hover:text-[#c7941e] transition-colors">About Us</button>
-              <button onClick={() => handleNavigate('/destinations')} className="block font-['Nunito_Sans'] cursor-pointer text-gray-300 hover:text-[#c7941e] transition-colors">Destinations</button>
-              <button onClick={() => handleNavigate('/packages')} className="block font-['Nunito_Sans'] cursor-pointer text-gray-300 hover:text-[#c7941e] transition-colors">Packages</button>
-              <button onClick={() => handleNavigate('/contact')} className="block font-['Nunito_Sans'] cursor-pointer text-gray-300 hover:text-[#c7941e] transition-colors">Contact</button>
-            </div>
-          </div>
-
-          {/* Services */}
-          <div>
-            <h4 className="font-['Playfair_Display'] font-semibold text-lg mb-4">
-              Our Services
-            </h4>
-            <div className="space-y-3">
-              {['Hajj Packages','Umrah Packages','Iraq Ziyarat','Iran Ziyarat','Syria Ziyarat','Travelism Services'].map((service, i) => (
-                <button 
-                  key={i}
-                  onClick={() => handleNavigate('/packages')}
-                  className="block font-['Nunito_Sans'] cursor-pointer text-gray-300 hover:text-[#c7941e] transition-colors"
-                >
-                  {service}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Contact Info */}
-          <div>
-            <h4 className="font-['Playfair_Display'] font-semibold text-lg mb-4">
-              Get in Touch
-            </h4>
-            <div className="space-y-4">
-              <div className="flex items-start space-x-3">
-                <Phone className="w-5 h-5 text-[#c7941e] mt-1" />
-                <div>
-                  <p className="font-['Nunito_Sans'] text-gray-300">Call Us</p>
-                  <p className="font-['Nunito_Sans'] font-semibold">0304-0008000</p>
-                </div>
-              </div>
-              <div className="flex items-start space-x-3">
-                <Mail className="w-5 h-5 text-[#c7941e] mt-1" />
-                <div>
-                  <p className="font-['Nunito_Sans'] text-gray-300">Email</p>
-                  <p className="font-['Nunito_Sans'] font-semibold">info@ziyaratnama.com</p>
-                </div>
-              </div>
-              <div className="flex items-start space-x-3">
-                <MapPin className="w-5 h-5 text-[#c7941e] mt-1" />
-                <div>
-                  <p className="font-['Nunito_Sans'] text-gray-300">Offices</p>
-                  <p className="font-['Nunito_Sans'] font-semibold">Islamabad + Nationwide</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Call to Action */}
-        <div className="mt-12 pt-8 border-t border-gray-600">
-          <div className="bg-[#dc2626] text-white rounded-lg p-8 text-center shadow-2xl">
-            <h3 className="font-['Playfair_Display'] text-2xl font-semibold mb-4">
-              Ready to Begin Your Sacred Journey?
-            </h3>
-            <p className="font-['Nunito_Sans'] text-lg mb-6">
-              Get in touch today and secure your spiritual pilgrimage with trusted hands.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button 
-                onClick={() => handleNavigate('/packages')}
-                className="bg-[#2c5530] text-white cursor-pointer hover:bg-[#1e3a1f] font-['Nunito_Sans'] font-semibold px-8 shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300">
-                <ArrowRight className="w-5 h-5 mr-2" />
-                Book Consultation
-              </Button>
-              <Button 
-                variant="outline" 
-                onClick={() => handleNavigate('/contact')}
-                className="border-white text-[#dc2626]  cursor-pointer hover:bg-white hover:text-[#dc2626] font-['Nunito_Sans'] font-semibold px-8 transition-all duration-300">
-                Contact Us
-              </Button>
-            </div>
-          </div>
-        </div>
-
-        {/* Copyright */}
-        <div className="mt-8 pt-8 border-t border-gray-600 text-center">
-          <p className="font-['Nunito_Sans'] text-gray-400">
-            © 2025 Ziaratnama Travels (Pvt) Ltd. All rights reserved. | Licensed Travel Company
-          </p>
-        </div>
-      </div>
-    </footer>
   );
 }
 </file>
@@ -12022,1794 +11811,6 @@ export function About() {
 }
 </file>
 
-<file path="src/pages/Contact.tsx">
-import { Card, CardContent, CardHeader } from '../components/ui/card';
-import { Button } from '../components/ui/button';
-import { Input } from '../components/ui/input';
-import { Textarea } from '../components/ui/textarea';
-import { Phone, Mail, MapPin, Clock, MessageCircle, Send, User, Calendar } from 'lucide-react';
-import { Link } from 'react-router-dom';
-
-
-
-export function Contact() {
-  const contactMethods = [
-    {
-      icon: <Phone className="w-8 h-8 text-[#c7941e]" />,
-      title: "Phone Support",
-      details: "0304-0008000",
-      description: "Call us anytime for immediate assistance",
-      available: "24/7 Available"
-    },
-    {
-      icon: <Mail className="w-8 h-8 text-[#c7941e]" />,
-      title: "Email Support",
-      details: "info@ziyaratnama.com",
-      description: "Send us detailed inquiries via email",
-      available: "Response within 2 hours"
-    },
-    {
-      icon: <MapPin className="w-8 h-8 text-[#c7941e]" />,
-      title: "Office Locations",
-      details: "Islamabad + Nationwide",
-      description: "Visit our offices for in-person consultation",
-      available: "Mon-Sat: 9AM-6PM"
-    },
-    {
-      icon: <MessageCircle className="w-8 h-8 text-[#c7941e]" />,
-      title: "WhatsApp",
-      details: "+92 304 0008000",
-      description: "Quick messages and instant support",
-      available: "24/7 Available"
-    }
-  ];
-
-  const officeHours = [
-    { day: "Monday - Friday", hours: "9:00 AM - 6:00 PM" },
-    { day: "Saturday", hours: "10:00 AM - 4:00 PM" },
-    { day: "Sunday", hours: "Closed" },
-    { day: "Emergency Support", hours: "24/7 Available" }
-  ];
-
-  const faqs = [
-    {
-      question: "How do I book an Umrah package?",
-      answer: "You can book by calling us, visiting our office, or filling out the contact form. We'll guide you through the entire process."
-    },
-    {
-      question: "What documents do I need for Umrah?",
-      answer: "You need a valid passport (6+ months validity), passport-size photos, vaccination certificates, and other documents we'll specify during booking."
-    },
-    {
-      question: "Are the instalment plans really interest-free?",
-      answer: "Yes, absolutely! Our instalment plans are 100% interest-free with no hidden charges. You pay the same total amount as cash packages."
-    },
-    {
-      question: "Can I customize my package?",
-      answer: "Yes, we offer flexible packages. Contact us to discuss your specific requirements and we'll create a customized solution."
-    }
-  ];
-
-  return (
-    <div className="min-h-screen">
-      {/* Hero Section */}
-      <section className="relative py-32 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#1a365d] via-[#2c5530] to-[#1a365d]"></div>
-        <div className="absolute top-20 right-10 w-32 h-32 bg-gradient-to-br from-[#c7941e]/20 to-[#f7e98e]/10 rounded-full blur-xl animate-pulse"></div>
-        <div className="absolute bottom-20 left-10 w-24 h-24 bg-gradient-to-br from-[#68d391]/20 to-transparent rounded-full blur-xl animate-pulse delay-1000"></div>
-        
-        <div className="relative z-10 container mx-auto px-4 text-center">
-          <h1 className="font-['Playfair_Display'] text-4xl md:text-6xl font-bold text-white mb-6">
-            Contact{' '}
-            <span className="bg-gradient-to-r from-[#c7941e] to-[#f7e98e] bg-clip-text text-transparent">
-              Us
-            </span>
-          </h1>
-          <p className="font-['Nunito_Sans'] text-xl text-white/90 max-w-3xl mx-auto leading-relaxed">
-            Ready to begin your sacred journey? Get in touch with our expert team for personalized guidance 
-            and support throughout your pilgrimage planning.
-          </p>
-        </div>
-      </section>
-
-      {/* Contact Methods */}
-      <section className="py-20 bg-gradient-to-br from-[#fffef7] to-[#f7f3e9]">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="font-['Playfair_Display'] text-3xl md:text-4xl font-bold text-[#1a365d] mb-4">
-              Multiple Ways to Reach Us
-            </h2>
-            <p className="font-['Nunito_Sans'] text-lg text-[#0a1219]/70 max-w-3xl mx-auto">
-              Choose the most convenient way to connect with our team
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
-            {contactMethods.map((method, index) => (
-              <Card key={index} className="border-0 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105 text-center bg-gradient-to-br from-white to-[#f7f3e9]">
-                <CardContent className="p-8">
-                  <div className="mx-auto mb-6 p-4 bg-gradient-to-br from-[#c7941e]/10 to-[#f7e98e]/5 rounded-full w-fit">
-                    {method.icon}
-                  </div>
-                  <h3 className="font-['Playfair_Display'] text-xl font-bold text-[#1a365d] mb-3">
-                    {method.title}
-                  </h3>
-                  <p className="font-['Nunito_Sans'] font-semibold text-[#2c5530] mb-2 text-lg">
-                    {method.details}
-                  </p>
-                  <p className="font-['Nunito_Sans'] text-[#0a1219]/70 mb-3 text-sm">
-                    {method.description}
-                  </p>
-                  <div className="inline-block bg-[#c7941e]/10 text-[#c7941e] px-3 py-1 rounded-full text-xs font-['Nunito_Sans'] font-semibold">
-                    {method.available}
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Contact Form & Info */}
-      <section className="py-20 bg-gradient-to-br from-[#1a365d] to-[#2c5530]">
-        <div className="container mx-auto px-4">
-          <div className="grid lg:grid-cols-2 gap-12 items-start">
-            {/* Contact Form */}
-            <Card className="border-0 shadow-2xl bg-white/95 backdrop-blur-sm">
-              <CardHeader className="text-center">
-                <h2 className="font-['Playfair_Display'] text-2xl font-bold text-[#1a365d] mb-2">
-                  Send Us a Message
-                </h2>
-                <p className="font-['Nunito_Sans'] text-[#0a1219]/70">
-                  Fill out the form and we'll get back to you within 2 hours
-                </p>
-              </CardHeader>
-              <CardContent className="p-8">
-                <form className="space-y-6">
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <label className="font-['Nunito_Sans'] font-semibold text-[#1a365d] text-sm">Full Name *</label>
-                      <div className="relative">
-                        <User className="absolute left-3 top-3 w-5 h-5 text-[#0a1219]/40" />
-                        <Input className="pl-10 border-gray-300 focus:border-[#c7941e] focus:ring-[#c7941e]/20" placeholder="Enter your full name" />
-                      </div>
-                    </div>
-                    <div className="space-y-2">
-                      <label className="font-['Nunito_Sans'] font-semibold text-[#1a365d] text-sm">Phone Number *</label>
-                      <div className="relative">
-                        <Phone className="absolute left-3 top-3 w-5 h-5 text-[#0a1219]/40" />
-                        <Input className="pl-10 border-gray-300 focus:border-[#c7941e] focus:ring-[#c7941e]/20" placeholder="Enter your phone number" />
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div className="space-y-2">
-                    <label className="font-['Nunito_Sans'] font-semibold text-[#1a365d] text-sm">Email Address *</label>
-                    <div className="relative">
-                      <Mail className="absolute left-3 top-3 w-5 h-5 text-[#0a1219]/40" />
-                      <Input className="pl-10 border-gray-300 focus:border-[#c7941e] focus:ring-[#c7941e]/20" placeholder="Enter your email address" />
-                    </div>
-                  </div>
-                  
-                  <div className="space-y-2">
-                    <label className="font-['Nunito_Sans'] font-semibold text-[#1a365d] text-sm">Preferred Travel Date</label>
-                    <div className="relative">
-                      <Calendar className="absolute left-3 top-3 w-5 h-5 text-[#0a1219]/40" />
-                      <Input type="date" className="pl-10 border-gray-300 focus:border-[#c7941e] focus:ring-[#c7941e]/20" />
-                    </div>
-                  </div>
-                  
-                  <div className="space-y-2">
-                    <label className="font-['Nunito_Sans'] font-semibold text-[#1a365d] text-sm">Package Interest</label>
-                    <select className="w-full p-3 border border-gray-300 rounded-lg focus:border-[#c7941e] focus:ring-[#c7941e]/20 font-['Nunito_Sans']">
-                      <option>Select a package type</option>
-                      <option>Economy Package</option>
-                      <option>Economy Plus Package</option>
-                      <option>4-Star Package</option>
-                      <option>5-Star Package</option>
-                      <option>Custom Package</option>
-                    </select>
-                  </div>
-                  
-                  <div className="space-y-2">
-                    <label className="font-['Nunito_Sans'] font-semibold text-[#1a365d] text-sm">Message</label>
-                    <Textarea 
-                      className="border-gray-300 focus:border-[#c7941e] focus:ring-[#c7941e]/20 min-h-[120px]" 
-                      placeholder="Tell us about your requirements, questions, or any specific needs..."
-                    />
-                  </div>
-                  
-                  <Button className="w-full bg-gradient-to-r from-[#1a365d] to-[#2c5530] text-white hover:from-[#0f2a44] hover:to-[#1a3321] font-['Nunito_Sans'] font-semibold py-3 shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300">
-                    <Send className="w-5 h-5 mr-2" />
-                    Send Message
-                  </Button>
-                </form>
-              </CardContent>
-            </Card>
-
-            {/* Contact Info & Hours */}
-            <div className="space-y-8">
-              {/* Office Hours */}
-              <Card className="border-0 shadow-xl bg-white/95 backdrop-blur-sm">
-                <CardHeader>
-                  <h3 className="font-['Playfair_Display'] text-xl font-bold text-[#1a365d] flex items-center">
-                    <Clock className="w-6 h-6 text-[#c7941e] mr-3" />
-                    Office Hours
-                  </h3>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-3">
-                    {officeHours.map((schedule, index) => (
-                      <div key={index} className="flex justify-between items-center py-2 border-b border-gray-100 last:border-0">
-                        <span className="font-['Nunito_Sans'] font-medium text-[#1a365d]">{schedule.day}</span>
-                        <span className="font-['Nunito_Sans'] text-[#0a1219]/70">{schedule.hours}</span>
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Quick Contact */}
-              <Card className="border-0 shadow-xl bg-gradient-to-br from-[#c7941e] to-[#f7e98e] text-[#0a1219]">
-                <CardContent className="p-8 text-center">
-                  <h3 className="font-['Playfair_Display'] text-xl font-bold mb-4">
-                    Need Immediate Assistance?
-                  </h3>
-                  <p className="font-['Nunito_Sans'] mb-6">
-                    Our expert consultants are available 24/7 for urgent inquiries
-                  </p>
-                  <div className="space-y-3">
-                    <Button 
-                      className="w-full bg-[#1a365d] text-white hover:bg-[#0f2a44] font-['Nunito_Sans'] font-semibold"
-                      onClick={() => window.open('tel:03040008000', '_self')}
-                    >
-                      <Phone className="w-5 h-5 mr-2" />
-                      Call Now: 0304-0008000
-                    </Button>
-                    <Button 
-                      variant="outline"
-                      className="w-full border-[#1a365d] text-[#1a365d] hover:bg-[#1a365d] hover:text-white font-['Nunito_Sans'] font-semibold"
-                      onClick={() => window.open('https://wa.me/923040008000', '_blank')}
-                    >
-                      <MessageCircle className="w-5 h-5 mr-2" />
-                      WhatsApp Chat
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* FAQ Section */}
-      <section className="py-20 bg-gradient-to-br from-[#f7f3e9] to-[#fffef7]">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="font-['Playfair_Display'] text-3xl md:text-4xl font-bold text-[#1a365d] mb-4">
-              Frequently Asked Questions
-            </h2>
-            <p className="font-['Nunito_Sans'] text-lg text-[#0a1219]/70 max-w-3xl mx-auto">
-              Find quick answers to common questions about our services
-            </p>
-          </div>
-
-          <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-8">
-            {faqs.map((faq, index) => (
-              <Card key={index} className="border-0 shadow-lg hover:shadow-xl transition-all duration-300 bg-gradient-to-br from-white to-[#f7f3e9]">
-                <CardContent className="p-6">
-                  <h3 className="font-['Playfair_Display'] font-bold text-[#1a365d] mb-3">
-                    {faq.question}
-                  </h3>
-                  <p className="font-['Nunito_Sans'] text-[#0a1219]/80 leading-relaxed text-sm">
-                    {faq.answer}
-                  </p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-
-          <div className="text-center mt-12">
-            <p className="font-['Nunito_Sans'] text-[#0a1219]/70 mb-4">
-              Don't see your question here?
-            </p>
-            <Link to='/about'>
-            <Button 
-              className="bg-gradient-to-r from-[#1a365d] to-[#2c5530] text-white hover:from-[#0f2a44] hover:to-[#1a3321] font-['Nunito_Sans'] font-semibold px-8 py-3 shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
-            >
-              Learn More About Us
-            </Button>
-            </Link>
-          </div>
-        </div>
-      </section>
-    </div>
-  );
-}
-</file>
-
-<file path="src/pages/Destinations.tsx">
-import { ImageWithFallback } from '../components/figma/ImageWithFallback';
-import { Card, CardContent } from '../components/ui/card';
-import { Button } from '../components/ui/button';
-import { Badge } from '../components/ui/badge';
-import { MapPin, Star, Plane, Clock, Users, ArrowRight, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-
-
-
-export function Destinations() {
-  const destinations = [
-    {
-      id: 'saudi-arabia',
-      name: "Saudi Arabia",
-      subtitle: "Hajj & Umrah",
-      description: "Ziaratnama Travels (Pvt) Ltd offers organized Hajj & Umrah packages to Makkah and Madinah, the holiest sites for Muslims. Our aim is to ensure every pilgrim experiences ease, trust, and spiritual tranquility throughout their journey.",
-      image: "https://images.unsplash.com/photo-1571909552531-1601eaec8f79?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxrYWFiYSUyMG1lY2NhJTIwaG9seSUyMG1vc3F1ZXxlbnwxfHx8fDE3NTgyOTcyMTJ8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-      significance: "Makkah and Madinah are the holiest sites for Muslims worldwide. Hajj and Umrah are among the most significant acts of worship in Islam.",
-      highlights: [
-        "The Kaaba & Masjid al-Haram",
-        "The Prophet’s Mosque in Madinah",
-        "Historical sites like Uhud, Masjid Quba, etc.",
-        "Jannat al-Baqi Cemetery",
-        "Cave of Hira",
-        "Masjid Quba - First mosque in Islam"
-      ],
-      packages: "Economy (Quad), Economy Plus (Triple), 4★ & 5★ Luxury",
-      duration: "14-30 days",
-      groupSize: "15-50 people",
-      features: [
-        "Airport transfers in luxury vehicles",
-        "Guided ziyarat tours with knowledgeable guides",
-        "Quality accommodation near Haram (Standard to 5★)",
-        "Flexible booking policies",
-        "Visa assistance",
-        "24/7 customer support"
-      ]
-    },
-    {
-      id: 'iraq',
-      name: "Iraq",
-      subtitle: "Ziyarat Tours",
-      description: "Visit the sacred shrines of Ahl al-Bayt (AS) in Najaf, Karbala, Kufa, Kadhimain, and Samarra. Our packages include intercity transport and expert guides for a meaningful experience.",
-      image: "https://images.unsplash.com/photo-1700130375571-8f2eca1b825e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxuYWphZiUyMHNocmluZSUyMGlzbGFtaWMlMjBhcmNoaXRlY3R1cmV8ZW58MXx8fHwxNzU4Mjk3MjEzfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-      significance: "Iraq is home to the shrines of Ahl al-Bayt (AS) and countless historic Islamic events. Millions of pilgrims visit Najaf, Karbala, and other cities annually.",
-      highlights: [
-        "Najaf al-Ashraf (Shrine of Imam Ali AS)",
-        "Karbala (Imam Hussain AS & Hazrat Abbas AS)",
-        "Kufa Mosque and landmarks",
-        "Kadhimain (Imam Musa al-Kadhim & Imam Muhammad Taqi AS)",
-        "Samarra (Imam Ali al-Naqi & Imam Hasan al-Askari AS)",
-        "Historic Islamic sites and museums"
-      ],
-      packages: "Economy to 5★ hotels",
-      duration: "7-14 days",
-      groupSize: "10-40 people",
-      features: [
-        "Airport transfers and intercity transport",
-        "Expert local guides",
-        "Group and family packages",
-        "Guided ziyarat programs",
-        "Comfortable accommodations",
-        "Visa and support services"
-      ]
-    },
-    {
-      id: 'iran',
-      name: "Iran",
-      subtitle: "Spiritual Journeys",
-      description: "Spiritual journeys to Mashhad (Imam Reza AS), Qom (Bibi Masooma AS), and other significant religious centers. Packages include 3★, 4★, and 5★ hotels with intercity flights or bus transport.",
-      image: "https://images.unsplash.com/photo-1638842491977-3c7ff4c484a7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxpc2xhbWljJTIwcGlsZ3JpbWFnZSUyMHNwaXJpdHVhbCUyMGpvdXJuZXl8ZW58MXx8fHwxNzU4Mjk3MjEyfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-      significance: "Iran is home to important shrines of Ahl al-Bayt (AS) and religious centers attracting pilgrims globally.",
-      highlights: [
-        "Mashhad (Shrine of Imam Ali Raza AS)",
-        "Qom (Shrine of Bibi Masooma AS)",
-        "Historical & religious landmarks in Shiraz",
-        "Religious centers in Tehran",
-        "Beautiful Persian architecture",
-        "Cultural and spiritual sites"
-      ],
-      packages: "3★, 4★, and 5★ hotels",
-      duration: "7-12 days",
-      groupSize: "12-35 people",
-      features: [
-        "Quality accommodation options",
-        "Comprehensive visa support",
-        "Organized group tours",
-        "Family-friendly packages",
-        "Intercity flights or bus transport",
-        "Guided ziyarat programs"
-      ]
-    },
-    {
-      id: 'syria',
-      name: "Syria",
-      subtitle: "Historic Pilgrimages",
-      description: "Pilgrimage to the sacred shrines of Sayyida Zainab (AS) and Sayyida Ruqayyah (AS) in Damascus. Packages range from Economy to 4★ hotels, subject to visa & security advisories.",
-      image: "https://images.unsplash.com/photo-1670602328279-82c100b3dfa8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxpc2xhbWljJTIwY2FsbGlncmFwaHklMjBnb2xkJTIwZW1lcmFsZHxlbnwxfHx8fDE3NTgyOTcyMTR8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-      significance: "Syria holds immense spiritual importance due to Islamic history and Ahl al-Bayt (AS) shrines.",
-      highlights: [
-        "Shrine of Sayyida Zainab (AS) in Damascus",
-        "Shrine of Sayyida Ruqayyah (AS)",
-        "Historic mosques and sites",
-        "Umayyad Mosque",
-        "Ancient Damascus old city",
-        "Cultural heritage sites"
-      ],
-      packages: "Economy to 4★ hotels",
-      duration: "5-10 days",
-      groupSize: "8-25 people",
-      features: [
-        "Professional guides",
-        "Safety and security support",
-        "Group and individual packages",
-        "Guided ziyarat programs",
-        "Historic site visits",
-        "Visa and support services"
-      ]
-    }
-  ];
-  return (
-    <div className="min-h-screen">
-      {/* Hero Section */}
-      <section className="relative py-32 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#1a365d] via-[#2c5530] to-[#1a365d]"></div>
-        <div className="absolute top-20 right-10 w-32 h-32 bg-gradient-to-br from-[#c7941e]/20 to-[#f7e98e]/10 rounded-full blur-xl animate-pulse"></div>
-        <div className="absolute bottom-20 left-10 w-24 h-24 bg-gradient-to-br from-[#68d391]/20 to-transparent rounded-full blur-xl animate-pulse delay-1000"></div>
-        
-        <div className="relative z-10 container mx-auto px-4 text-center">
-          <h1 className="font-['Playfair_Display'] text-4xl md:text-6xl font-bold text-white mb-6">
-            Sacred{' '}
-            <span className="bg-gradient-to-r from-[#c7941e] to-[#f7e98e] bg-clip-text text-transparent">
-              Destinations
-            </span>
-          </h1>
-          <p className="font-['Nunito_Sans'] text-xl text-white/90 max-w-3xl mx-auto leading-relaxed">
-            Embark on spiritually enriching journeys to the most revered Islamic destinations across four countries
-          </p>
-        </div>
-      </section>
-
-      {/* Destinations Grid */}
-      <section className="py-20 bg-gradient-to-br from-[#fffef7] to-[#f7f3e9]">
-        <div className="container mx-auto px-4">
-          <div className="space-y-16">
-            {destinations.map((destination, index) => (
-              <Card key={destination.id} className={`border-0 shadow-2xl overflow-hidden ${index % 2 === 1 ? 'lg:flex-row-reverse' : ''}`}>
-                <div className="lg:flex">
-                  {/* Image Section */}
-                  <div className="lg:w-1/2 relative h-96 lg:h-auto overflow-hidden">
-                    <ImageWithFallback
-                      src={destination.image}
-                      alt={destination.name}
-                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#1a365d]/60 to-transparent"></div>
-                    <div className="absolute top-6 left-6">
-                      <Badge className="bg-[#c7941e] text-[#0a1219] font-['Nunito_Sans'] font-semibold">
-                        {destination.packages}
-                      </Badge>
-                    </div>
-                    <div className="absolute bottom-6 left-6 text-white">
-                      <h3 className="font-['Playfair_Display'] text-2xl font-bold mb-2">{destination.name}</h3>
-                      <p className="font-['Nunito_Sans'] text-lg opacity-90">{destination.subtitle}</p>
-                    </div>
-                  </div>
-
-                  {/* Content Section */}
-                  <div className="lg:w-1/2 p-8 lg:p-12">
-                    <div className="mb-6">
-                      <div className="flex items-center mb-4">
-                        <MapPin className="w-6 h-6 text-[#c7941e] mr-3" />
-                        <h3 className="font-['Playfair_Display'] text-2xl font-bold text-[#1a365d]">
-                          {destination.name}
-                        </h3>
-                      </div>
-                      <p className="font-['Nunito_Sans'] text-[#0a1219]/80 leading-relaxed mb-6">
-                        {destination.description}
-                      </p>
-                      <p className="font-['Nunito_Sans'] text-[#0a1219]/70 leading-relaxed mb-6 italic">
-                        {destination.significance}
-                      </p>
-                    </div>
-
-                    {/* Trip Details */}
-                    <div className="grid grid-cols-3 gap-4 mb-8">
-                      <div className="text-center p-4 bg-gradient-to-br from-[#c7941e]/10 to-[#f7e98e]/5 rounded-lg">
-                        <Clock className="w-6 h-6 text-[#c7941e] mx-auto mb-2" />
-                        <p className="font-['Nunito_Sans'] text-sm font-semibold text-[#1a365d]">{destination.duration}</p>
-                        <p className="font-['Nunito_Sans'] text-xs text-[#0a1219]/60">Duration</p>
-                      </div>
-                      <div className="text-center p-4 bg-gradient-to-br from-[#c7941e]/10 to-[#f7e98e]/5 rounded-lg">
-                        <Users className="w-6 h-6 text-[#c7941e] mx-auto mb-2" />
-                        <p className="font-['Nunito_Sans'] text-sm font-semibold text-[#1a365d]">{destination.groupSize}</p>
-                        <p className="font-['Nunito_Sans'] text-xs text-[#0a1219]/60">Group Size</p>
-                      </div>
-                      <div className="text-center p-4 bg-gradient-to-br from-[#c7941e]/10 to-[#f7e98e]/5 rounded-lg">
-                        <Plane className="w-6 h-6 text-[#c7941e] mx-auto mb-2" />
-                        <p className="font-['Nunito_Sans'] text-sm font-semibold text-[#1a365d]">{destination.packages}</p>
-                        <p className="font-['Nunito_Sans'] text-xs text-[#0a1219]/60">Packages</p>
-                      </div>
-                    </div>
-
-                    {/* Highlights */}
-                    <div className="mb-8">
-                      <h4 className="font-['Playfair_Display'] font-bold text-[#1a365d] mb-4">Sacred Sites & Highlights</h4>
-                      <div className="grid grid-cols-1 gap-2">
-                        {destination.highlights.slice(0, 4).map((highlight, idx) => (
-                          <div key={idx} className="flex items-center">
-                            <Star className="w-4 h-4 text-[#c7941e] mr-3 flex-shrink-0" />
-                            <span className="font-['Nunito_Sans'] text-[#0a1219]/80 text-sm">{highlight}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Features */}
-                    <div className="mb-8">
-                      <h4 className="font-['Playfair_Display'] font-bold text-[#1a365d] mb-4">Package Features</h4>
-                      <div className="grid grid-cols-1 gap-2">
-                        {destination.features.slice(0, 3).map((feature, idx) => (
-                          <div key={idx} className="flex items-center">
-                            <div className="w-2 h-2 bg-[#2c5530] rounded-full mr-3 flex-shrink-0"></div>
-                            <span className="font-['Nunito_Sans'] text-[#0a1219]/80 text-sm">{feature}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-
-                    <Link to='/packages'>
-                    <Button 
-                      className="w-full bg-gradient-to-r from-[#1a365d] to-[#2c5530] text-white hover:from-[#0f2a44] hover:to-[#1a3321] font-['Nunito_Sans'] font-semibold py-3 shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
-                    >
-                      View Packages for {destination.name}
-                      <ArrowRight className="ml-2 w-5 h-5" />
-                    </Button>
-                    </Link>
-                  </div>
-                </div>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-<section className="py-20 bg-gradient-to-br from-[#fffef7] to-[#f7f3e9]">
-<div className="container mx-auto px-4">
-<div className="text-center mb-16">
-<h2 className="font-['Playfair_Display'] text-3xl md:text-4xl font-bold text-[#1a365d] mb-4">
-Additional Information
-</h2>
-<p className="font-['Nunito_Sans'] text-lg text-[#0a1219]/80 max-w-3xl mx-auto">
-Every Ziaratnama Travels (Pvt) Ltd package ensures you travel with complete peace of mind
-</p>
-</div>
-
-
-<div className="grid sm:grid-cols-2 md:grid-cols-3 gap-8">
-{[
-{ title: "Airport Transfers", desc: "Seamless pickups and drop-offs for stress-free travel" },
-{ title: "Intercity Transport", desc: "Safe and comfortable journeys between holy cities" },
-{ title: "Hotel Accommodation", desc: "From economy to 5★ luxury, stay as per your chosen category" },
-{ title: "Guided Ziyarat Programs", desc: "Meaningful tours with knowledgeable religious guides" },
-{ title: "Visa Services", desc: "Complete visa and documentation support" },
-{ title: "24/7 Assistance", desc: "Dedicated support team available round-the-clock" }
-].map((item, idx) => (
-<Card key={idx} className="border-0 shadow-xl bg-white/95 backdrop-blur-sm hover:shadow-2xl transition-all duration-300">
-<CardContent className="p-6 flex items-start">
-<CheckCircle className="w-6 h-6 text-[#2c5530] mr-4 mt-1 flex-shrink-0" />
-<div>
-<h3 className="font-['Playfair_Display'] font-bold text-[#1a365d] mb-2 text-lg">{item.title}</h3>
-<p className="font-['Nunito_Sans'] text-[#0a1219]/70 text-sm leading-relaxed">{item.desc}</p>
-</div>
-</CardContent>
-</Card>
-))}
-</div>
-</div>
-</section>
-      {/* Why Choose Our Destinations */}
-      <section className="py-20 bg-gradient-to-br from-[#1a365d] to-[#2c5530]">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="font-['Playfair_Display'] text-3xl md:text-4xl font-bold text-white mb-4">
-              Why Choose Our Destination Packages?
-            </h2>
-            <p className="font-['Nunito_Sans'] text-lg text-white/80 max-w-3xl mx-auto">
-              Every Ziaratnama Travels package ensures a complete, worry-free spiritual journey
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {[
-              {
-                icon: <Plane className="w-8 h-8 text-[#c7941e]" />,
-                title: "Airport Transfers",
-                description: "Comfortable transfers from arrival to departure"
-              },
-              {
-                icon: <MapPin className="w-8 h-8 text-[#c7941e]" />,
-                title: "Intercity Transport",
-                description: "Safe and comfortable travel between cities"
-              },
-              {
-                icon: <Users className="w-8 h-8 text-[#c7941e]" />,
-                title: "Expert Guides",
-                description: "Knowledgeable guides for meaningful experiences"
-              },
-              {
-                icon: <Star className="w-8 h-8 text-[#c7941e]" />,
-                title: "Quality Accommodation",
-                description: "Comfortable stays as per chosen category"
-              }
-            ].map((item, index) => (
-              <Card key={index} className="border-0 shadow-xl bg-white/95 backdrop-blur-sm text-center hover:shadow-2xl transition-all duration-300 transform hover:scale-105">
-                <CardContent className="p-6">
-                  <div className="mx-auto mb-4 p-3 bg-gradient-to-br from-[#c7941e]/10 to-[#f7e98e]/5 rounded-full w-fit">
-                    {item.icon}
-                  </div>
-                  <h3 className="font-['Playfair_Display'] font-bold text-[#1a365d] mb-2">{item.title}</h3>
-                  <p className="font-['Nunito_Sans'] text-[#0a1219]/70 text-sm">{item.description}</p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Call to Action */}
-      <section className="py-20 bg-gradient-to-br from-[#f7f3e9] to-[#fffef7]">
-        <div className="container mx-auto px-4">
-          <Card className="border-0 shadow-2xl overflow-hidden bg-gradient-to-r from-[#1a365d] to-[#2c5530]">
-            <CardContent className="p-12 text-center text-white relative">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-[#c7941e]/20 to-transparent rounded-full blur-xl"></div>
-              <div className="relative z-10">
-                <h2 className="font-['Playfair_Display'] text-3xl md:text-4xl font-bold mb-6">
-                  Ready to Embark on Your Sacred Journey?
-                </h2>
-                <p className="font-['Nunito_Sans'] text-xl mb-8 opacity-90 max-w-2xl mx-auto">
-                  Choose from our carefully crafted packages and begin your spiritual transformation
-                </p>
-                <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <Link to='/packages'>
-                  <Button 
-                    size="lg"
-                    className="bg-gradient-to-r from-[#c7941e] to-[#f7e98e] text-[#0a1219] hover:from-[#996f10] hover:to-[#c7941e] font-['Nunito_Sans'] font-semibold px-8 py-4 shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
-                  >
-                    Explore All Packages
-                  </Button>
-                  </Link>
-                  <Link to='/contact'>
-                  <Button 
-                    size="lg"
-                    variant="outline"
-                    className="border-white/30 text-white bg-white/10 backdrop-blur-sm hover:bg-white hover:text-[#1a365d] font-['Nunito_Sans'] font-semibold px-8 py-4 transition-all duration-300"
-                  >
-                    Contact Us
-                  </Button>
-                  </Link>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      </section>
-    </div>
-  );
-}
-</file>
-
-<file path="src/pages/Home.tsx">
-import { ImageWithFallback } from '../components/figma/ImageWithFallback';
-import { Button } from '../components/ui/button';
-import { Card, CardContent } from '../components/ui/card';
-import { Badge } from '../components/ui/badge';
-import { Shield, Compass, Star, ArrowRight, CheckCircle, Users, Globe, Award } from 'lucide-react';
-import { Link } from 'react-router-dom';
-
-
-
-export function Home() {
-  const features = [
-    {
-      icon: <Shield className="w-8 h-8 text-[#dc2626]" />,
-      title: "Trust",
-      description: "We are a registered and licensed travel company ensuring transparency and reliability in every booking."
-    },
-    {
-      icon: <CheckCircle className="w-8 h-8 text-[#dc2626]" />,
-      title: "Convenience",
-      description: "From Jeddah Airport to Makkah and Madinah hotels, every step of your journey — transport, stay, and services — is managed by us, so you can focus entirely on your worship."
-    },
-    {
-      icon: <Compass className="w-8 h-8 text-[#dc2626]" />,
-      title: "Guidance",
-      description: "Our experienced and dedicated staff provides complete assistance, ensuring you never face difficulties at any stage of your pilgrimage."
-    }
-  ];
-
-  const destinations = [
-    {
-      name: "Saudi Arabia",
-      subtitle: "🕋 Hajj & Umrah",
-      description: "Experience the spirituality of the Haramain Sharifain with options from Economy to Five-Star hotels.",
-      image: "https://images.unsplash.com/photo-1571909552531-1601eaec8f79?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxrYWFiYSUyMG1lY2NhJTIwaG9seSUyMG1vc3F1ZXxlbnwxfHx8fDE3NTgyOTcyMTJ8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
-    },
-    {
-      name: "Iraq",
-      subtitle: "🕌 Ziyarats",
-      description: "Visit Najaf, Karbala, Kufa, Kadhimain, and Samarra to pay respects at the shrines of Ahl al-Bayt (AS).",
-      image: "https://images.unsplash.com/photo-1700130375571-8f2eca1b825e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxuYWphZiUyMHNocmluZSUyMGlzbGFtaWMlMjBhcmNoaXRlY3R1cmV8ZW58MXx8fHwxNzU4Mjk3MjEzfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
-    },
-    {
-      name: "Iran",
-      subtitle: "🌙 Spiritual Journeys",
-      description: "Spiritual journeys to Mashhad (Imam Reza), Qom, and other sacred sites.",
-      image: "https://images.unsplash.com/photo-1638842491977-3c7ff4c484a7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxpc2xhbWljJTIwcGlsZ3JpbWFnZSUyMHNwaXJpdHVhbCUyMGpvdXJuZXl8ZW58MXx8fHwxNzU4Mjk3MjEyfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
-    },
-    {
-      name: "Syria",
-      subtitle: "🕊 Ziyarats",
-      description: "Pilgrimage to the shrines of Sayyida Zainab and Sayyida Ruqayyah in Damascus.",
-      image: "https://images.unsplash.com/photo-1504548840739-580b10ae7715?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxkeW5hbWljdXMlMjBtb3NxdWV8ZW58MXx8fHwxNzU4MzA0NTQ3fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
-    }
-  ];
-
-  const stats = [
-    { icon: <Users className="w-10 h-10 text-[#dc2626]" />, number: "1000+", label: "Happy Pilgrims" },
-    { icon: <Globe className="w-10 h-10 text-[#dc2626]" />, number: "4", label: "Countries" },
-    { icon: <Award className="w-10 h-10 text-[#dc2626]" />, number: "5+", label: "Years Experience" },
-    { icon: <CheckCircle className="w-10 h-10 text-[#dc2626]" />, number: "100%", label: "Satisfaction" }
-  ];
-  const packages = [
-    { title: "Economy", description: "Standard hotels, Quad Sharing, perfect for budget travelers." },
-    { title: "Economy Plus", description: "3★ hotels, Triple Sharing, extra comfort with affordability." },
-    { title: "4-Star", description: "Premium facilities with Single, Double, Triple, and Quad room options." },
-    { title: "5-Star", description: "Luxury brands, near-Haram accommodations, world-class comfort." }
-  ];
-  return (
-    <div className="min-h-screen h-auto  max-w-[1640px] mx-auto">
-      {/* Hero Section */}
-      <section className="relative  min-h-screen flex w-full justify-center  items-center overflow-hidden">
-        {/* Background with gradient overlay */}
-        <div className="absolute inset-0">
-          <ImageWithFallback
-            src="https://images.unsplash.com/photo-1571909552531-1601eaec8f79?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxrYWFiYSUyMG1lY2NhJTIwaG9seSUyMG1vc3F1ZXxlbnwxfHx8fDE3NTgyOTcyMTJ8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
-            alt="Kaaba at Mecca"
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-[#1a365d]/85"></div>
-        </div>
-
-        {/* Floating elements */}
-        <div className="absolute top-20 right-10 w-32 h-32 bg-[#dc2626]/15 rounded-full blur-xl animate-pulse"></div>
-        <div className="absolute bottom-32 left-10 w-24 h-24 bg-[#c7941e]/10 rounded-full blur-xl animate-pulse delay-1000"></div>
-
-        {/* Content */}
-        <div className="relative z-10 container mx-auto    px-4">
-          <div className="w-full mx-auto flex flex-col items-center">
-            <div className="mb-8 " style={{ marginTop: '100px' }}>
-              <Badge className="bg-[#dc2626]/25 text-[#dc2626] border-[#dc2626]/40 font-['Nunito_Sans'] text-sm px-4 py-2 shadow-lg">
-                ✨ Sacred Journeys Await
-              </Badge>
-            </div>
-
-            {/* <h1 className="font-['Playfair_Display'] text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-8 leading-tight">
-              Your{' '}
-              <span className="bg-gradient-to-r from-[#c7941e] to-[#f7e98e] bg-clip-text text-transparent drop-shadow-lg">
-                Spiritual Journey
-              </span>
-              <br />
-              Begins Here
-            </h1> */}
-
-            <p className="font-['Nunito_Sans'] text-center text-xl md:text-2xl text-white/90 mb-8 leading-relaxed max-w-3xl">
-              Welcome to Ziaratnama Travels (Pvt) Ltd — where Hajj, Umrah, and Ziyarats are not just journeys but profound spiritual experiences. Our mission is to make your sacred travel convenient, organized, and memorable. Whether this is your first pilgrimage or a return visit, we provide the best packages, comfortable accommodations, and transparent arrangements tailored for your needs.
-            </p>
-
-            <div className="flex flex-col sm:flex-row gap-4 mb-12">
-              <Link to='/packages'>
-                <Button
-                  size="lg"
-                  className="bg-gradient-to-r cursor-pointer from-[#c7941e] to-[#f7e98e] text-[#0a1219] hover:from-[#996f10] hover:to-[#c7941e] font-['Nunito_Sans'] font-semibold px-10 py-5 text-lg shadow-2xl hover:shadow-3xl transform hover:scale-105 transition-all duration-300 border border-[#c7941e]/30"
-                >
-                  Explore Packages
-                  <ArrowRight className="ml-2 w-5 h-5" />
-                </Button>
-              </Link>
-              <Link to='/about'>
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="border-white/40 cursor-pointer text-white bg-white/15 backdrop-blur-md hover:bg-white hover:text-[#1a365d] font-['Nunito_Sans'] font-semibold px-10 py-5 text-lg transition-all duration-300 shadow-lg"
-                >
-                  Learn More
-                </Button>
-              </Link>
-            </div>
-
-
-          </div>
-        </div>
-
-        {/* Scroll indicator */}
-        <div className="absolute md:block hidden bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-          <div className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center">
-            <div className="w-1 h-3 bg-white/50 rounded-full mt-2 animate-pulse"></div>
-          </div>
-        </div>
-      </section>
-
-      {/* Highlights */}
-      <div className='py-24 px-4 md:px-8 '>
-        <div className="text-center mb-20">
-          <h2 className="font-['Playfair_Display'] text-3xl md:text-5xl font-bold text-[#1a365d] mb-6">
-            Our Promise
-          </h2>
-          <p className="font-['Nunito_Sans'] text-xl text-[#0a1219]/70 max-w-3xl mx-auto">
-            Our foundation rests on three pillars: Trust, Convenience, and Guidance.
-          </p>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-3  gap-6 w-full">
-          {features.map((feature, index) => (
-            <div
-              key={index}
-              className="p-6 bg-white rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300 text-center group"
-            >
-              <div className="mx-auto mb-3 p-3 backdrop-blur-sm rounded-full w-fit group-hover:bg-white/20 transition-all duration-300">
-                {feature.icon}
-              </div>
-              <h3 className="font-['Playfair_Display'] font-bold text-lg text-[#1a365d] mb-1">{feature.title}</h3>
-              <p className="font-['Nunito_Sans'] text-sm text-black">{feature.description}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-      {/* Quick Stats Section */}
-
-
-      {/* Featured Destinations Preview */}
-      <section className="py-24 bg-gradient-to-br from-[#1a365d] to-[#2c5530] relative overflow-hidden">
-        <div className="absolute inset-0 opacity-[0.05]">
-          <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_40%,rgba(255,255,255,0.1)_45%,rgba(255,255,255,0.1)_55%,transparent_60%)] bg-[length:40px_40px]"></div>
-        </div>
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="text-center mb-20">
-            <h2 className="font-['Playfair_Display'] text-3xl md:text-5xl font-bold text-white mb-6 drop-shadow-lg">
-              Featured Destinations
-            </h2>
-            <p className="font-['Nunito_Sans'] text-xl text-white/95 max-w-3xl mx-auto">
-              Our services extend beyond Saudi Arabia to other significant Islamic destinations
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8 mb-12">
-            {destinations.map((destination, index) => (
-              <Card
-                key={index}
-                className="group overflow-hidden cursor-pointer border-0 shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:scale-105"
-              >
-                <div className="relative h-64 overflow-hidden">
-                  <ImageWithFallback
-                    src={destination.image}
-                    alt={destination.name}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#1a365d]/70 to-transparent"></div>
-                  <div className="absolute bottom-6 left-6 right-6 text-white">
-                    <h3 className="font-['Playfair_Display'] text-xl font-bold mb-1 drop-shadow-md">
-                      {destination.name}
-                    </h3>
-                    <p className="font-['Nunito_Sans'] text-sm opacity-95 font-medium">
-                      {destination.subtitle}
-                    </p>
-                    <p className="font-['Nunito_Sans'] text-xs opacity-90 mt-1 leading-relaxed">
-                      {destination.description}
-                    </p>
-                  </div>
-                  <div className="absolute top-6 right-6">
-                    <Star className="w-6 h-6 text-[#c7941e] fill-current drop-shadow-md" />
-                  </div>
-                </div>
-              </Card>
-            ))}
-          </div>
-
-          <div className="text-center">
-            <Link to='/destinations'>
-              <Button
-                size="lg"
-                className="bg-gradient-to-r from-[#c7941e] to-[#f7e98e] text-[#0a1219] hover:from-[#996f10] hover:to-[#c7941e] font-['Nunito_Sans'] font-semibold px-10 py-5 shadow-2xl hover:shadow-3xl transform hover:scale-105 transition-all duration-300 border border-[#c7941e]/30"
-              >
-                Explore All Destinations
-                <ArrowRight className="ml-2 w-5 h-5" />
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </section>
-
-
-
-      {/* Packages */}
-      <section className="py-24 bg-[#1a365d] text-white">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="font-['Playfair_Display'] text-3xl md:text-5xl font-bold mb-6">Our Packages</h2>
-          <p className="font-['Nunito_Sans'] text-xl mb-12">Flexible options to suit every budget and preference</p>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 relative">
-            {packages.map((pkg, i) => (
-              <Card
-                key={i}
-                className="shadow-2xl  bg-white text-[#1a365d] flex flex-col justify-between border-0 hover:scale-105 hover:shadow-3xl transition-all duration-300 group"
-              >
-                <CardContent className="py-10 px-6 flex flex-col relative">
-                  <div className="flex-grow">
-                    <h3 className="font-['Playfair_Display'] pt-6 text-2xl md:text-3xl font-bold mb-4 group-hover:text-[#c7941e] transition-colors duration-300">
-                      {pkg.title}
-                    </h3>
-                    <p className="font-['Nunito_Sans'] text-base md:text-lg mb-6 text-[#0a1219]/80">{pkg.description}</p>
-                  </div>
-                </CardContent>
-                <div className="px-10 pb-8">
-                  <Link to='/contact'>
-                    <Button
-                      size="lg"
-
-                      className="w-full bg-gradient-to-r from-[#c7941e] to-[#f7e98e] cursor-pointer text-[#1a365d] font-semibold font-['Nunito_Sans'] shadow-lg hover:from-[#b8860b] hover:to-[#c7941e] transition-all duration-300"
-                    >
-                      Book Now
-                    </Button>
-                  </Link>
-                </div>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-      <section className="py-24 bg-gradient-to-br from-[#fffef7] to-[#f7f3e9]">
-        <div className="container mx-auto px-4 text-center">
-          {/* Heading */}
-          <h2 className="font-['Playfair_Display'] text-3xl md:text-5xl font-bold text-[#1a365d] mb-6">
-            Instalment Plans
-          </h2>
-          <p className="font-['Nunito_Sans'] text-xl text-[#0a1219]/70 mb-12">
-            We are among the few in Pakistan offering Instalment-based Umrah & Ziyarat packages
-          </p>
-
-          {/* Card */}
-          <div className="max-w-2xl mx-auto bg-white shadow-xl rounded-2xl p-10 text-left">
-            <ul className="space-y-6 text-lg">
-              <li className="flex items-start space-x-3">
-                <span className="text-[#dc2626] mt-1">✔</span>
-                <span>10% advance booking</span>
-              </li>
-              <li className="flex items-start space-x-3">
-                <span className="text-[#dc2626] mt-1">✔</span>
-                <span>24 easy monthly instalments</span>
-              </li>
-              <li className="flex items-start space-x-3">
-                <span className="text-[#dc2626] mt-1">✔</span>
-                <span>10% final payment in the 25th month</span>
-              </li>
-              <li className="flex items-start space-x-3">
-                <span className="text-[#dc2626] mt-1">✔</span>
-                <span>Departure after 100% payment completion</span>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </section>
-      <section className="py-16 bg-gray-50">
-        <div className=" mx-auto px-6 lg:px-12 py-10">
-          <div className="bg-white rounded-3xl shadow-xl p-10 ">
-            <div className="flex flex-col  md:flex-row items-center md:items-start gap-12">
-
-              {/* Left Icon Section */}
-              <div className="flex-shrink-0">
-                <div className="  flex items-center justify-center ">
-                  <Shield size={40} className=" text-[#1a365d]" />
-                </div>
-              </div>
-
-              {/* Right Content Section */}
-              <div className="flex-1 text-center md:text-left">
-                <h2 className="font-['Playfair_Display'] text-3xl md:text-5xl font-bold text-[#1a365d] mb-10">
-                  Our Mission & Vision
-                </h2>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                  {/* Mission Card */}
-                  <div className="bg-gradient-to-br from-[#fffef7] to-[#fdfbf6] rounded-2xl p-5 md:p-8 shadow-sm hover:shadow-md transition-all duration-300">
-                    <h3 className="font-['Nunito_Sans'] text-xl font-semibold text-[#c7941e] mb-3">
-                      Mission
-                    </h3>
-                    <p className="font-['Nunito_Sans'] text-base text-[#0a1219]/80 leading-relaxed">
-                      Our mission is not just to provide travel arrangements but to create a platform that brings ease and peace to every Muslim’s spiritual journey.
-                    </p>
-                  </div>
-
-                  {/* Vision Card */}
-                  <div className="bg-gradient-to-br from-[#fffef7] to-[#fdfbf6] rounded-2xl p-5 md:p-8 shadow-sm hover:shadow-md transition-all duration-300">
-                    <h3 className="font-['Nunito_Sans'] text-xl font-semibold text-[#c7941e] mb-3">
-                      Vision
-                    </h3>
-                    <p className="font-['Nunito_Sans'] text-base text-[#0a1219]/80 leading-relaxed">
-                      Our vision is to make Ziaratnama Travels the most trusted and first choice for Hajj, Umrah, and Ziyarat services globally.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-
-      <section className="py-24 bg-gradient-to-br from-[#fffef7] to-[#f7f3e9] relative">
-        <div className="absolute inset-0 opacity-[0.02]">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,#1a365d_1px,transparent_0)] bg-[length:30px_30px]"></div>
-        </div>
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="text-center mb-20">
-            <h2 className="font-['Playfair_Display'] text-3xl md:text-5xl font-bold text-[#1a365d] mb-6">
-              Trusted by Thousands
-            </h2>
-            <p className="font-['Nunito_Sans'] text-xl text-[#0a1219]/70 max-w-3xl mx-auto">
-              Join the thousands who have trusted us with their sacred journeys
-            </p>
-          </div>
-
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {stats.map((stat, index) => (
-              <Card key={index} className="text-center border-0 shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:scale-105 hover:-translate-y-2 bg-gradient-to-br from-white via-[#f7f3e9] to-[#fffef7] group">
-                <CardContent className="p-10">
-                  <div className="mx-auto mb-6 p-5 bg-gradient-to-br from-[#c7941e]/15 to-[#f7e98e]/8 rounded-full w-fit group-hover:shadow-lg transition-all duration-500">
-                    {stat.icon}
-                  </div>
-                  <h3 className="font-['Playfair_Display'] text-4xl font-bold text-[#1a365d] mb-3">{stat.number}</h3>
-                  <p className="font-['Nunito_Sans'] text-lg text-[#0a1219]/70">{stat.label}</p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Call to Action */}
-      <section className="py-24 bg-gradient-to-br from-[#fffef7] to-[#f7f3e9]">
-        <div className="container mx-auto px-4">
-          <Card className="border-0 shadow-2xl overflow-hidden bg-gradient-to-r from-[#1a365d] to-[#2c5530]">
-            <CardContent className="p-16 text-center text-white relative">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-[#c7941e]/20 to-transparent rounded-full blur-xl"></div>
-              <div className="relative z-10">
-                <h2 className="font-['Playfair_Display'] text-3xl md:text-5xl font-bold mb-8">
-                  Begin Your Sacred Journey Today
-                </h2>
-                <p className="font-['Nunito_Sans'] text-xl mb-10 opacity-95 max-w-3xl mx-auto">
-                  Let us guide you through a spiritually fulfilling pilgrimage that you'll cherish forever
-                </p>
-                <div className="flex flex-col sm:flex-row gap-6 justify-center">
-                  <Link to='/packages'>
-                    <Button
-                      size="lg"
-                      className="bg-gradient-to-r cursor-pointer from-[#b8860b] to-[#daa520] text-white hover:from-[#9a7209] hover:to-[#b8860b] font-['Nunito_Sans'] font-semibold px-10 py-5 shadow-2xl hover:shadow-3xl transform hover:scale-105 transition-all duration-300"
-                    >
-                      View Packages
-                    </Button>
-                  </Link>
-                  <Link to='/contact'>
-                    <Button
-                      size="lg"
-                      variant="outline"
-                      className="border-white/40 cursor-pointer text-white bg-white/15 backdrop-blur-md hover:bg-white hover:text-[#0f4c5c] font-['Nunito_Sans'] font-semibold px-10 py-5 transition-all duration-300 shadow-lg"
-                    >
-                      Contact Us
-                    </Button>
-                  </Link>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      </section>
-    </div>
-  );
-}
-</file>
-
-<file path="src/pages/Packages.tsx">
-import { Card, CardContent, CardHeader } from '../components/ui/card';
-import { Button } from '../components/ui/button';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs';
-import { Check, Users, Utensils, Car, Star, CreditCard,  Clock, Shield,  CheckCircle2, Crown, AlertCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-
-
-
-export function Packages() {
- const cashPackages = [
-  {
-    name: "Economy Package",
-    price: "PKR 270,000 (Per Person)",
-    duration: "14 Days",
-    accommodation: "Standard hotels (Quad Sharing – 4 persons per room)",
-    meals: "Breakfast included (Lunch & Dinner not included)",
-    transport: "Jeddah ⇄ Makkah ⇄ Madinah ⇄ Makkah ⇄ Jeddah",
-    features: [
-      "AC buses, group ziyarat tours",
-      "Standard accommodation near Haram",
-      "Airport transfers included",
-      "Basic travel insurance"
-    ],
-    bestFor: "Budget-conscious pilgrims",
-    popular: false,
-    savings: "Save PKR 30,000"
-  },
-  {
-    name: "Economy Plus Package",
-    price: "PKR 335,000 (Per Person)",
-    duration: "14 Days",
-    accommodation: "3★ hotels (Triple Sharing – 3 persons per room)",
-    meals: "Breakfast included (Lunch & Dinner not included)",
-    transport: "Jeddah ⇄ Makkah ⇄ Madinah ⇄ Makkah ⇄ Jeddah",
-    features: [
-      "Better hotels, closer location",
-      "Guided tours with cultural insights",
-      "Enhanced room amenities",
-      "Priority customer support"
-    ],
-    bestFor: "Pilgrims seeking comfort within reasonable budget",
-    popular: false,
-    savings: "Save PKR 30,000"
-  },
-  {
-    name: "4-Star Package",
-    price: "PKR 425,000 (Per Person)",
-    duration: "14 Days",
-    accommodation: "4★ hotels (Single/Double/Triple/Quad room options)",
-    meals: "Breakfast included (Lunch & Dinner not included)",
-    transport: "AC buses or private vans",
-    features: [
-      "Near Haram premium accommodation",
-      "Laundry service included",
-      "Guided ziyarat tours",
-      "Private transport options",
-      "Family-friendly arrangements"
-    ],
-    bestFor: "Families and comfort seekers",
-    popular: true,
-    savings: "Save PKR 40,000"
-  },
-  {
-    name: "5-Star Package",
-    price: "PKR 595,000 (Per Person)",
-    duration: "14 Days",
-    accommodation: "Luxury 5★ hotels (Near Haram – subject to availability)",
-    meals: "Breakfast included (Lunch & Dinner not included)",
-    transport: "VIP buses or private SUVs",
-    features: [
-      "Walking distance accommodation",
-      "24/7 premium customer support",
-      "VIP airport services & lounge access",
-      "Exclusive private ziyarat tours",
-      "Personal concierge services"
-    ],
-    bestFor: "Business class & luxury travelers",
-    popular: false,
-    savings: "Save PKR 50,000"
-  },
-  {
-    name: "Executive 5-Star Package",
-    price: "To be finalized",
-    duration: "14 Days",
-    accommodation: "Luxury 5★ hotels (within 300–1000m of Haram)",
-    meals: "Breakfast included (Lunch & Dinner not included)",
-    transport: "VIP coasters or private SUVs",
-    features: [
-      "Walking distance (300–1000m from Haram)",
-      "Concierge services & personal assistance",
-      "Exclusive ziyarat tours with professional guides",
-      "VIP reception & fast-track immigration"
-    ],
-    bestFor: "Pilgrims preferring luxury & peace",
-    popular: false,
-    savings: "Seasonal pricing"
-  }
-];
-
-// 📌 Notes:
-// - Standard duration: 14 days
-// - Extra days available on request (charges vary by hotel category)
-// - Prices may vary by season & availability
-// - Visa & insurance may be included or separate
-// - Group & family discounts available
-
-
- const instalmentPlans = [
-  { 
-    package: "Economy Package", 
-    total: "PKR 270,000", 
-    advance: "PKR 27,000", 
-    monthly: "PKR 10,125", 
-    final: "PKR 27,000",
-    features: [
-      "1. Total price: PKR 270,000 (same as cash)",
-      "2. Advance (10%): PKR 27,000 — payable at booking",
-      "3. Monthly (24 months): PKR 10,125 / month",
-      "4. Final payment (10%): PKR 27,000 — in 25th month",
-      "5. Meals: Breakfast included (Lunch & Dinner not included)",
-      "6. Hotels: Standard (Quad Sharing)",
-      "7. Duration: 14 Days",
-      "8. No interest or extra charges — total equals cash price"
-    ]
-  },
-  { 
-    package: "Economy Plus Package", 
-    total: "PKR 335,000", 
-    advance: "PKR 33,500", 
-    monthly: "PKR 12,521", 
-    final: "PKR 33,500",
-    features: [
-      "1. Total price: PKR 335,000 (same as cash)",
-      "2. Advance (10%): PKR 33,500 — payable at booking",
-      "3. Monthly (24 months): PKR 12,521 / month",
-      "4. Final payment (10%): PKR 33,500 — in 25th month",
-      "5. Meals: Breakfast included (Lunch & Dinner not included)",
-      "6. Hotels: 3★ (Triple Sharing)",
-      "7. Duration: 14 Days",
-      "8. No interest or extra charges — total equals cash price"
-    ]
-  },
-  { 
-    package: "4-Star Package", 
-    total: "PKR 425,000", 
-    advance: "PKR 42,500", 
-    monthly: "PKR 15,938", 
-    final: "PKR 42,500",
-    features: [
-      "1. Total price: PKR 425,000 (same as cash)",
-      "2. Advance (10%): PKR 42,500 — payable at booking",
-      "3. Monthly (24 months): PKR 15,938 / month",
-      "4. Final payment (10%): PKR 42,500 — in 25th month",
-      "5. Meals: Breakfast included (Lunch & Dinner not included)",
-      "6. Hotels: 4★ (Single/Double/Triple/Quad options)",
-      "7. Duration: 14 Days",
-      "8. No interest or extra charges — total equals cash price"
-    ]
-  },
-  { 
-    package: "5-Star Package", 
-    total: "PKR 595,000", 
-    advance: "PKR 59,500", 
-    monthly: "PKR 22,271", 
-    final: "PKR 59,500",
-    features: [
-      "1. Total price: PKR 595,000 (same as cash)",
-      "2. Advance (10%): PKR 59,500 — payable at booking",
-      "3. Monthly (24 months): PKR 22,271 / month",
-      "4. Final payment (10%): PKR 59,500 — in 25th month",
-      "5. Meals: Breakfast included (Lunch & Dinner not included)",
-      "6. Hotels: 5★ (Near Haram)",
-      "7. Duration: 14 Days",
-      "8. No interest or extra charges — total equals cash price"
-    ]
-  },
-  { 
-    package: "Executive 5-Star Package", 
-    total: "To be finalized", 
-    advance: "—", 
-    monthly: "—", 
-    final: "—",
-    features: [
-      "1. Total price: To be finalized (will match cash when finalised)",
-      "2. Advance (10%): — (TBD once price is fixed)",
-      "3. Monthly (24 months): — / month (TBD)",
-      "4. Final payment (10%): — (TBD)",
-      "5. Meals: Breakfast included (Lunch & Dinner not included)",
-      "6. Hotels: Super Luxury 5★ (within 300–1000m of Haram)",
-      "7. Extras: Concierge services, VIP transport, personal assistance, VIP reception & fast-track immigration",
-      "8. Duration: 14 Days"
-    ]
-  }
-];
-
-   const notes = [
-    "Standard duration is 14 days",
-    "Extra days can be added on request",
-    "Extra day charges vary by hotel category",
-    "Prices may vary by season & availability",
-    "Visa & insurance may be included or separate",
-    "Group & family discounts available",
-  ]
-
-
-  // const packageInclusions = [
-  //   "Return air tickets (Jeddah/Madinah)",
-  //   "Visa processing and documentation",
-  //   "Airport transfers in Saudi Arabia", 
-  //   "Hotel accommodation as per package",
-  //   "Transportation between cities",
-  //   "Group ziyarat tours with guide",
-  //   "Travel insurance coverage",
-  //   "24/7 customer support in Pakistan & Saudi Arabia"
-  // ];
-
-  return (
-    <div className="min-h-screen">
-      {/* Hero Section */}
-      <section className="relative py-32 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#1a365d] via-[#2c5530] to-[#1a365d]"></div>
-        <div className="absolute top-20 right-10 w-32 h-32 bg-gradient-to-br from-[#c7941e]/20 to-[#f7e98e]/10 rounded-full blur-xl animate-pulse"></div>
-        <div className="absolute bottom-20 left-10 w-24 h-24 bg-gradient-to-br from-[#68d391]/20 to-transparent rounded-full blur-xl animate-pulse delay-1000"></div>
-        
-        <div className="relative z-10 container mx-auto px-4 text-center">
-          <h1 className="font-['Playfair_Display'] text-4xl md:text-6xl font-bold text-white mb-6">
-            Umrah{' '}
-            <span className="bg-gradient-to-r from-[#c7941e] to-[#f7e98e] bg-clip-text text-transparent">
-              Packages
-            </span>
-          </h1>
-          <p className="font-['Nunito_Sans'] text-xl text-white/90 max-w-3xl mx-auto leading-relaxed">
-            Choose from our comprehensive 14-day packages designed to suit every budget and preference. 
-            All packages include complete journey management from arrival to departure.
-          </p>
-        </div>
-      </section>
-
-      {/* Package Selection */}
-      <section className="py-20 bg-gradient-to-br from-[#fffef7] to-[#f7f3e9]">
-        <div className="container mx-auto px-4">
-          <Tabs defaultValue="cash" className="w-full">
-            <div className="flex justify-center mb-12">
-              <TabsList className="grid w-full max-w-md grid-cols-2 h-14 bg-white shadow-lg border-0">
-                <TabsTrigger 
-                  value="cash" 
-                  className="font-['Nunito_Sans'] cursor-pointer font-semibold data-[state=active]:bg-gradient-to-r data-[state=active]:from-[#1a365d] data-[state=active]:to-[#2c5530] data-[state=active]:text-white"
-                >
-                  <CreditCard className="w-5 h-5 mr-2" />
-                  Cash Packages
-                </TabsTrigger>
-                <TabsTrigger 
-                  value="instalment" 
-                  className="font-['Nunito_Sans'] cursor-pointer font-semibold data-[state=active]:bg-gradient-to-r data-[state=active]:from-[#1a365d] data-[state=active]:to-[#2c5530] data-[state=active]:text-white"
-                >
-                  <Clock className="w-5 h-5 mr-2" />
-                  Instalment Plans
-                </TabsTrigger>
-              </TabsList>
-            </div>
-
-            <TabsContent value="cash">
-              <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
-                {cashPackages.map((pkg, index) => (
-                  <Card key={index} className={`relative  transition-all duration-300 hover:shadow-2xl transform hover:scale-105 ${
-                    pkg.popular 
-                      ? 'ring-2 ring-[#c7941e] shadow-2xl bg-gradient-to-br from-white to-[#f7f3e9]' 
-                      : 'border shadow-lg bg-white hover:bg-gradient-to-br hover:from-white hover:to-[#f7f3e9]'
-                  }`}>
-                    {pkg.popular && (
-                      <div className="absolute top-0 rounded-tl-xl rounded-tr-xl left-0 overflow-x-hidden right-0 bg-gradient-to-r from-[#c7941e] to-[#f7e98e] text-[#0a1219] px-4 py-2 text-center">
-                        <span className="font-['Nunito_Sans'] font-bold text-sm">🌟 MOST POPULAR</span>
-                      </div>
-                    )}
-                    
-                    {pkg.savings && (
-                      <div className="absolute -top-4 left-1/2 bg-gradient-to-r from-[#2c5530] to-[#68d391] text-white px-3 py-1 rounded-full text-xs font-['Nunito_Sans'] font-semibold">
-                        {pkg.savings}
-                      </div>
-                    )}
-                    
-                    <CardHeader className={`text-center ${pkg.popular ? 'pt-12 pb-4' : 'pb-4'}`}>
-                      <h3 className="font-['Playfair_Display'] text-xl font-bold text-[#1a365d] mb-3">
-                        {pkg.name}
-                      </h3>
-                      <div className="space-y-2">
-                        {/* {pkg.originalPrice && (
-                          <div className="text-lg font-['Nunito_Sans'] text-[#0a1219]/50 line-through">
-                            {pkg?.originalPrice}
-                          </div>
-                        )} */}
-                        <div className="text-3xl font-['Playfair_Display'] font-bold text-[#2c5530]">
-                          {pkg.price}
-                        </div>
-                        <p className="font-['Nunito_Sans'] text-sm text-[#0a1219]/70">per person (14 days)</p>
-                      </div>
-                    </CardHeader>
-                    
-                    <CardContent className="space-y-6 px-6 pb-8">
-                      <div className="space-y-4">
-                        <div className="flex items-start space-x-3">
-                          <Users className="w-5 h-5 text-[#2c5530] mt-0.5 flex-shrink-0" />
-                          <div>
-                            <p className="font-['Nunito_Sans'] font-semibold text-[#1a365d] text-sm">Accommodation</p>
-                            <p className="font-['Nunito_Sans'] text-sm text-[#0a1219]/70">{pkg.accommodation}</p>
-                          </div>
-                        </div>
-                        
-                        <div className="flex items-start space-x-3">
-                          <Utensils className="w-5 h-5 text-[#2c5530] mt-0.5 flex-shrink-0" />
-                          <div>
-                            <p className="font-['Nunito_Sans'] font-semibold text-[#1a365d] text-sm">Meals</p>
-                            <p className="font-['Nunito_Sans'] text-sm text-[#0a1219]/70">{pkg.meals}</p>
-                          </div>
-                        </div>
-                        
-                        <div className="flex items-start space-x-3">
-                          <Car className="w-5 h-5 text-[#2c5530] mt-0.5 flex-shrink-0" />
-                          <div>
-                            <p className="font-['Nunito_Sans'] font-semibold text-[#1a365d] text-sm">Transport</p>
-                            <p className="font-['Nunito_Sans'] text-sm text-[#0a1219]/70">{pkg.transport}</p>
-                          </div>
-                        </div>
-                      </div>
-                      
-                      <div className="pt-4 border-t border-gray-200">
-                        <p className="font-['Nunito_Sans'] font-semibold text-[#1a365d] mb-3 text-sm">Package Features:</p>
-                        <div className="space-y-2">
-                          {pkg.features.slice(0, 4).map((feature, idx) => (
-                            <div key={idx} className="flex items-start space-x-2">
-                              <Check className="w-4 h-4 text-[#2c5530] mt-0.5 flex-shrink-0" />
-                              <span className="font-['Nunito_Sans'] text-xs text-[#0a1219]/80 leading-relaxed">{feature}</span>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                      <Link to='/contact' >
-                      <Button className={`w-full ${
-                        pkg.popular 
-                          ? 'bg-gradient-to-r from-[#c7941e] to-[#f7e98e] text-[#0a1219] hover:from-[#996f10] hover:to-[#c7941e]' 
-                          : 'bg-gradient-to-r from-[#1a365d] to-[#2c5530] text-white hover:from-[#0f2a44] hover:to-[#1a3321]'
-                      } font-['Nunito_Sans'] font-semibold py-3 cursor-pointer shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300`}>
-                        Select Package
-                      </Button>
-                      </Link>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            </TabsContent>
- 
-            <TabsContent value="instalment">
-              <div className="max-w-6xl mx-auto">
-                {/* Instalment Benefits */}
-                <Card className="mb-12 border-0 shadow-xl bg-gradient-to-br from-[#1a365d] to-[#2c5530] text-white overflow-hidden">
-                  <CardContent className="p-8">
-                    <div className="text-center mb-8">
-                      <h3 className="font-['Playfair_Display'] text-2xl font-bold mb-4">
-                        Interest-Free Instalment Plans
-                      </h3>
-                      <p className="font-['Nunito_Sans'] text-lg opacity-90">
-                        We are among the few in Pakistan offering completely interest-free instalment-based Umrah packages
-                      </p>
-                    </div>
-                    
-                    <div className="grid md:grid-cols-3 gap-6">
-                      <div className="text-center p-6 bg-white/10 backdrop-blur-sm rounded-lg">
-                        <div className="text-3xl font-['Playfair_Display'] font-bold text-[#c7941e] mb-2">10%</div>
-                        <h4 className="font-['Nunito_Sans'] font-semibold mb-2">Advance Booking</h4>
-                        <p className="font-['Nunito_Sans'] text-sm opacity-80">Initial payment to secure your spot</p>
-                      </div>
-                      <div className="text-center p-6 bg-white/10 backdrop-blur-sm rounded-lg">
-                        <div className="text-3xl font-['Playfair_Display'] font-bold text-[#c7941e] mb-2">24</div>
-                        <h4 className="font-['Nunito_Sans'] font-semibold mb-2">Monthly Instalments</h4>
-                        <p className="font-['Nunito_Sans'] text-sm opacity-80">Easy monthly payments over 2 years</p>
-                      </div>
-                      <div className="text-center p-6 bg-white/10 backdrop-blur-sm rounded-lg">
-                        <div className="text-3xl font-['Playfair_Display'] font-bold text-[#c7941e] mb-2">10%</div>
-                        <h4 className="font-['Nunito_Sans'] font-semibold mb-2">Final Payment</h4>
-                        <p className="font-['Nunito_Sans'] text-sm opacity-80">Final payment in 25th month before departure</p>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                {/* Instalment Table */}
-                <div className="grid md:grid-cols-2 gap-8">
-  {instalmentPlans.map((plan, index) => (
-    <Card
-      key={index}
-      className="relative border-0 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105 bg-gradient-to-br from-white to-[#f7f3e9]"
-    >
-      {/* Card Header */}
-      <CardHeader className="bg-gradient-to-r from-[#1a365d] to-[#2c5530] text-white">
-        <h3 className="font-['Playfair_Display'] text-xl font-bold">
-          {plan.package}
-        </h3>
-        <p className="font-['Nunito_Sans'] text-xs opacity-90">
-          {plan.total !== "To be finalized"
-            ? "Instalment plan with no extra charges"
-            : "Exclusive package with custom pricing"}
-        </p>
-      </CardHeader>
-
-      {/* Card Content */}
-      <CardContent className="p-6">
-        <div className="space-y-4">
-          {/* Total Price */}
-          <div className="flex justify-between items-center p-3 bg-[#f7f3e9] rounded-lg">
-            <span className="font-['Nunito_Sans'] font-semibold text-[#1a365d]">
-              Total Package Price:
-            </span>
-            <span className="font-['Playfair_Display'] text-xl font-bold text-[#2c5530]">
-              {plan.total}
-            </span>
-          </div>
-
-          {/* Numbers Grid */}
-          <div className="grid grid-cols-3 gap-3 text-center">
-            <div className="p-3 bg-[#c7941e]/10 rounded-lg">
-              <p className="font-['Nunito_Sans'] text-xs text-[#0a1219]/60 mb-1">
-                Advance
-              </p>
-              <p className="font-['Nunito_Sans'] font-bold text-[#1a365d]">
-                {plan.advance}
-              </p>
-            </div>
-            <div className="p-3 bg-[#c7941e]/10 rounded-lg">
-              <p className="font-['Nunito_Sans'] text-xs text-[#0a1219]/60 mb-1">
-                Monthly
-              </p>
-              <p className="font-['Nunito_Sans'] font-bold text-[#1a365d]">
-                {plan.monthly}
-              </p>
-            </div>
-            <div className="p-3 bg-[#c7941e]/10 rounded-lg">
-              <p className="font-['Nunito_Sans'] text-xs text-[#0a1219]/60 mb-1">
-                Final
-              </p>
-              <p className="font-['Nunito_Sans'] font-bold text-[#1a365d]">
-                {plan.final}
-              </p>
-            </div>
-          </div>
-
-          {/* Features List */}
-          <ol className="list-decimal list-inside space-y-2 text-sm text-[#0a1219]/85">
-            {plan.features.map((feature, i) => (
-              <li
-                key={i}
-                className="pl-1 font-['Nunito_Sans'] leading-relaxed"
-              >
-                {feature.replace(/^\d+\.\s*/, "")}
-              </li>
-            ))}
-          </ol>
-
-          {/* CTA Button */}
-          <Link to='/contact' >
-          <Button className="w-full cursor-pointer bg-gradient-to-r from-[#1a365d] to-[#2c5530] text-white hover:from-[#0f2a44] hover:to-[#1a3321] font-['Nunito_Sans'] font-semibold py-3 shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300">
-            Choose Instalment Plan
-          </Button>
-          </Link>
-        </div>
-      </CardContent>
-    </Card>
-  ))}
-</div>
-
-
-              </div>
-            </TabsContent>
-          </Tabs>
-          <div className="mt-12">
-      <div className="bg-gradient-to-r from-[#f7e98e]/40 to-[#fff9e6] border border-[#f7e98e]/60 rounded-2xl p-6 shadow-md">
-        {/* Header */}
-        <div className="flex items-center gap-2 mb-4">
-          <AlertCircle className="w-6 h-6 text-[#c7941e]" />
-          <h3 className="font-['Nunito_Sans'] text-lg font-bold text-[#1a365d]">
-            📌 Important Notes
-          </h3>
-        </div>
-
-        {/* List */}
-        <ul className="space-y-2">
-          {notes.map((note, i) => (
-            <li
-              key={i}
-              className="flex items-start gap-2 text-sm text-gray-700"
-            >
-              <span className="text-[#c7941e] font-bold">•</span>
-              <span>{note}</span>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </div>
-        </div>
-      </section>
-
-      {/* Package Inclusions */}
-      <section className="py-20 bg-gradient-to-br from-[#1a365d] to-[#2c5530]">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="font-['Playfair_Display'] text-3xl md:text-4xl font-bold text-white mb-4">
-              What's Included in Every Package
-            </h2>
-            <p className="font-['Nunito_Sans'] text-lg text-white/80 max-w-3xl mx-auto">
-              Comprehensive services ensuring a hassle-free pilgrimage experience
-            </p>
-          </div>
-
-           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-      {cashPackages.map((pkg, index) => (
-        
-        <Card
-          key={index}
-          className={`relative border-0 shadow-xl bg-white/95 backdrop-blur-sm hover:shadow-2xl transition-all duration-300 transform hover:scale-105 rounded-2xl  ${
-            pkg.popular ? "ring-2 ring-[#c7941e]" : ""
-          }`}
-        >
-          {/* Popular Badge */}
-          {pkg.popular && (
-            <div className="absolute top-4 right-4 bg-[#c7941e] text-white text-xs font-semibold px-3 py-1 rounded-full flex items-center gap-1">
-              <Crown className="w-4 h-4" /> Popular
-            </div>
-          )}
-
-          <CardContent className="p-6 space-y-4">
-            {/* Title */}
-            <h3 className="font-bold text-xl text-[#1a365d]">{pkg.name}</h3>
-
-            {/* Price + Savings */}
-            <div>
-              <p className="text-2xl font-extrabold text-[#c7941e]">{pkg.price}</p>
-             {/* {pkg.savings && (
-  <div className="absolute top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-[#2c5530] to-[#68d391] text-white px-4 py-1 rounded-full text-xs font-['Nunito_Sans'] font-semibold shadow-md">
-    {pkg.savings}
-  </div>
-)} */}
-
-            </div>
-
-            {/* Duration */}
-            <p className="text-sm text-gray-600">⏳ {pkg.duration}</p>
-
-            {/* Accommodation / Meals / Transport */}
-            <div className="text-sm text-gray-700 space-y-1">
-              <p><span className="font-semibold">🏨 Accommodation:</span> {pkg.accommodation}</p>
-              <p><span className="font-semibold">🍽 Meals:</span> {pkg.meals}</p>
-              <p><span className="font-semibold">🚌 Transport:</span> {pkg.transport}</p>
-            </div>
-
-            {/* Features */}
-            <ul className="space-y-2 pt-3">
-              {pkg.features.map((feature, i) => (
-                <li key={i} className="flex items-start gap-2 text-sm text-gray-700">
-                  <CheckCircle2 className="w-4 h-4 text-[#c7941e] flex-shrink-0 mt-0.5" />
-                  {feature}
-                </li>
-              ))}
-            </ul>
-
-            {/* Best For */}
-            <div className="bg-[#f7e98e]/20 border border-[#f7e98e]/50 p-3 rounded-xl mt-4 text-sm text-[#1a365d] font-semibold text-center">
-              ✨ Best for: {pkg.bestFor}
-            </div>
-
-            {/* Call to Action */}
-            <Link to='/contact' >
-            <button className="mt-6 cursor-pointer w-full py-2 px-4 rounded-xl bg-[#c7941e] text-white font-semibold hover:bg-[#a17b18] transition">
-              Book Now
-            </button>
-            </Link>
-          </CardContent>
-        </Card>
-      ))}
-    </div>
-        </div>
-      </section>
-
-      {/* Important Notes */}
-      <section className="py-20 bg-gradient-to-br from-[#f7f3e9] to-[#fffef7]">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto">
-            <Card className="border-0 shadow-2xl bg-gradient-to-br from-white to-[#f7f3e9]">
-              <CardHeader className="text-center">
-                <h2 className="font-['Playfair_Display'] text-2xl font-bold text-[#1a365d] mb-2">
-                  Important Information
-                </h2>
-                <p className="font-['Nunito_Sans'] text-[#0a1219]/70">
-                  Please read these important details about our packages
-                </p>
-              </CardHeader>
-              <CardContent className="p-8">
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div className="space-y-4">
-                    <div className="flex items-start space-x-3">
-                      <Clock className="w-5 h-5 text-[#c7941e] mt-1 flex-shrink-0" />
-                      <div>
-                        <h4 className="font-['Nunito_Sans'] font-semibold text-[#1a365d] mb-1">Duration</h4>
-                        <p className="font-['Nunito_Sans'] text-sm text-[#0a1219]/70">Standard duration: 14 days (extra days available at additional cost)</p>
-                      </div>
-                    </div>
-                    
-                    <div className="flex items-start space-x-3">
-                      <Star className="w-5 h-5 text-[#c7941e] mt-1 flex-shrink-0" />
-                      <div>
-                        <h4 className="font-['Nunito_Sans'] font-semibold text-[#1a365d] mb-1">Pricing</h4>
-                        <p className="font-['Nunito_Sans'] text-sm text-[#0a1219]/70">Prices vary by season & availability</p>
-                      </div>
-                    </div>
-                    
-                    <div className="flex items-start space-x-3">
-                      <Shield className="w-5 h-5 text-[#c7941e] mt-1 flex-shrink-0" />
-                      <div>
-                        <h4 className="font-['Nunito_Sans'] font-semibold text-[#1a365d] mb-1">Additional Costs</h4>
-                        <p className="font-['Nunito_Sans'] text-sm text-[#0a1219]/70">Visa & insurance may be separate</p>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div className="space-y-4">
-                    <div className="flex items-start space-x-3">
-                      <Users className="w-5 h-5 text-[#c7941e] mt-1 flex-shrink-0" />
-                      <div>
-                        <h4 className="font-['Nunito_Sans'] font-semibold text-[#1a365d] mb-1">Discounts</h4>
-                        <p className="font-['Nunito_Sans'] text-sm text-[#0a1219]/70">Group & family discounts available</p>
-                      </div>
-                    </div>
-                    
-                    <div className="flex items-start space-x-3">
-                      <CreditCard className="w-5 h-5 text-[#c7941e] mt-1 flex-shrink-0" />
-                      <div>
-                        <h4 className="font-['Nunito_Sans'] font-semibold text-[#1a365d] mb-1">Instalments</h4>
-                        <p className="font-['Nunito_Sans'] text-sm text-[#0a1219]/70">No interest or extra charges on instalment plans</p>
-                      </div>
-                    </div>
-                    
-                    <div className="flex items-start space-x-3">
-                      <Check className="w-5 h-5 text-[#c7941e] mt-1 flex-shrink-0" />
-                      <div>
-                        <h4 className="font-['Nunito_Sans'] font-semibold text-[#1a365d] mb-1">Departure</h4>
-                        <p className="font-['Nunito_Sans'] text-sm text-[#0a1219]/70">Departure only after 100% payment completion</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </section>
-
-      {/* Call to Action */}
-      <section className="py-20 bg-gradient-to-br from-[#1a365d] to-[#2c5530]">
-        <div className="container mx-auto px-4">
-          <div className="text-center text-white">
-            <h2 className="font-['Playfair_Display'] text-3xl md:text-4xl font-bold mb-6">
-              Ready to Book Your Sacred Journey?
-            </h2>
-            <p className="font-['Nunito_Sans'] text-xl mb-8 opacity-90 max-w-2xl mx-auto">
-              Our team is ready to help you choose the perfect package for your spiritual pilgrimage
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link to='/contact'>
-              <Button 
-                size="lg"
-                
-                className="bg-gradient-to-r cursor-pointer from-[#c7941e] to-[#f7e98e] text-[#0a1219] hover:from-[#996f10] hover:to-[#c7941e] font-['Nunito_Sans'] font-semibold px-8 py-4 shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
-              >
-                Contact Us Now
-              </Button>
-              </Link>
-              <Link to='/about'>
-              <Button 
-                size="lg"
-                variant="outline"
-                className="border-white/30 text-white bg-white/10 backdrop-blur-sm hover:bg-white hover:text-[#1a365d] font-['Nunito_Sans'] font-semibold px-8 py-4 transition-all duration-300"
-              >
-                Learn More About Us
-              </Button>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-    </div>
-  );
-}
-</file>
-
 <file path="src/pages/Travelism.tsx">
 import { Card, CardContent, CardHeader } from '../components/ui/card';
 import { Badge } from '../components/ui/badge';
@@ -14354,6 +12355,10 @@ html {
 /// <reference types="vite/client" />
 </file>
 
+<file path="test.txt">
+asklfjslkdfslkfjsf
+</file>
+
 <file path="tsconfig.app.json">
 {
   "compilerOptions": {
@@ -14432,6 +12437,2062 @@ export default defineConfig({
 })
 </file>
 
+<file path="public/send_email.php">
+<?php
+// Allow from any origin (CORS)
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: POST");
+header("Access-Control-Allow-Headers: Content-Type");
+header('Content-Type: application/json');
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Decode JSON input
+    $data = json_decode(file_get_contents("php://input"), true);
+
+    // Sanitize inputs
+    $name = filter_var($data["name"] ?? '', FILTER_SANITIZE_STRING);
+    $email = filter_var($data["email"] ?? '', FILTER_SANITIZE_EMAIL);
+    $phone = filter_var($data["phone"] ?? '', FILTER_SANITIZE_STRING);
+    $date = filter_var($data["date"] ?? '', FILTER_SANITIZE_STRING);
+    $package = filter_var($data["package"] ?? '', FILTER_SANITIZE_STRING);
+    $messageContent = filter_var($data["message"] ?? '', FILTER_SANITIZE_STRING);
+
+    // Validate required fields
+    if (empty($name) || empty($email) || empty($messageContent)) {
+        echo json_encode(["status" => "error", "message" => "Please fill in all required fields"]);
+        exit;
+    }
+
+    // Validate email format
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        echo json_encode(["status" => "error", "message" => "Invalid email format"]);
+        exit;
+    }
+
+    // Email settings
+    $to = "ziaratnama.com@gmail.com"; // your email here
+    $subject = "New Contact Form Submission - Ziaratnama";
+
+    // Build email body
+    $emailBody = "You have a new contact form submission:\n\n";
+    $emailBody .= "Name: $name\n";
+    $emailBody .= "Email: $email\n";
+    $emailBody .= "Phone: $phone\n";
+    $emailBody .= "Preferred Travel Date: $date\n";
+    $emailBody .= "Package Interest: $package\n";
+    $emailBody .= "Message:\n$messageContent\n";
+
+    // Email headers
+    $headers = "From: noreply@ziaratnama.com\r\n";
+    $headers .= "Reply-To: $email\r\n";
+    $headers .= "X-Mailer: PHP/" . phpversion();
+
+    // Send email
+    if (mail($to, $subject, $emailBody, $headers)) {
+        echo json_encode(["status" => "success", "message" => "Thank you! We will get back to you shortly."]);
+    } else {
+        echo json_encode(["status" => "error", "message" => "Failed to send your message. Please try again later."]);
+    }
+} else {
+    echo json_encode(["status" => "error", "message" => "Method not allowed"]);
+}
+?>
+</file>
+
+<file path="src/components/Footer.tsx">
+import { Phone, Mail, MapPin, Facebook, Instagram, Twitter, ArrowRight } from 'lucide-react';
+import { Button } from './ui/button';
+import { Link, useNavigate } from 'react-router-dom';
+
+const Ziarat = '/Ziaratnewlogo1.png';
+
+export function Footer() {
+  const navigate = useNavigate();
+
+  // helper function
+  const handleNavigate = (path: string) => {
+    navigate(path);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  return (
+    <footer className="bg-[#1a365d] text-white">
+      <div className="container mx-auto px-4 py-16">
+        <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-8">
+          {/* Company Info */}
+          <div>
+            <Link to="/" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+              <img
+                src={Ziarat}
+                alt="Ziarat Logo"
+                className='cursor-pointer'
+                style={{ width: "180px", height: "auto", display: "block" }}
+              />
+            </Link>
+            <p className="font-['Nunito_Sans'] text-gray-300 mb-6 leading-relaxed">
+              Making sacred journeys convenient, organized, and memorable. 
+              Your trusted partner for Hajj, Umrah, and Ziyarat services.
+            </p>
+            {/* <div className="flex space-x-4">
+              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
+                <Button size="sm" variant="outline" className="border-gray-400 text-gray-300 hover:bg-white hover:text-[#dc2626]">
+                  <Facebook className="w-4 h-4" />
+                </Button>
+              </a>
+              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
+                <Button size="sm" variant="outline" className="border-gray-400 text-gray-300 hover:bg-white hover:text-[#dc2626]">
+                  <Instagram className="w-4 h-4" />
+                </Button>
+              </a>
+              <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
+                <Button size="sm" variant="outline" className="border-gray-400 text-gray-300 hover:bg-white hover:text-[#dc2626]">
+                  <Twitter className="w-4 h-4" />
+                </Button>
+              </a>
+            </div> */}
+          </div>
+
+          {/* Quick Links */}
+          <div>
+            <h4 className="font-['Playfair_Display'] font-semibold text-lg mb-4">
+              Quick Links
+            </h4>
+            <div className="space-y-3">
+              <button onClick={() => handleNavigate('/')} className=" cursor-pointer  text-gray-300 hover:text-[#c7941e] transition-colors">Home</button>
+              <button onClick={() => handleNavigate('/about')} className="block font-['Nunito_Sans'] cursor-pointer text-gray-300 hover:text-[#c7941e] transition-colors">About Us</button>
+              <button onClick={() => handleNavigate('/destinations')} className="block font-['Nunito_Sans'] cursor-pointer text-gray-300 hover:text-[#c7941e] transition-colors">Destinations</button>
+              <button onClick={() => handleNavigate('/packages')} className="block font-['Nunito_Sans'] cursor-pointer text-gray-300 hover:text-[#c7941e] transition-colors">Packages</button>
+              <button onClick={() => handleNavigate('/contact')} className="block font-['Nunito_Sans'] cursor-pointer text-gray-300 hover:text-[#c7941e] transition-colors">Contact</button>
+            </div>
+          </div>
+
+          {/* Services */}
+          <div>
+            <h4 className="font-['Playfair_Display'] font-semibold text-lg mb-4">
+              Our Services
+            </h4>
+            <div className="space-y-3">
+              {['Hajj Packages','Umrah Packages','Iraq Ziyarat','Iran Ziyarat','Syria Ziyarat','Travelism Services'].map((service, i) => (
+                <button 
+                  key={i}
+                  onClick={() => handleNavigate('/packages')}
+                  className="block font-['Nunito_Sans'] cursor-pointer text-gray-300 hover:text-[#c7941e] transition-colors"
+                >
+                  {service}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Contact Info */}
+          <div>
+            <h4 className="font-['Playfair_Display'] font-semibold text-lg mb-4">
+              Get in Touch
+            </h4>
+            <div className="space-y-4">
+              <div className="flex items-start space-x-3">
+                <Phone className="w-5 h-5 text-[#c7941e] mt-1" />
+                <div>
+                  <p className="font-['Nunito_Sans'] text-gray-300">Call Us</p>
+                  <p className="font-['Nunito_Sans'] font-semibold">0304-0008000</p>
+                </div>
+              </div>
+              <div className="flex items-start space-x-3">
+                <Mail className="w-5 h-5 text-[#c7941e] mt-1" />
+                <div>
+                  <p className="font-['Nunito_Sans'] text-gray-300">Email</p>
+                  <p className="font-['Nunito_Sans'] font-semibold">info@ziyaratnama.com</p>
+                </div>
+              </div>
+              <div className="flex items-start space-x-3">
+                <MapPin className="w-5 h-5 text-[#c7941e] mt-1" />
+                <div>
+                  <p className="font-['Nunito_Sans'] text-gray-300">Offices</p>
+                  <p className="font-['Nunito_Sans'] font-semibold">Islamabad + Nationwide</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Call to Action */}
+        <div className="mt-12 pt-8 border-t border-gray-600">
+          <div className="bg-[#dc2626] text-white rounded-lg p-8 text-center shadow-2xl">
+            <h3 className="font-['Playfair_Display'] text-2xl font-semibold mb-4">
+              Ready to Begin Your Sacred Journey?
+            </h3>
+            <p className="font-['Nunito_Sans'] text-lg mb-6">
+              Get in touch today and secure your spiritual pilgrimage with trusted hands.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button 
+                onClick={() => handleNavigate('/packages')}
+                className="bg-[#2c5530] text-white cursor-pointer hover:bg-[#1e3a1f] font-['Nunito_Sans'] font-semibold px-8 shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300">
+                <ArrowRight className="w-5 h-5 mr-2" />
+                Book Consultation
+              </Button>
+              <Button 
+                variant="outline" 
+                onClick={() => handleNavigate('/contact')}
+                className="border-white text-[#dc2626]  cursor-pointer hover:bg-white hover:text-[#dc2626] font-['Nunito_Sans'] font-semibold px-8 transition-all duration-300">
+                Contact Us
+              </Button>
+            </div>
+          </div>
+        </div>
+
+        {/* Copyright */}
+        <div className="mt-8 pt-8 border-t border-gray-600 text-center">
+          <p className="font-['Nunito_Sans'] text-gray-400">
+            © 2025 Ziaratnama Travels (Pvt) Ltd. All rights reserved. | Licensed Travel Company
+          </p>
+        </div>
+      </div>
+    </footer>
+  );
+}
+</file>
+
+<file path="src/pages/Contact.tsx">
+import { Card, CardContent, CardHeader } from '../components/ui/card';
+import { Button } from '../components/ui/button';
+import { Input } from '../components/ui/input';
+import { Textarea } from '../components/ui/textarea';
+import { Phone, Mail, MapPin, Clock, MessageCircle, Send, User, Calendar } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { useState } from "react";
+
+export function Contact() {
+  const [formData, setFormData] = useState({
+    name: "",
+    phone: "",
+    email: "",
+    date: "",
+    package: "",
+    message: "",
+  });
+
+  const [status, setStatus] = useState("");
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus("Sending...");
+
+    try {
+      const response = await fetch("/send_email.php", {
+        method: "POST",
+        body: new URLSearchParams(formData), // sends as form-data
+      });
+
+      const result = await response.text();
+      if (response.ok) {
+        setStatus("✅ Message sent successfully!");
+      } else {
+        setStatus("❌ Failed to send: " + result);
+      }
+    } catch (error) {
+      setStatus("❌ Error sending message.");
+    }
+  };
+
+  const contactMethods = [
+    {
+      icon: <Phone className="w-8 h-8 text-[#c7941e]" />,
+      title: "Phone Support",
+      details: "0304-0008000",
+      description: "Call us anytime for immediate assistance",
+      available: "24/7 Available"
+    },
+    {
+      icon: <Mail className="w-8 h-8 text-[#c7941e]" />,
+      title: "Email Support",
+      details: "ziaratnama.com@gmail.com",
+      description: "Send us detailed inquiries via email",
+      available: "Response within 2 hours"
+    },
+    {
+      icon: <MapPin className="w-8 h-8 text-[#c7941e]" />,
+      title: "Office Locations",
+      details: "Islamabad + Nationwide",
+      description: "Visit our offices for in-person consultation",
+      available: "Mon-Sat: 9AM-6PM"
+    },
+    {
+      icon: <MessageCircle className="w-8 h-8 text-[#c7941e]" />,
+      title: "WhatsApp",
+      details: "+92 304 0008000",
+      description: "Quick messages and instant support",
+      available: "24/7 Available"
+    }
+  ];
+
+  const officeHours = [
+    { day: "Monday - Friday", hours: "9:00 AM - 6:00 PM" },
+    { day: "Saturday", hours: "10:00 AM - 4:00 PM" },
+    { day: "Sunday", hours: "Closed" },
+    { day: "Emergency Support", hours: "24/7 Available" }
+  ];
+
+  const faqs = [
+    {
+      question: "How do I book an Umrah package?",
+      answer: "You can book by calling us, visiting our office, or filling out the contact form. We'll guide you through the entire process."
+    },
+    {
+      question: "What documents do I need for Umrah?",
+      answer: "You need a valid passport (6+ months validity), passport-size photos, vaccination certificates, and other documents we'll specify during booking."
+    },
+    {
+      question: "Are the instalment plans really interest-free?",
+      answer: "Yes, absolutely! Our instalment plans are 100% interest-free with no hidden charges. You pay the same total amount as cash packages."
+    },
+    {
+      question: "Can I customize my package?",
+      answer: "Yes, we offer flexible packages. Contact us to discuss your specific requirements and we'll create a customized solution."
+    }
+  ];
+
+  return (
+    <div className="min-h-screen">
+      {/* Hero Section */}
+      <section className="relative py-32 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-[#1a365d] via-[#2c5530] to-[#1a365d]"></div>
+        <div className="absolute top-20 right-10 w-32 h-32 bg-gradient-to-br from-[#c7941e]/20 to-[#f7e98e]/10 rounded-full blur-xl animate-pulse"></div>
+        <div className="absolute bottom-20 left-10 w-24 h-24 bg-gradient-to-br from-[#68d391]/20 to-transparent rounded-full blur-xl animate-pulse delay-1000"></div>
+        
+        <div className="relative z-10 container mx-auto px-4 text-center">
+          <h1 className="font-['Playfair_Display'] text-4xl md:text-6xl font-bold text-white mb-6">
+            Contact{' '}
+            <span className="bg-gradient-to-r from-[#c7941e] to-[#f7e98e] bg-clip-text text-transparent">
+              Us
+            </span>
+          </h1>
+          <p className="font-['Nunito_Sans'] text-xl text-white/90 max-w-3xl mx-auto leading-relaxed">
+            Ready to begin your sacred journey? Get in touch with our expert team for personalized guidance 
+            and support throughout your pilgrimage planning.
+          </p>
+        </div>
+      </section>
+
+      {/* Contact Methods */}
+      <section className="py-20 bg-gradient-to-br from-[#fffef7] to-[#f7f3e9]">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="font-['Playfair_Display'] text-3xl md:text-4xl font-bold text-[#1a365d] mb-4">
+              Multiple Ways to Reach Us
+            </h2>
+            <p className="font-['Nunito_Sans'] text-lg text-[#0a1219]/70 max-w-3xl mx-auto">
+              Choose the most convenient way to connect with our team
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+            {contactMethods.map((method, index) => (
+              <Card key={index} className="border-0 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105 text-center bg-gradient-to-br from-white to-[#f7f3e9]">
+                <CardContent className="p-8">
+                  <div className="mx-auto mb-6 p-4 bg-gradient-to-br from-[#c7941e]/10 to-[#f7e98e]/5 rounded-full w-fit">
+                    {method.icon}
+                  </div>
+                  <h3 className="font-['Playfair_Display'] text-xl font-bold text-[#1a365d] mb-3">
+                    {method.title}
+                  </h3>
+                  <p className="font-['Nunito_Sans'] font-semibold text-[#2c5530] mb-2 text-lg">
+                    {method.details}
+                  </p>
+                  <p className="font-['Nunito_Sans'] text-[#0a1219]/70 mb-3 text-sm">
+                    {method.description}
+                  </p>
+                  <div className="inline-block bg-[#c7941e]/10 text-[#c7941e] px-3 py-1 rounded-full text-xs font-['Nunito_Sans'] font-semibold">
+                    {method.available}
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Contact Form & Info */}
+      <section className="py-20 bg-gradient-to-br from-[#1a365d] to-[#2c5530]">
+        <div className="container mx-auto px-4">
+          <div className="grid lg:grid-cols-2 gap-12 items-start">
+            {/* Contact Form */}
+            <Card className="border-0 shadow-2xl bg-white/95 backdrop-blur-sm">
+              <CardHeader className="text-center">
+                <h2 className="font-['Playfair_Display'] text-2xl font-bold text-[#1a365d] mb-2">
+                  Send Us a Message
+                </h2>
+                <p className="font-['Nunito_Sans'] text-[#0a1219]/70">
+                  Fill out the form and we'll get back to you within 2 hours
+                </p>
+              </CardHeader>
+              <CardContent className="p-8">
+                <form className="space-y-6" onSubmit={handleSubmit}>
+  <div className="grid md:grid-cols-2 gap-4">
+    <div className="space-y-2">
+      <label>Full Name *</label>
+      <Input 
+        name="name"
+        value={formData.name}
+        onChange={handleChange}
+        placeholder="Enter your full name" 
+        required
+      />
+    </div>
+    <div className="space-y-2">
+      <label>Phone Number *</label>
+      <Input 
+        name="phone"
+        value={formData.phone}
+        onChange={handleChange}
+        placeholder="Enter your phone number" 
+        required
+      />
+    </div>
+  </div>
+
+  <Input 
+    name="email"
+    type="email"
+    value={formData.email}
+    onChange={handleChange}
+    placeholder="Enter your email address" 
+    required
+  />
+
+  <Input 
+    type="date"
+    name="date"
+    value={formData.date}
+    onChange={handleChange}
+  />
+
+  <select
+    name="package"
+    value={formData.package}
+    onChange={handleChange}
+    required
+  >
+    <option value="">Select a package type</option>
+    <option>Economy Package</option>
+    <option>Economy Plus Package</option>
+    <option>4-Star Package</option>
+    <option>5-Star Package</option>
+    <option>Custom Package</option>
+  </select>
+
+  <Textarea
+    name="message"
+    value={formData.message}
+    onChange={handleChange}
+    placeholder="Tell us about your requirements..."
+  />
+
+  <Button type="submit">Send Message</Button>
+
+  {status && (
+    <p className="mt-3 text-sm text-center">{status}</p>
+  )}
+</form>
+
+              </CardContent>
+            </Card>
+
+            {/* Contact Info & Hours */}
+            <div className="space-y-8">
+              {/* Office Hours */}
+              <Card className="border-0 shadow-xl bg-white/95 backdrop-blur-sm">
+                <CardHeader>
+                  <h3 className="font-['Playfair_Display'] text-xl font-bold text-[#1a365d] flex items-center">
+                    <Clock className="w-6 h-6 text-[#c7941e] mr-3" />
+                    Office Hours
+                  </h3>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-3">
+                    {officeHours.map((schedule, index) => (
+                      <div key={index} className="flex justify-between items-center py-2 border-b border-gray-100 last:border-0">
+                        <span className="font-['Nunito_Sans'] font-medium text-[#1a365d]">{schedule.day}</span>
+                        <span className="font-['Nunito_Sans'] text-[#0a1219]/70">{schedule.hours}</span>
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Quick Contact */}
+              <Card className="border-0 shadow-xl bg-gradient-to-br from-[#c7941e] to-[#f7e98e] text-[#0a1219]">
+                <CardContent className="p-8 text-center">
+                  <h3 className="font-['Playfair_Display'] text-xl font-bold mb-4">
+                    Need Immediate Assistance?
+                  </h3>
+                  <p className="font-['Nunito_Sans'] mb-6">
+                    Our expert consultants are available 24/7 for urgent inquiries
+                  </p>
+                  <div className="space-y-3">
+                    <Button 
+                      className="w-full bg-[#1a365d] text-white hover:bg-[#0f2a44] font-['Nunito_Sans'] font-semibold"
+                      onClick={() => window.open('tel:03040008000', '_self')}
+                    >
+                      <Phone className="w-5 h-5 mr-2" />
+                      Call Now: 0304-0008000
+                    </Button>
+                    <Button 
+                      variant="outline"
+                      className="w-full border-[#1a365d] text-[#1a365d] hover:bg-[#1a365d] hover:text-white font-['Nunito_Sans'] font-semibold"
+                      onClick={() => window.open('https://wa.me/923040008000', '_blank')}
+                    >
+                      <MessageCircle className="w-5 h-5 mr-2" />
+                      WhatsApp Chat
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="py-20 bg-gradient-to-br from-[#f7f3e9] to-[#fffef7]">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="font-['Playfair_Display'] text-3xl md:text-4xl font-bold text-[#1a365d] mb-4">
+              Frequently Asked Questions
+            </h2>
+            <p className="font-['Nunito_Sans'] text-lg text-[#0a1219]/70 max-w-3xl mx-auto">
+              Find quick answers to common questions about our services
+            </p>
+          </div>
+
+          <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-8">
+            {faqs.map((faq, index) => (
+              <Card key={index} className="border-0 shadow-lg hover:shadow-xl transition-all duration-300 bg-gradient-to-br from-white to-[#f7f3e9]">
+                <CardContent className="p-6">
+                  <h3 className="font-['Playfair_Display'] font-bold text-[#1a365d] mb-3">
+                    {faq.question}
+                  </h3>
+                  <p className="font-['Nunito_Sans'] text-[#0a1219]/80 leading-relaxed text-sm">
+                    {faq.answer}
+                  </p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+
+          <div className="text-center mt-12">
+            <p className="font-['Nunito_Sans'] text-[#0a1219]/70 mb-4">
+              Don't see your question here?
+            </p>
+            <Link to='/about'>
+            <Button 
+              className="bg-gradient-to-r from-[#1a365d] to-[#2c5530] text-white hover:from-[#0f2a44] hover:to-[#1a3321] font-['Nunito_Sans'] font-semibold px-8 py-3 shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
+            >
+              Learn More About Us
+            </Button>
+            </Link>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+}
+</file>
+
+<file path="src/pages/Destinations.tsx">
+import { ImageWithFallback } from '../components/figma/ImageWithFallback';
+import { Card, CardContent } from '../components/ui/card';
+import { Button } from '../components/ui/button';
+import { Badge } from '../components/ui/badge';
+import { MapPin, Star, Plane, Clock, Users, ArrowRight, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+
+
+
+export function Destinations() {
+  const destinations = [
+    {
+      id: 'saudi-arabia',
+      name: "Saudi Arabia",
+      subtitle: "Hajj & Umrah",
+      description: "Ziaratnama Travels (Pvt) Ltd offers organized Hajj & Umrah packages to Makkah and Madinah, the holiest sites for Muslims. Our aim is to ensure every pilgrim experiences ease, trust, and spiritual tranquility throughout their journey.",
+      image: "https://images.unsplash.com/photo-1571909552531-1601eaec8f79?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxrYWFiYSUyMG1lY2NhJTIwaG9seSUyMG1vc3F1ZXxlbnwxfHx8fDE3NTgyOTcyMTJ8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+      significance: "Makkah and Madinah are the holiest sites for Muslims worldwide. Hajj and Umrah are among the most significant acts of worship in Islam.",
+      highlights: [
+        "The Kaaba & Masjid al-Haram",
+        "The Prophet’s Mosque in Madinah",
+        "Historical sites like Uhud, Masjid Quba, etc.",
+        "Jannat al-Baqi Cemetery",
+        "Cave of Hira",
+        "Masjid Quba - First mosque in Islam"
+      ],
+      packages: "Economy (Quad), Economy Plus (Triple), 4★ & 5★ Luxury",
+      duration: "14-30 days",
+      groupSize: "15-50 people",
+      features: [
+        "Airport transfers in luxury vehicles",
+        "Guided ziyarat tours with knowledgeable guides",
+        "Quality accommodation near Haram (Standard to 5★)",
+        "Flexible booking policies",
+        "Visa assistance",
+        "24/7 customer support"
+      ]
+    },
+    {
+      id: 'iraq',
+      name: "Iraq",
+      subtitle: "Ziyarat Tours",
+      description: "Visit the sacred shrines of Ahl al-Bayt (AS) in Najaf, Karbala, Kufa, Kadhimain, and Samarra. Our packages include intercity transport and expert guides for a meaningful experience.",
+      image: "https://images.unsplash.com/photo-1700130375571-8f2eca1b825e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxuYWphZiUyMHNocmluZSUyMGlzbGFtaWMlMjBhcmNoaXRlY3R1cmV8ZW58MXx8fHwxNzU4Mjk3MjEzfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+      significance: "Iraq is home to the shrines of Ahl al-Bayt (AS) and countless historic Islamic events. Millions of pilgrims visit Najaf, Karbala, and other cities annually.",
+      highlights: [
+        "Najaf al-Ashraf (Shrine of Imam Ali AS)",
+        "Karbala (Imam Hussain AS & Hazrat Abbas AS)",
+        "Kufa Mosque and landmarks",
+        "Kadhimain (Imam Musa al-Kadhim & Imam Muhammad Taqi AS)",
+        "Samarra (Imam Ali al-Naqi & Imam Hasan al-Askari AS)",
+        "Historic Islamic sites and museums"
+      ],
+      packages: "Economy to 5★ hotels",
+      duration: "7-14 days",
+      groupSize: "10-40 people",
+      features: [
+        "Airport transfers and intercity transport",
+        "Expert local guides",
+        "Group and family packages",
+        "Guided ziyarat programs",
+        "Comfortable accommodations",
+        "Visa and support services"
+      ]
+    },
+    {
+      id: 'iran',
+      name: "Iran",
+      subtitle: "Spiritual Journeys",
+      description: "Spiritual journeys to Mashhad (Imam Reza AS), Qom (Bibi Masooma AS), and other significant religious centers. Packages include 3★, 4★, and 5★ hotels with intercity flights or bus transport.",
+      image: "/iran2.jfif",
+      significance: "Iran is home to important shrines of Ahl al-Bayt (AS) and religious centers attracting pilgrims globally.",
+      highlights: [
+        "Mashhad (Shrine of Imam Ali Raza AS)",
+        "Qom (Shrine of Bibi Masooma AS)",
+        "Historical & religious landmarks in Shiraz",
+        "Religious centers in Tehran",
+        "Beautiful Persian architecture",
+        "Cultural and spiritual sites"
+      ],
+      packages: "3★, 4★, and 5★ hotels",
+      duration: "7-12 days",
+      groupSize: "12-35 people",
+      features: [
+        "Quality accommodation options",
+        "Comprehensive visa support",
+        "Organized group tours",
+        "Family-friendly packages",
+        "Intercity flights or bus transport",
+        "Guided ziyarat programs"
+      ]
+    },
+    {
+      id: 'syria',
+      name: "Syria",
+      subtitle: "Historic Pilgrimages",
+      description: "Pilgrimage to the sacred shrines of Sayyida Zainab (AS) and Sayyida Ruqayyah (AS) in Damascus. Packages range from Economy to 4★ hotels, subject to visa & security advisories.",
+      image: "syria.jpg",
+      significance: "Syria holds immense spiritual importance due to Islamic history and Ahl al-Bayt (AS) shrines.",
+      highlights: [
+        "Shrine of Sayyida Zainab (AS) in Damascus",
+        "Shrine of Sayyida Ruqayyah (AS)",
+        "Historic mosques and sites",
+        "Umayyad Mosque",
+        "Ancient Damascus old city",
+        "Cultural heritage sites"
+      ],
+      packages: "Economy to 4★ hotels",
+      duration: "5-10 days",
+      groupSize: "8-25 people",
+      features: [
+        "Professional guides",
+        "Safety and security support",
+        "Group and individual packages",
+        "Guided ziyarat programs",
+        "Historic site visits",
+        "Visa and support services"
+      ]
+    }
+  ];
+  return (
+    <div className="min-h-screen">
+      {/* Hero Section */}
+      <section className="relative py-32 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-[#1a365d] via-[#2c5530] to-[#1a365d]"></div>
+        <div className="absolute top-20 right-10 w-32 h-32 bg-gradient-to-br from-[#c7941e]/20 to-[#f7e98e]/10 rounded-full blur-xl animate-pulse"></div>
+        <div className="absolute bottom-20 left-10 w-24 h-24 bg-gradient-to-br from-[#68d391]/20 to-transparent rounded-full blur-xl animate-pulse delay-1000"></div>
+        
+        <div className="relative z-10 container mx-auto px-4 text-center">
+          <h1 className="font-['Playfair_Display'] text-4xl md:text-6xl font-bold text-white mb-6">
+            Sacred{' '}
+            <span className="bg-gradient-to-r from-[#c7941e] to-[#f7e98e] bg-clip-text text-transparent">
+              Destinations
+            </span>
+          </h1>
+          <p className="font-['Nunito_Sans'] text-xl text-white/90 max-w-3xl mx-auto leading-relaxed">
+            Embark on spiritually enriching journeys to the most revered Islamic destinations across four countries
+          </p>
+        </div>
+      </section>
+
+      {/* Destinations Grid */}
+      <section className="py-20 bg-gradient-to-br from-[#fffef7] to-[#f7f3e9]">
+        <div className="container mx-auto px-4">
+          <div className="space-y-16">
+            {destinations.map((destination, index) => (
+              <Card key={destination.id} className={`border-0 shadow-2xl overflow-hidden ${index % 2 === 1 ? 'lg:flex-row-reverse' : ''}`}>
+                <div className="lg:flex">
+                  {/* Image Section */}
+                  <div className="lg:w-1/2 relative h-96 lg:h-auto overflow-hidden">
+                    <ImageWithFallback
+                      src={destination.image}
+                      alt={destination.name}
+                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#1a365d]/60 to-transparent"></div>
+                    <div className="absolute top-6 left-6">
+                      <Badge className="bg-[#c7941e] text-[#0a1219] font-['Nunito_Sans'] font-semibold">
+                        {destination.packages}
+                      </Badge>
+                    </div>
+                    <div className="absolute bottom-6 left-6 text-white">
+                      <h3 className="font-['Playfair_Display'] text-2xl font-bold mb-2">{destination.name}</h3>
+                      <p className="font-['Nunito_Sans'] text-lg opacity-90">{destination.subtitle}</p>
+                    </div>
+                  </div>
+
+                  {/* Content Section */}
+                  <div className="lg:w-1/2 p-8 lg:p-12">
+                    <div className="mb-6">
+                      <div className="flex items-center mb-4">
+                        <MapPin className="w-6 h-6 text-[#c7941e] mr-3" />
+                        <h3 className="font-['Playfair_Display'] text-2xl font-bold text-[#1a365d]">
+                          {destination.name}
+                        </h3>
+                      </div>
+                      <p className="font-['Nunito_Sans'] text-[#0a1219]/80 leading-relaxed mb-6">
+                        {destination.description}
+                      </p>
+                      <p className="font-['Nunito_Sans'] text-[#0a1219]/70 leading-relaxed mb-6 italic">
+                        {destination.significance}
+                      </p>
+                    </div>
+
+                    {/* Trip Details */}
+                    <div className="grid grid-cols-3 gap-4 mb-8">
+                      <div className="text-center p-4 bg-gradient-to-br from-[#c7941e]/10 to-[#f7e98e]/5 rounded-lg">
+                        <Clock className="w-6 h-6 text-[#c7941e] mx-auto mb-2" />
+                        <p className="font-['Nunito_Sans'] text-sm font-semibold text-[#1a365d]">{destination.duration}</p>
+                        <p className="font-['Nunito_Sans'] text-xs text-[#0a1219]/60">Duration</p>
+                      </div>
+                      <div className="text-center p-4 bg-gradient-to-br from-[#c7941e]/10 to-[#f7e98e]/5 rounded-lg">
+                        <Users className="w-6 h-6 text-[#c7941e] mx-auto mb-2" />
+                        <p className="font-['Nunito_Sans'] text-sm font-semibold text-[#1a365d]">{destination.groupSize}</p>
+                        <p className="font-['Nunito_Sans'] text-xs text-[#0a1219]/60">Group Size</p>
+                      </div>
+                      <div className="text-center p-4 bg-gradient-to-br from-[#c7941e]/10 to-[#f7e98e]/5 rounded-lg">
+                        <Plane className="w-6 h-6 text-[#c7941e] mx-auto mb-2" />
+                        <p className="font-['Nunito_Sans'] text-sm font-semibold text-[#1a365d]">{destination.packages}</p>
+                        <p className="font-['Nunito_Sans'] text-xs text-[#0a1219]/60">Packages</p>
+                      </div>
+                    </div>
+
+                    {/* Highlights */}
+                    <div className="mb-8">
+                      <h4 className="font-['Playfair_Display'] font-bold text-[#1a365d] mb-4">Sacred Sites & Highlights</h4>
+                      <div className="grid grid-cols-1 gap-2">
+                        {destination.highlights.slice(0, 4).map((highlight, idx) => (
+                          <div key={idx} className="flex items-center">
+                            <Star className="w-4 h-4 text-[#c7941e] mr-3 flex-shrink-0" />
+                            <span className="font-['Nunito_Sans'] text-[#0a1219]/80 text-sm">{highlight}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Features */}
+                    <div className="mb-8">
+                      <h4 className="font-['Playfair_Display'] font-bold text-[#1a365d] mb-4">Package Features</h4>
+                      <div className="grid grid-cols-1 gap-2">
+                        {destination.features.slice(0, 3).map((feature, idx) => (
+                          <div key={idx} className="flex items-center">
+                            <div className="w-2 h-2 bg-[#2c5530] rounded-full mr-3 flex-shrink-0"></div>
+                            <span className="font-['Nunito_Sans'] text-[#0a1219]/80 text-sm">{feature}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    <Link to='/packages'>
+                    <Button 
+                      className="w-full bg-gradient-to-r from-[#1a365d] to-[#2c5530] text-white hover:from-[#0f2a44] hover:to-[#1a3321] font-['Nunito_Sans'] font-semibold py-3 shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
+                    >
+                      View Packages for {destination.name}
+                      <ArrowRight className="ml-2 w-5 h-5" />
+                    </Button>
+                    </Link>
+                  </div>
+                </div>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+<section className="py-20 bg-gradient-to-br from-[#fffef7] to-[#f7f3e9]">
+<div className="container mx-auto px-4">
+<div className="text-center mb-16">
+<h2 className="font-['Playfair_Display'] text-3xl md:text-4xl font-bold text-[#1a365d] mb-4">
+Additional Information
+</h2>
+<p className="font-['Nunito_Sans'] text-lg text-[#0a1219]/80 max-w-3xl mx-auto">
+Every Ziaratnama Travels (Pvt) Ltd package ensures you travel with complete peace of mind
+</p>
+</div>
+
+
+<div className="grid sm:grid-cols-2 md:grid-cols-3 gap-8">
+{[
+{ title: "Airport Transfers", desc: "Seamless pickups and drop-offs for stress-free travel" },
+{ title: "Intercity Transport", desc: "Safe and comfortable journeys between holy cities" },
+{ title: "Hotel Accommodation", desc: "From economy to 5★ luxury, stay as per your chosen category" },
+{ title: "Guided Ziyarat Programs", desc: "Meaningful tours with knowledgeable religious guides" },
+{ title: "Visa Services", desc: "Complete visa and documentation support" },
+{ title: "24/7 Assistance", desc: "Dedicated support team available round-the-clock" }
+].map((item, idx) => (
+<Card key={idx} className="border-0 shadow-xl bg-white/95 backdrop-blur-sm hover:shadow-2xl transition-all duration-300">
+<CardContent className="p-6 flex items-start">
+<CheckCircle className="w-6 h-6 text-[#2c5530] mr-4 mt-1 flex-shrink-0" />
+<div>
+<h3 className="font-['Playfair_Display'] font-bold text-[#1a365d] mb-2 text-lg">{item.title}</h3>
+<p className="font-['Nunito_Sans'] text-[#0a1219]/70 text-sm leading-relaxed">{item.desc}</p>
+</div>
+</CardContent>
+</Card>
+))}
+</div>
+</div>
+</section>
+      {/* Why Choose Our Destinations */}
+      <section className="py-20 bg-gradient-to-br from-[#1a365d] to-[#2c5530]">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="font-['Playfair_Display'] text-3xl md:text-4xl font-bold text-white mb-4">
+              Why Choose Our Destination Packages?
+            </h2>
+            <p className="font-['Nunito_Sans'] text-lg text-white/80 max-w-3xl mx-auto">
+              Every Ziaratnama Travels package ensures a complete, worry-free spiritual journey
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {[
+              {
+                icon: <Plane className="w-8 h-8 text-[#c7941e]" />,
+                title: "Airport Transfers",
+                description: "Comfortable transfers from arrival to departure"
+              },
+              {
+                icon: <MapPin className="w-8 h-8 text-[#c7941e]" />,
+                title: "Intercity Transport",
+                description: "Safe and comfortable travel between cities"
+              },
+              {
+                icon: <Users className="w-8 h-8 text-[#c7941e]" />,
+                title: "Expert Guides",
+                description: "Knowledgeable guides for meaningful experiences"
+              },
+              {
+                icon: <Star className="w-8 h-8 text-[#c7941e]" />,
+                title: "Quality Accommodation",
+                description: "Comfortable stays as per chosen category"
+              }
+            ].map((item, index) => (
+              <Card key={index} className="border-0 shadow-xl bg-white/95 backdrop-blur-sm text-center hover:shadow-2xl transition-all duration-300 transform hover:scale-105">
+                <CardContent className="p-6">
+                  <div className="mx-auto mb-4 p-3 bg-gradient-to-br from-[#c7941e]/10 to-[#f7e98e]/5 rounded-full w-fit">
+                    {item.icon}
+                  </div>
+                  <h3 className="font-['Playfair_Display'] font-bold text-[#1a365d] mb-2">{item.title}</h3>
+                  <p className="font-['Nunito_Sans'] text-[#0a1219]/70 text-sm">{item.description}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Call to Action */}
+      <section className="py-20 bg-gradient-to-br from-[#f7f3e9] to-[#fffef7]">
+        <div className="container mx-auto px-4">
+          <Card className="border-0 shadow-2xl overflow-hidden bg-gradient-to-r from-[#1a365d] to-[#2c5530]">
+            <CardContent className="p-12 text-center text-white relative">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-[#c7941e]/20 to-transparent rounded-full blur-xl"></div>
+              <div className="relative z-10">
+                <h2 className="font-['Playfair_Display'] text-3xl md:text-4xl font-bold mb-6">
+                  Ready to Embark on Your Sacred Journey?
+                </h2>
+                <p className="font-['Nunito_Sans'] text-xl mb-8 opacity-90 max-w-2xl mx-auto">
+                  Choose from our carefully crafted packages and begin your spiritual transformation
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  <Link to='/packages'>
+                  <Button 
+                    size="lg"
+                    className="bg-gradient-to-r from-[#c7941e] to-[#f7e98e] text-[#0a1219] hover:from-[#996f10] hover:to-[#c7941e] font-['Nunito_Sans'] font-semibold px-8 py-4 shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
+                  >
+                    Explore All Packages
+                  </Button>
+                  </Link>
+                  <Link to='/contact'>
+                  <Button 
+                    size="lg"
+                    variant="outline"
+                    className="border-white/30 text-white bg-white/10 backdrop-blur-sm hover:bg-white hover:text-[#1a365d] font-['Nunito_Sans'] font-semibold px-8 py-4 transition-all duration-300"
+                  >
+                    Contact Us
+                  </Button>
+                  </Link>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+    </div>
+  );
+}
+</file>
+
+<file path="src/pages/Home.tsx">
+import { ImageWithFallback } from '../components/figma/ImageWithFallback';
+import { Button } from '../components/ui/button';
+import { Card, CardContent } from '../components/ui/card';
+import { Badge } from '../components/ui/badge';
+import { Shield, Compass, Star, ArrowRight, CheckCircle, Users, Globe, Award } from 'lucide-react';
+import { Link } from 'react-router-dom';
+
+
+
+export function Home() {
+  const features = [
+    {
+      icon: <Shield className="w-8 h-8 text-[#dc2626]" />,
+      title: "Trust",
+      description: "We are a registered and licensed travel company ensuring transparency and reliability in every booking."
+    },
+    {
+      icon: <CheckCircle className="w-8 h-8 text-[#dc2626]" />,
+      title: "Convenience",
+      description: "From Jeddah Airport to Makkah and Madinah hotels, every step of your journey — transport, stay, and services — is managed by us, so you can focus entirely on your worship."
+    },
+    {
+      icon: <Compass className="w-8 h-8 text-[#dc2626]" />,
+      title: "Guidance",
+      description: "Our experienced and dedicated staff provides complete assistance, ensuring you never face difficulties at any stage of your pilgrimage."
+    }
+  ];
+
+  const destinations = [
+    {
+      name: "Saudi Arabia",
+      subtitle: "🕋 Hajj & Umrah",
+      description: "Experience the spirituality of the Haramain Sharifain with options from Economy to Five-Star hotels.",
+      image: "https://images.unsplash.com/photo-1571909552531-1601eaec8f79?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxrYWFiYSUyMG1lY2NhJTIwaG9seSUyMG1vc3F1ZXxlbnwxfHx8fDE3NTgyOTcyMTJ8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+    },
+    {
+      name: "Iraq",
+      subtitle: "🕌 Ziyarats",
+      description: "Visit Najaf, Karbala, Kufa, Kadhimain, and Samarra to pay respects at the shrines of Ahl al-Bayt (AS).",
+      image: "https://images.unsplash.com/photo-1700130375571-8f2eca1b825e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxuYWphZiUyMHNocmluZSUyMGlzbGFtaWMlMjBhcmNoaXRlY3R1cmV8ZW58MXx8fHwxNzU4Mjk3MjEzfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+    },
+    {
+      name: "Iran",
+      subtitle: "🌙 Spiritual Journeys",
+      description: "Spiritual journeys to Mashhad (Imam Reza), Qom, and other sacred sites.",
+      image: "/iran2.jfif"
+    },
+    {
+      name: "Syria",
+      subtitle: "🕊 Ziyarats",
+      description: "Pilgrimage to the shrines of Sayyida Zainab and Sayyida Ruqayyah in Damascus.",
+      image: "/syria.jpg"
+    }
+  ];
+
+  const stats = [
+    { icon: <Users className="w-10 h-10 text-[#dc2626]" />, number: "1000+", label: "Happy Pilgrims" },
+    { icon: <Globe className="w-10 h-10 text-[#dc2626]" />, number: "4", label: "Countries" },
+    { icon: <Award className="w-10 h-10 text-[#dc2626]" />, number: "5+", label: "Years Experience" },
+    { icon: <CheckCircle className="w-10 h-10 text-[#dc2626]" />, number: "100%", label: "Satisfaction" }
+  ];
+  const packages = [
+    { title: "Economy", description: "Standard hotels, Quad Sharing, perfect for budget travelers." },
+    { title: "Economy Plus", description: "3★ hotels, Triple Sharing, extra comfort with affordability." },
+    { title: "4-Star", description: "Premium facilities with Single, Double, Triple, and Quad room options." },
+    { title: "5-Star", description: "Luxury brands, near-Haram accommodations, world-class comfort." }
+  ];
+  return (
+    <div className="min-h-screen h-auto  max-w-[1640px] mx-auto">
+      {/* Hero Section */}
+      <section className="relative  min-h-screen flex w-full justify-center  items-center overflow-hidden">
+        {/* Background with gradient overlay */}
+        <div className="absolute inset-0">
+          <ImageWithFallback
+            src="https://images.unsplash.com/photo-1571909552531-1601eaec8f79?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxrYWFiYSUyMG1lY2NhJTIwaG9seSUyMG1vc3F1ZXxlbnwxfHx8fDE3NTgyOTcyMTJ8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+            alt="Kaaba at Mecca"
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-[#1a365d]/85"></div>
+        </div>
+
+        {/* Floating elements */}
+        <div className="absolute top-20 right-10 w-32 h-32 bg-[#dc2626]/15 rounded-full blur-xl animate-pulse"></div>
+        <div className="absolute bottom-32 left-10 w-24 h-24 bg-[#c7941e]/10 rounded-full blur-xl animate-pulse delay-1000"></div>
+
+        {/* Content */}
+        <div className="relative z-10 container mx-auto    px-4">
+          <div className="w-full mx-auto flex flex-col items-center">
+            <div className="mb-8 " style={{ marginTop: '100px' }}>
+              <Badge className="bg-[#dc2626]/25 text-[#dc2626] border-[#dc2626]/40 font-['Nunito_Sans'] text-sm px-4 py-2 shadow-lg">
+                ✨ Sacred Journeys Await
+              </Badge>
+            </div>
+
+            {/* <h1 className="font-['Playfair_Display'] text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-8 leading-tight">
+              Your{' '}
+              <span className="bg-gradient-to-r from-[#c7941e] to-[#f7e98e] bg-clip-text text-transparent drop-shadow-lg">
+                Spiritual Journey
+              </span>
+              <br />
+              Begins Here
+            </h1> */}
+
+            <p className="font-['Nunito_Sans'] text-center text-xl md:text-2xl text-white/90 mb-8 leading-relaxed max-w-3xl">
+              Welcome to Ziaratnama Travels (Pvt) Ltd — where Hajj, Umrah, and Ziyarats are not just journeys but profound spiritual experiences. Our mission is to make your sacred travel convenient, organized, and memorable. Whether this is your first pilgrimage or a return visit, we provide the best packages, comfortable accommodations, and transparent arrangements tailored for your needs.
+            </p>
+
+            <div className="flex flex-col sm:flex-row gap-4 mb-12">
+              <Link to='/packages'>
+                <Button
+                  size="lg"
+                  className="bg-gradient-to-r cursor-pointer from-[#c7941e] to-[#f7e98e] text-[#0a1219] hover:from-[#996f10] hover:to-[#c7941e] font-['Nunito_Sans'] font-semibold px-10 py-5 text-lg shadow-2xl hover:shadow-3xl transform hover:scale-105 transition-all duration-300 border border-[#c7941e]/30"
+                >
+                  Explore Packages
+                  <ArrowRight className="ml-2 w-5 h-5" />
+                </Button>
+              </Link>
+              <Link to='/about'>
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="border-white/40 cursor-pointer text-white bg-white/15 backdrop-blur-md hover:bg-white hover:text-[#1a365d] font-['Nunito_Sans'] font-semibold px-10 py-5 text-lg transition-all duration-300 shadow-lg"
+                >
+                  Learn More
+                </Button>
+              </Link>
+            </div>
+
+
+          </div>
+        </div>
+
+        {/* Scroll indicator */}
+        <div className="absolute md:block hidden bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+          <div className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center">
+            <div className="w-1 h-3 bg-white/50 rounded-full mt-2 animate-pulse"></div>
+          </div>
+        </div>
+      </section>
+
+      {/* Highlights */}
+      <div className='py-24 px-4 md:px-8 '>
+        <div className="text-center mb-20">
+          <h2 className="font-['Playfair_Display'] text-3xl md:text-5xl font-bold text-[#1a365d] mb-6">
+            Our Promise
+          </h2>
+          <p className="font-['Nunito_Sans'] text-xl text-[#0a1219]/70 max-w-3xl mx-auto">
+            Our foundation rests on three pillars: Trust, Convenience, and Guidance.
+          </p>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3  gap-6 w-full">
+          {features.map((feature, index) => (
+            <div
+              key={index}
+              className="p-6 bg-white rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300 text-center group"
+            >
+              <div className="mx-auto mb-3 p-3 backdrop-blur-sm rounded-full w-fit group-hover:bg-white/20 transition-all duration-300">
+                {feature.icon}
+              </div>
+              <h3 className="font-['Playfair_Display'] font-bold text-lg text-[#1a365d] mb-1">{feature.title}</h3>
+              <p className="font-['Nunito_Sans'] text-sm text-black">{feature.description}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+      {/* Quick Stats Section */}
+
+
+      {/* Featured Destinations Preview */}
+      <section className="py-24 bg-gradient-to-br from-[#1a365d] to-[#2c5530] relative overflow-hidden">
+        <div className="absolute inset-0 opacity-[0.05]">
+          <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_40%,rgba(255,255,255,0.1)_45%,rgba(255,255,255,0.1)_55%,transparent_60%)] bg-[length:40px_40px]"></div>
+        </div>
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="text-center mb-20">
+            <h2 className="font-['Playfair_Display'] text-3xl md:text-5xl font-bold text-white mb-6 drop-shadow-lg">
+              Featured Destinations
+            </h2>
+            <p className="font-['Nunito_Sans'] text-xl text-white/95 max-w-3xl mx-auto">
+              Our services extend beyond Saudi Arabia to other significant Islamic destinations
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8 mb-12">
+            {destinations.map((destination, index) => (
+              <Card
+                key={index}
+                className="group overflow-hidden cursor-pointer border-0 shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:scale-105"
+              >
+                <div className="relative h-64 overflow-hidden">
+                  <ImageWithFallback
+                    src={destination.image}
+                    alt={destination.name}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#1a365d]/70 to-transparent"></div>
+                  <div className="absolute bottom-6 left-6 right-6 text-white">
+                    <h3 className="font-['Playfair_Display'] text-xl font-bold mb-1 drop-shadow-md">
+                      {destination.name}
+                    </h3>
+                    <p className="font-['Nunito_Sans'] text-sm opacity-95 font-medium">
+                      {destination.subtitle}
+                    </p>
+                    <p className="font-['Nunito_Sans'] text-xs opacity-90 mt-1 leading-relaxed">
+                      {destination.description}
+                    </p>
+                  </div>
+                  <div className="absolute top-6 right-6">
+                    <Star className="w-6 h-6 text-[#c7941e] fill-current drop-shadow-md" />
+                  </div>
+                </div>
+              </Card>
+            ))}
+          </div>
+
+          <div className="text-center">
+            <Link to='/destinations'>
+              <Button
+                size="lg"
+                className="bg-gradient-to-r from-[#c7941e] to-[#f7e98e] text-[#0a1219] hover:from-[#996f10] hover:to-[#c7941e] font-['Nunito_Sans'] font-semibold px-10 py-5 shadow-2xl hover:shadow-3xl transform hover:scale-105 transition-all duration-300 border border-[#c7941e]/30"
+              >
+                Explore All Destinations
+                <ArrowRight className="ml-2 w-5 h-5" />
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+
+
+      {/* Packages */}
+      <section className="py-24 bg-[#1a365d] text-white">
+        <div className="container mx-auto px-4 text-center">
+          <h2 className="font-['Playfair_Display'] text-3xl md:text-5xl font-bold mb-6">Our Packages</h2>
+          <p className="font-['Nunito_Sans'] text-xl mb-12">Flexible options to suit every budget and preference</p>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 relative">
+            {packages.map((pkg, i) => (
+              <Card
+                key={i}
+                className="shadow-2xl  bg-white text-[#1a365d] flex flex-col justify-between border-0 hover:scale-105 hover:shadow-3xl transition-all duration-300 group"
+              >
+                <CardContent className="py-10 px-6 flex flex-col relative">
+                  <div className="flex-grow">
+                    <h3 className="font-['Playfair_Display'] pt-6 text-2xl md:text-3xl font-bold mb-4 group-hover:text-[#c7941e] transition-colors duration-300">
+                      {pkg.title}
+                    </h3>
+                    <p className="font-['Nunito_Sans'] text-base md:text-lg mb-6 text-[#0a1219]/80">{pkg.description}</p>
+                  </div>
+                </CardContent>
+                <div className="px-10 pb-8">
+                  <Link to='/contact'>
+                    <Button
+                      size="lg"
+
+                      className="w-full bg-gradient-to-r from-[#c7941e] to-[#f7e98e] cursor-pointer text-[#1a365d] font-semibold font-['Nunito_Sans'] shadow-lg hover:from-[#b8860b] hover:to-[#c7941e] transition-all duration-300"
+                    >
+                      Book Now
+                    </Button>
+                  </Link>
+                </div>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+      <section className="py-24 bg-gradient-to-br from-[#fffef7] to-[#f7f3e9]">
+        <div className="container mx-auto px-4 text-center">
+          {/* Heading */}
+          <h2 className="font-['Playfair_Display'] text-3xl md:text-5xl font-bold text-[#1a365d] mb-6">
+            Instalment Plans
+          </h2>
+          <p className="font-['Nunito_Sans'] text-xl text-[#0a1219]/70 mb-12">
+            We are among the few in Pakistan offering Instalment-based Umrah & Ziyarat packages
+          </p>
+
+          {/* Card */}
+          <div className="max-w-2xl mx-auto bg-white shadow-xl rounded-2xl p-10 text-left">
+            <ul className="space-y-6 text-lg">
+              <li className="flex items-start space-x-3">
+                <span className="text-[#dc2626] mt-1">✔</span>
+                <span>10% advance booking</span>
+              </li>
+              <li className="flex items-start space-x-3">
+                <span className="text-[#dc2626] mt-1">✔</span>
+                <span>24 easy monthly instalments</span>
+              </li>
+              <li className="flex items-start space-x-3">
+                <span className="text-[#dc2626] mt-1">✔</span>
+                <span>10% final payment in the 25th month</span>
+              </li>
+              <li className="flex items-start space-x-3">
+                <span className="text-[#dc2626] mt-1">✔</span>
+                <span>Departure after 100% payment completion</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+      <section className="py-16 bg-gray-50">
+        <div className=" mx-auto px-6 lg:px-12 py-10">
+          <div className="bg-white rounded-3xl shadow-xl p-10 ">
+            <div className="flex flex-col  md:flex-row items-center md:items-start gap-12">
+
+              {/* Left Icon Section */}
+              <div className="flex-shrink-0">
+                <div className="  flex items-center justify-center ">
+                  <Shield size={40} className=" text-[#1a365d]" />
+                </div>
+              </div>
+
+              {/* Right Content Section */}
+              <div className="flex-1 text-center md:text-left">
+                <h2 className="font-['Playfair_Display'] text-3xl md:text-5xl font-bold text-[#1a365d] mb-10">
+                  Our Mission & Vision
+                </h2>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  {/* Mission Card */}
+                  <div className="bg-gradient-to-br from-[#fffef7] to-[#fdfbf6] rounded-2xl p-5 md:p-8 shadow-sm hover:shadow-md transition-all duration-300">
+                    <h3 className="font-['Nunito_Sans'] text-xl font-semibold text-[#c7941e] mb-3">
+                      Mission
+                    </h3>
+                    <p className="font-['Nunito_Sans'] text-base text-[#0a1219]/80 leading-relaxed">
+                      Our mission is not just to provide travel arrangements but to create a platform that brings ease and peace to every Muslim’s spiritual journey.
+                    </p>
+                  </div>
+
+                  {/* Vision Card */}
+                  <div className="bg-gradient-to-br from-[#fffef7] to-[#fdfbf6] rounded-2xl p-5 md:p-8 shadow-sm hover:shadow-md transition-all duration-300">
+                    <h3 className="font-['Nunito_Sans'] text-xl font-semibold text-[#c7941e] mb-3">
+                      Vision
+                    </h3>
+                    <p className="font-['Nunito_Sans'] text-base text-[#0a1219]/80 leading-relaxed">
+                      Our vision is to make Ziaratnama Travels the most trusted and first choice for Hajj, Umrah, and Ziyarat services globally.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      <section className="py-24 bg-gradient-to-br from-[#fffef7] to-[#f7f3e9] relative">
+        <div className="absolute inset-0 opacity-[0.02]">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,#1a365d_1px,transparent_0)] bg-[length:30px_30px]"></div>
+        </div>
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="text-center mb-20">
+            <h2 className="font-['Playfair_Display'] text-3xl md:text-5xl font-bold text-[#1a365d] mb-6">
+              Trusted by Thousands
+            </h2>
+            <p className="font-['Nunito_Sans'] text-xl text-[#0a1219]/70 max-w-3xl mx-auto">
+              Join the thousands who have trusted us with their sacred journeys
+            </p>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+            {stats.map((stat, index) => (
+              <Card key={index} className="text-center border-0 shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:scale-105 hover:-translate-y-2 bg-gradient-to-br from-white via-[#f7f3e9] to-[#fffef7] group">
+                <CardContent className="p-10">
+                  <div className="mx-auto mb-6 p-5 bg-gradient-to-br from-[#c7941e]/15 to-[#f7e98e]/8 rounded-full w-fit group-hover:shadow-lg transition-all duration-500">
+                    {stat.icon}
+                  </div>
+                  <h3 className="font-['Playfair_Display'] text-4xl font-bold text-[#1a365d] mb-3">{stat.number}</h3>
+                  <p className="font-['Nunito_Sans'] text-lg text-[#0a1219]/70">{stat.label}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Call to Action */}
+      <section className="py-24 bg-gradient-to-br from-[#fffef7] to-[#f7f3e9]">
+        <div className="container mx-auto px-4">
+          <Card className="border-0 shadow-2xl overflow-hidden bg-gradient-to-r from-[#1a365d] to-[#2c5530]">
+            <CardContent className="p-16 text-center text-white relative">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-[#c7941e]/20 to-transparent rounded-full blur-xl"></div>
+              <div className="relative z-10">
+                <h2 className="font-['Playfair_Display'] text-3xl md:text-5xl font-bold mb-8">
+                  Begin Your Sacred Journey Today
+                </h2>
+                <p className="font-['Nunito_Sans'] text-xl mb-10 opacity-95 max-w-3xl mx-auto">
+                  Let us guide you through a spiritually fulfilling pilgrimage that you'll cherish forever
+                </p>
+                <div className="flex flex-col sm:flex-row gap-6 justify-center">
+                  <Link to='/packages'>
+                    <Button
+                      size="lg"
+                      className="bg-gradient-to-r cursor-pointer from-[#b8860b] to-[#daa520] text-white hover:from-[#9a7209] hover:to-[#b8860b] font-['Nunito_Sans'] font-semibold px-10 py-5 shadow-2xl hover:shadow-3xl transform hover:scale-105 transition-all duration-300"
+                    >
+                      View Packages
+                    </Button>
+                  </Link>
+                  <Link to='/contact'>
+                    <Button
+                      size="lg"
+                      variant="outline"
+                      className="border-white/40 cursor-pointer text-white bg-white/15 backdrop-blur-md hover:bg-white hover:text-[#0f4c5c] font-['Nunito_Sans'] font-semibold px-10 py-5 transition-all duration-300 shadow-lg"
+                    >
+                      Contact Us
+                    </Button>
+                  </Link>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+    </div>
+  );
+}
+</file>
+
+<file path="src/pages/Packages.tsx">
+import { Card, CardContent, CardHeader } from '../components/ui/card';
+import { Button } from '../components/ui/button';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs';
+import { Check, Users, Utensils, Car, Star, CreditCard,  Clock, Shield,  CheckCircle2, Crown, AlertCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+
+
+
+export function Packages() {
+ const cashPackages = [
+  {
+    name: "Economy Package",
+    originalPrice:"PKR 270,000 (Per Person)",
+    price: "PKR 250,000 (Per Person)",
+    duration: "14 Days",
+    accommodation: "Standard hotels (Quad Sharing – 4 persons per room)",
+    meals: "Breakfast included (Lunch & Dinner not included)",
+    transport: "Jeddah ⇄ Makkah ⇄ Madinah ⇄ Makkah ⇄ Jeddah",
+    features: [
+      "AC buses, group ziyarat tours",
+      "Standard accommodation near Haram",
+      "Airport transfers included",
+      "Basic travel insurance"
+    ],
+    bestFor: "Budget-conscious pilgrims",
+    popular: false,
+
+    savings: "Save PKR 20,000"
+  },
+  {
+    name: "Economy Plus Package",
+    originalPrice:"PKR 350,000 (Per Person)",
+
+    price: "PKR 300,000 (Per Person)",
+    duration: "14 Days",
+    accommodation: "3★ hotels (Triple Sharing – 3 persons per room)",
+    meals: "Breakfast included (Lunch & Dinner not included)",
+    transport: "Jeddah ⇄ Makkah ⇄ Madinah ⇄ Makkah ⇄ Jeddah",
+    features: [
+      "Better hotels, closer location",
+      "Guided tours with cultural insights",
+      "Enhanced room amenities",
+      "Priority customer support"
+    ],
+    bestFor: "Pilgrims seeking comfort within reasonable budget",
+    popular: false,
+    savings: "Save PKR 50,000"
+  },
+  {
+    name: "4-Star Package",
+    originalPrice:"PKR 450,000 (Per Person)",
+    price: "PKR 400,000 (Per Person)",
+    duration: "14 Days",
+    accommodation: "4★ hotels (Single/Double/Triple/Quad room options)",
+    meals: "Breakfast included (Lunch & Dinner not included)",
+    transport: "AC buses or private vans",
+    features: [
+      "Near Haram premium accommodation",
+      "Laundry service included",
+      "Guided ziyarat tours",
+      "Private transport options",
+      "Family-friendly arrangements"
+    ],
+    bestFor: "Families and comfort seekers",
+    popular: true,
+    savings: "Save PKR 50,000"
+  },
+  {
+    name: "5-Star Package",
+    originalPrice:"PKR 500,000 (Per Person)",
+    price: "PKR 450,000 (Per Person)",
+    duration: "14 Days",
+    accommodation: "Luxury 5★ hotels (Near Haram – subject to availability)",
+    meals: "Breakfast included (Lunch & Dinner not included)",
+    transport: "VIP buses or private SUVs",
+    features: [
+      "Walking distance accommodation",
+      "24/7 premium customer support",
+      "VIP airport services & lounge access",
+      "Exclusive private ziyarat tours",
+      "Personal concierge services"
+    ],
+    bestFor: "Business class & luxury travelers",
+    popular: false,
+    savings: "Save PKR 50,000"
+  },
+  {
+    name: "Executive 5-Star Package",
+    originalPrice:"PKR 600,000 (Per Person)",
+    price: "550,000",
+    duration: "14 Days",
+    accommodation: "Luxury 5★ hotels (within 300–1000m of Haram)",
+    meals: "Breakfast included (Lunch & Dinner not included)",
+    transport: "VIP coasters or private SUVs",
+    features: [
+      "Walking distance (300–1000m from Haram)",
+      "Concierge services & personal assistance",
+      "Exclusive ziyarat tours with professional guides",
+      "VIP reception & fast-track immigration"
+    ],
+    bestFor: "Pilgrims preferring luxury & peace",
+    popular: false,
+    savings: "Seasonal pricing"
+  }
+];
+
+// 📌 Notes:
+// - Standard duration: 14 days
+// - Extra days available on request (charges vary by hotel category)
+// - Prices may vary by season & availability
+// - Visa & insurance may be included or separate
+// - Group & family discounts available
+
+
+ const instalmentPlans = [
+  { 
+    package: "Economy Package", 
+    total: "PKR 270,000", 
+    advance: "PKR 27,000", 
+    monthly: "PKR 10,125", 
+    final: "PKR 27,000",
+    features: [
+      "1. Total price: PKR 270,000 (same as cash)",
+      "2. Advance (10%): PKR 27,000 — payable at booking",
+      "3. Monthly (24 months): PKR 10,125 / month",
+      "4. Final payment (10%): PKR 27,000 — in 25th month",
+      "5. Meals: Breakfast included (Lunch & Dinner not included)",
+      "6. Hotels: Standard (Quad Sharing)",
+      "7. Duration: 14 Days",
+      "8. No interest or extra charges — total equals cash price"
+    ]
+  },
+  { 
+    package: "Economy Plus Package", 
+    total: "PKR 335,000", 
+    advance: "PKR 33,500", 
+    monthly: "PKR 12,521", 
+    final: "PKR 33,500",
+    features: [
+      "1. Total price: PKR 335,000 (same as cash)",
+      "2. Advance (10%): PKR 33,500 — payable at booking",
+      "3. Monthly (24 months): PKR 12,521 / month",
+      "4. Final payment (10%): PKR 33,500 — in 25th month",
+      "5. Meals: Breakfast included (Lunch & Dinner not included)",
+      "6. Hotels: 3★ (Triple Sharing)",
+      "7. Duration: 14 Days",
+      "8. No interest or extra charges — total equals cash price"
+    ]
+  },
+  { 
+    package: "4-Star Package", 
+    total: "PKR 425,000", 
+    advance: "PKR 42,500", 
+    monthly: "PKR 15,938", 
+    final: "PKR 42,500",
+    features: [
+      "1. Total price: PKR 425,000 (same as cash)",
+      "2. Advance (10%): PKR 42,500 — payable at booking",
+      "3. Monthly (24 months): PKR 15,938 / month",
+      "4. Final payment (10%): PKR 42,500 — in 25th month",
+      "5. Meals: Breakfast included (Lunch & Dinner not included)",
+      "6. Hotels: 4★ (Single/Double/Triple/Quad options)",
+      "7. Duration: 14 Days",
+      "8. No interest or extra charges — total equals cash price"
+    ]
+  },
+  { 
+    package: "5-Star Package", 
+    total: "PKR 595,000", 
+    advance: "PKR 59,500", 
+    monthly: "PKR 22,271", 
+    final: "PKR 59,500",
+    features: [
+      "1. Total price: PKR 595,000 (same as cash)",
+      "2. Advance (10%): PKR 59,500 — payable at booking",
+      "3. Monthly (24 months): PKR 22,271 / month",
+      "4. Final payment (10%): PKR 59,500 — in 25th month",
+      "5. Meals: Breakfast included (Lunch & Dinner not included)",
+      "6. Hotels: 5★ (Near Haram)",
+      "7. Duration: 14 Days",
+      "8. No interest or extra charges — total equals cash price"
+    ]
+  },
+  { 
+    package: "Executive 5-Star Package", 
+    total: "To be finalized", 
+    advance: "—", 
+    monthly: "—", 
+    final: "—",
+    features: [
+      "1. Total price: To be finalized (will match cash when finalised)",
+      "2. Advance (10%): — (TBD once price is fixed)",
+      "3. Monthly (24 months): — / month (TBD)",
+      "4. Final payment (10%): — (TBD)",
+      "5. Meals: Breakfast included (Lunch & Dinner not included)",
+      "6. Hotels: Super Luxury 5★ (within 300–1000m of Haram)",
+      "7. Extras: Concierge services, VIP transport, personal assistance, VIP reception & fast-track immigration",
+      "8. Duration: 14 Days"
+    ]
+  }
+];
+
+   const notes = [
+    "Standard duration is 14 days",
+    "Extra days can be added on request",
+    "Extra day charges vary by hotel category",
+    "Prices may vary by season & availability",
+    "Visa & insurance may be included or separate",
+    "Group & family discounts available",
+  ]
+
+
+  // const packageInclusions = [
+  //   "Return air tickets (Jeddah/Madinah)",
+  //   "Visa processing and documentation",
+  //   "Airport transfers in Saudi Arabia", 
+  //   "Hotel accommodation as per package",
+  //   "Transportation between cities",
+  //   "Group ziyarat tours with guide",
+  //   "Travel insurance coverage",
+  //   "24/7 customer support in Pakistan & Saudi Arabia"
+  // ];
+
+  return (
+    <div className="min-h-screen">
+      {/* Hero Section */}
+      <section className="relative py-32 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-[#1a365d] via-[#2c5530] to-[#1a365d]"></div>
+        <div className="absolute top-20 right-10 w-32 h-32 bg-gradient-to-br from-[#c7941e]/20 to-[#f7e98e]/10 rounded-full blur-xl animate-pulse"></div>
+        <div className="absolute bottom-20 left-10 w-24 h-24 bg-gradient-to-br from-[#68d391]/20 to-transparent rounded-full blur-xl animate-pulse delay-1000"></div>
+        
+        <div className="relative z-10 container mx-auto px-4 text-center">
+          <h1 className="font-['Playfair_Display'] text-4xl md:text-6xl font-bold text-white mb-6">
+            Umrah{' '}
+            <span className="bg-gradient-to-r from-[#c7941e] to-[#f7e98e] bg-clip-text text-transparent">
+              Packages
+            </span>
+          </h1>
+          <p className="font-['Nunito_Sans'] text-xl text-white/90 max-w-3xl mx-auto leading-relaxed">
+            Choose from our comprehensive 14-day packages designed to suit every budget and preference. 
+            All packages include complete journey management from arrival to departure.
+          </p>
+        </div>
+      </section>
+
+      {/* Package Selection */}
+      <section className="py-20 bg-gradient-to-br from-[#fffef7] to-[#f7f3e9]">
+        <div className="container mx-auto px-4">
+          <Tabs defaultValue="cash" className="w-full">
+            <div className="flex justify-center mb-12">
+              <TabsList className="grid w-full max-w-md grid-cols-2 h-14 bg-white shadow-lg border-0">
+                <TabsTrigger 
+                  value="cash" 
+                  className="font-['Nunito_Sans'] cursor-pointer font-semibold data-[state=active]:bg-gradient-to-r data-[state=active]:from-[#1a365d] data-[state=active]:to-[#2c5530] data-[state=active]:text-white"
+                >
+                  <CreditCard className="w-5 h-5 mr-2" />
+                  Cash Packages
+                </TabsTrigger>
+                <TabsTrigger 
+                  value="instalment" 
+                  className="font-['Nunito_Sans'] cursor-pointer font-semibold data-[state=active]:bg-gradient-to-r data-[state=active]:from-[#1a365d] data-[state=active]:to-[#2c5530] data-[state=active]:text-white"
+                >
+                  <Clock className="w-5 h-5 mr-2" />
+                  Instalment Plans
+                </TabsTrigger>
+              </TabsList>
+            </div>
+
+            <TabsContent value="cash">
+              <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+                {cashPackages.map((pkg, index) => (
+                  <Card key={index} className={`relative  transition-all duration-300 hover:shadow-2xl transform hover:scale-105 ${
+                    pkg.popular 
+                      ? 'ring-2 ring-[#c7941e] shadow-2xl bg-gradient-to-br from-white to-[#f7f3e9]' 
+                      : 'border shadow-lg bg-white hover:bg-gradient-to-br hover:from-white hover:to-[#f7f3e9]'
+                  }`}>
+                    {pkg.popular && (
+                      <div className="absolute top-0 rounded-tl-xl rounded-tr-xl left-0 overflow-x-hidden right-0 bg-gradient-to-r from-[#c7941e] to-[#f7e98e] text-[#0a1219] px-4 py-2 text-center">
+                        <span className="font-['Nunito_Sans'] font-bold text-sm">🌟 MOST POPULAR</span>
+                      </div>
+                    )}
+                    
+                    {pkg.savings && (
+                      <div className="absolute -top-4 left-1/2 bg-gradient-to-r from-[#2c5530] to-[#68d391] text-white px-3 py-1 rounded-full text-xs font-['Nunito_Sans'] font-semibold">
+                        {pkg.savings}
+                      </div>
+                    )}
+                    
+                    <CardHeader className={`text-center ${pkg.popular ? 'pt-12 pb-4' : 'pb-4'}`}>
+                      <h3 className="font-['Playfair_Display'] text-xl font-bold text-[#1a365d] mb-3">
+                        {pkg.name}
+                      </h3>
+                      <div className="space-y-2">
+                        {pkg.originalPrice && (
+                          <div className="text-lg font-['Nunito_Sans'] text-[#0a1219]/50 line-through">
+                            {pkg?.originalPrice}
+                          </div>
+                        )}
+                        <div className="text-3xl font-['Playfair_Display'] font-bold text-[#2c5530]">
+                          {pkg.price}
+                        </div>
+                        <p className="font-['Nunito_Sans'] text-sm text-[#0a1219]/70">per person (14 days)</p>
+                      </div>
+                    </CardHeader>
+                    
+                    <CardContent className="space-y-6 px-6 pb-8">
+                      <div className="space-y-4">
+                        <div className="flex items-start space-x-3">
+                          <Users className="w-5 h-5 text-[#2c5530] mt-0.5 flex-shrink-0" />
+                          <div>
+                            <p className="font-['Nunito_Sans'] font-semibold text-[#1a365d] text-sm">Accommodation</p>
+                            <p className="font-['Nunito_Sans'] text-sm text-[#0a1219]/70">{pkg.accommodation}</p>
+                          </div>
+                        </div>
+                        
+                        <div className="flex items-start space-x-3">
+                          <Utensils className="w-5 h-5 text-[#2c5530] mt-0.5 flex-shrink-0" />
+                          <div>
+                            <p className="font-['Nunito_Sans'] font-semibold text-[#1a365d] text-sm">Meals</p>
+                            <p className="font-['Nunito_Sans'] text-sm text-[#0a1219]/70">{pkg.meals}</p>
+                          </div>
+                        </div>
+                        
+                        <div className="flex items-start space-x-3">
+                          <Car className="w-5 h-5 text-[#2c5530] mt-0.5 flex-shrink-0" />
+                          <div>
+                            <p className="font-['Nunito_Sans'] font-semibold text-[#1a365d] text-sm">Transport</p>
+                            <p className="font-['Nunito_Sans'] text-sm text-[#0a1219]/70">{pkg.transport}</p>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div className="pt-4 border-t border-gray-200">
+                        <p className="font-['Nunito_Sans'] font-semibold text-[#1a365d] mb-3 text-sm">Package Features:</p>
+                        <div className="space-y-2">
+                          {pkg.features.slice(0, 4).map((feature, idx) => (
+                            <div key={idx} className="flex items-start space-x-2">
+                              <Check className="w-4 h-4 text-[#2c5530] mt-0.5 flex-shrink-0" />
+                              <span className="font-['Nunito_Sans'] text-xs text-[#0a1219]/80 leading-relaxed">{feature}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                      <Link to='/contact' >
+                      <Button className={`w-full ${
+                        pkg.popular 
+                          ? 'bg-gradient-to-r from-[#c7941e] to-[#f7e98e] text-[#0a1219] hover:from-[#996f10] hover:to-[#c7941e]' 
+                          : 'bg-gradient-to-r from-[#1a365d] to-[#2c5530] text-white hover:from-[#0f2a44] hover:to-[#1a3321]'
+                      } font-['Nunito_Sans'] font-semibold py-3 cursor-pointer shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300`}>
+                        Select Package
+                      </Button>
+                      </Link>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </TabsContent>
+ 
+            <TabsContent value="instalment">
+              <div className="max-w-6xl mx-auto">
+                {/* Instalment Benefits */}
+                <Card className="mb-12 border-0 shadow-xl bg-gradient-to-br from-[#1a365d] to-[#2c5530] text-white overflow-hidden">
+                  <CardContent className="p-8">
+                    <div className="text-center mb-8">
+                      <h3 className="font-['Playfair_Display'] text-2xl font-bold mb-4">
+                        Interest-Free Instalment Plans
+                      </h3>
+                      <p className="font-['Nunito_Sans'] text-lg opacity-90">
+                        We are among the few in Pakistan offering completely interest-free instalment-based Umrah packages
+                      </p>
+                    </div>
+                    
+                    <div className="grid md:grid-cols-3 gap-6">
+                      <div className="text-center p-6 bg-white/10 backdrop-blur-sm rounded-lg">
+                        <div className="text-3xl font-['Playfair_Display'] font-bold text-[#c7941e] mb-2">10%</div>
+                        <h4 className="font-['Nunito_Sans'] font-semibold mb-2">Advance Booking</h4>
+                        <p className="font-['Nunito_Sans'] text-sm opacity-80">Initial payment to secure your spot</p>
+                      </div>
+                      <div className="text-center p-6 bg-white/10 backdrop-blur-sm rounded-lg">
+                        <div className="text-3xl font-['Playfair_Display'] font-bold text-[#c7941e] mb-2">24</div>
+                        <h4 className="font-['Nunito_Sans'] font-semibold mb-2">Monthly Instalments</h4>
+                        <p className="font-['Nunito_Sans'] text-sm opacity-80">Easy monthly payments over 2 years</p>
+                      </div>
+                      <div className="text-center p-6 bg-white/10 backdrop-blur-sm rounded-lg">
+                        <div className="text-3xl font-['Playfair_Display'] font-bold text-[#c7941e] mb-2">10%</div>
+                        <h4 className="font-['Nunito_Sans'] font-semibold mb-2">Final Payment</h4>
+                        <p className="font-['Nunito_Sans'] text-sm opacity-80">Final payment in 25th month before departure</p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* Instalment Table */}
+                <div className="grid md:grid-cols-2 gap-8">
+  {instalmentPlans.map((plan, index) => (
+    <Card
+      key={index}
+      className="relative border-0 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105 bg-gradient-to-br from-white to-[#f7f3e9]"
+    >
+      {/* Card Header */}
+      <CardHeader className="bg-gradient-to-r from-[#1a365d] to-[#2c5530] text-white">
+        <h3 className="font-['Playfair_Display'] text-xl font-bold">
+          {plan.package}
+        </h3>
+        <p className="font-['Nunito_Sans'] text-xs opacity-90">
+          {plan.total !== "To be finalized"
+            ? "Instalment plan with no extra charges"
+            : "Exclusive package with custom pricing"}
+        </p>
+      </CardHeader>
+
+      {/* Card Content */}
+      <CardContent className="p-6">
+        <div className="space-y-4">
+          {/* Total Price */}
+          <div className="flex justify-between items-center p-3 bg-[#f7f3e9] rounded-lg">
+            <span className="font-['Nunito_Sans'] font-semibold text-[#1a365d]">
+              Total Package Price:
+            </span>
+            <span className="font-['Playfair_Display'] text-xl font-bold text-[#2c5530]">
+              {plan.total}
+            </span>
+          </div>
+
+          {/* Numbers Grid */}
+          <div className="grid grid-cols-3 gap-3 text-center">
+            <div className="p-3 bg-[#c7941e]/10 rounded-lg">
+              <p className="font-['Nunito_Sans'] text-xs text-[#0a1219]/60 mb-1">
+                Advance
+              </p>
+              <p className="font-['Nunito_Sans'] font-bold text-[#1a365d]">
+                {plan.advance}
+              </p>
+            </div>
+            <div className="p-3 bg-[#c7941e]/10 rounded-lg">
+              <p className="font-['Nunito_Sans'] text-xs text-[#0a1219]/60 mb-1">
+                Monthly
+              </p>
+              <p className="font-['Nunito_Sans'] font-bold text-[#1a365d]">
+                {plan.monthly}
+              </p>
+            </div>
+            <div className="p-3 bg-[#c7941e]/10 rounded-lg">
+              <p className="font-['Nunito_Sans'] text-xs text-[#0a1219]/60 mb-1">
+                Final
+              </p>
+              <p className="font-['Nunito_Sans'] font-bold text-[#1a365d]">
+                {plan.final}
+              </p>
+            </div>
+          </div>
+
+          {/* Features List */}
+          <ol className="list-decimal list-inside space-y-2 text-sm text-[#0a1219]/85">
+            {plan.features.map((feature, i) => (
+              <li
+                key={i}
+                className="pl-1 font-['Nunito_Sans'] leading-relaxed"
+              >
+                {feature.replace(/^\d+\.\s*/, "")}
+              </li>
+            ))}
+          </ol>
+
+          {/* CTA Button */}
+          <Link to='/contact' >
+          <Button className="w-full cursor-pointer bg-gradient-to-r from-[#1a365d] to-[#2c5530] text-white hover:from-[#0f2a44] hover:to-[#1a3321] font-['Nunito_Sans'] font-semibold py-3 shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300">
+            Choose Instalment Plan
+          </Button>
+          </Link>
+        </div>
+      </CardContent>
+    </Card>
+  ))}
+</div>
+
+
+              </div>
+            </TabsContent>
+          </Tabs>
+          <div className="mt-12">
+      <div className="bg-gradient-to-r from-[#f7e98e]/40 to-[#fff9e6] border border-[#f7e98e]/60 rounded-2xl p-6 shadow-md">
+        {/* Header */}
+        <div className="flex items-center gap-2 mb-4">
+          <AlertCircle className="w-6 h-6 text-[#c7941e]" />
+          <h3 className="font-['Nunito_Sans'] text-lg font-bold text-[#1a365d]">
+            📌 Important Notes
+          </h3>
+        </div>
+
+        {/* List */}
+        <ul className="space-y-2">
+          {notes.map((note, i) => (
+            <li
+              key={i}
+              className="flex items-start gap-2 text-sm text-gray-700"
+            >
+              <span className="text-[#c7941e] font-bold">•</span>
+              <span>{note}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+        </div>
+      </section>
+
+      {/* Package Inclusions */}
+      <section className="py-20 bg-gradient-to-br from-[#1a365d] to-[#2c5530]">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="font-['Playfair_Display'] text-3xl md:text-4xl font-bold text-white mb-4">
+              What's Included in Every Package
+            </h2>
+            <p className="font-['Nunito_Sans'] text-lg text-white/80 max-w-3xl mx-auto">
+              Comprehensive services ensuring a hassle-free pilgrimage experience
+            </p>
+          </div>
+
+           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {cashPackages.map((pkg, index) => (
+        
+        <Card
+          key={index}
+          className={`relative border-0 shadow-xl bg-white/95 backdrop-blur-sm hover:shadow-2xl transition-all duration-300 transform hover:scale-105 rounded-2xl  ${
+            pkg.popular ? "ring-2 ring-[#c7941e]" : ""
+          }`}
+        >
+          {/* Popular Badge */}
+          {pkg.popular && (
+            <div className="absolute top-4 right-4 bg-[#c7941e] text-white text-xs font-semibold px-3 py-1 rounded-full flex items-center gap-1">
+              <Crown className="w-4 h-4" /> Popular
+            </div>
+          )}
+
+          <CardContent className="p-6 space-y-4">
+            {/* Title */}
+            <h3 className="font-bold text-xl text-[#1a365d]">{pkg.name}</h3>
+
+            {/* Price + Savings */}
+            <div>
+              <p className="text-2xl font-extrabold text-[#c7941e]">{pkg.price}</p>
+             {/* {pkg.savings && (
+  <div className="absolute top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-[#2c5530] to-[#68d391] text-white px-4 py-1 rounded-full text-xs font-['Nunito_Sans'] font-semibold shadow-md">
+    {pkg.savings}
+  </div>
+)} */}
+
+            </div>
+
+            {/* Duration */}
+            <p className="text-sm text-gray-600">⏳ {pkg.duration}</p>
+
+            {/* Accommodation / Meals / Transport */}
+            <div className="text-sm text-gray-700 space-y-1">
+              <p><span className="font-semibold">🏨 Accommodation:</span> {pkg.accommodation}</p>
+              <p><span className="font-semibold">🍽 Meals:</span> {pkg.meals}</p>
+              <p><span className="font-semibold">🚌 Transport:</span> {pkg.transport}</p>
+            </div>
+
+            {/* Features */}
+            <ul className="space-y-2 pt-3">
+              {pkg.features.map((feature, i) => (
+                <li key={i} className="flex items-start gap-2 text-sm text-gray-700">
+                  <CheckCircle2 className="w-4 h-4 text-[#c7941e] flex-shrink-0 mt-0.5" />
+                  {feature}
+                </li>
+              ))}
+            </ul>
+
+            {/* Best For */}
+            <div className="bg-[#f7e98e]/20 border border-[#f7e98e]/50 p-3 rounded-xl mt-4 text-sm text-[#1a365d] font-semibold text-center">
+              ✨ Best for: {pkg.bestFor}
+            </div>
+
+            {/* Call to Action */}
+            <Link to='/contact' >
+            <button className="mt-6 cursor-pointer w-full py-2 px-4 rounded-xl bg-[#c7941e] text-white font-semibold hover:bg-[#a17b18] transition">
+              Book Now
+            </button>
+            </Link>
+          </CardContent>
+        </Card>
+      ))}
+    </div>
+        </div>
+      </section>
+
+      {/* Important Notes */}
+      <section className="py-20 bg-gradient-to-br from-[#f7f3e9] to-[#fffef7]">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto">
+            <Card className="border-0 shadow-2xl bg-gradient-to-br from-white to-[#f7f3e9]">
+              <CardHeader className="text-center">
+                <h2 className="font-['Playfair_Display'] text-2xl font-bold text-[#1a365d] mb-2">
+                  Important Information
+                </h2>
+                <p className="font-['Nunito_Sans'] text-[#0a1219]/70">
+                  Please read these important details about our packages
+                </p>
+              </CardHeader>
+              <CardContent className="p-8">
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div className="space-y-4">
+                    <div className="flex items-start space-x-3">
+                      <Clock className="w-5 h-5 text-[#c7941e] mt-1 flex-shrink-0" />
+                      <div>
+                        <h4 className="font-['Nunito_Sans'] font-semibold text-[#1a365d] mb-1">Duration</h4>
+                        <p className="font-['Nunito_Sans'] text-sm text-[#0a1219]/70">Standard duration: 14 days (extra days available at additional cost)</p>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-start space-x-3">
+                      <Star className="w-5 h-5 text-[#c7941e] mt-1 flex-shrink-0" />
+                      <div>
+                        <h4 className="font-['Nunito_Sans'] font-semibold text-[#1a365d] mb-1">Pricing</h4>
+                        <p className="font-['Nunito_Sans'] text-sm text-[#0a1219]/70">Prices vary by season & availability</p>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-start space-x-3">
+                      <Shield className="w-5 h-5 text-[#c7941e] mt-1 flex-shrink-0" />
+                      <div>
+                        <h4 className="font-['Nunito_Sans'] font-semibold text-[#1a365d] mb-1">Additional Costs</h4>
+                        <p className="font-['Nunito_Sans'] text-sm text-[#0a1219]/70">Visa & insurance may be separate</p>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-4">
+                    <div className="flex items-start space-x-3">
+                      <Users className="w-5 h-5 text-[#c7941e] mt-1 flex-shrink-0" />
+                      <div>
+                        <h4 className="font-['Nunito_Sans'] font-semibold text-[#1a365d] mb-1">Discounts</h4>
+                        <p className="font-['Nunito_Sans'] text-sm text-[#0a1219]/70">Group & family discounts available</p>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-start space-x-3">
+                      <CreditCard className="w-5 h-5 text-[#c7941e] mt-1 flex-shrink-0" />
+                      <div>
+                        <h4 className="font-['Nunito_Sans'] font-semibold text-[#1a365d] mb-1">Instalments</h4>
+                        <p className="font-['Nunito_Sans'] text-sm text-[#0a1219]/70">No interest or extra charges on instalment plans</p>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-start space-x-3">
+                      <Check className="w-5 h-5 text-[#c7941e] mt-1 flex-shrink-0" />
+                      <div>
+                        <h4 className="font-['Nunito_Sans'] font-semibold text-[#1a365d] mb-1">Departure</h4>
+                        <p className="font-['Nunito_Sans'] text-sm text-[#0a1219]/70">Departure only after 100% payment completion</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Call to Action */}
+      <section className="py-20 bg-gradient-to-br from-[#1a365d] to-[#2c5530]">
+        <div className="container mx-auto px-4">
+          <div className="text-center text-white">
+            <h2 className="font-['Playfair_Display'] text-3xl md:text-4xl font-bold mb-6">
+              Ready to Book Your Sacred Journey?
+            </h2>
+            <p className="font-['Nunito_Sans'] text-xl mb-8 opacity-90 max-w-2xl mx-auto">
+              Our team is ready to help you choose the perfect package for your spiritual pilgrimage
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link to='/contact'>
+              <Button 
+                size="lg"
+                
+                className="bg-gradient-to-r cursor-pointer from-[#c7941e] to-[#f7e98e] text-[#0a1219] hover:from-[#996f10] hover:to-[#c7941e] font-['Nunito_Sans'] font-semibold px-8 py-4 shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
+              >
+                Contact Us Now
+              </Button>
+              </Link>
+              <Link to='/about'>
+              <Button 
+                size="lg"
+                variant="outline"
+                className="border-white/30 text-white bg-white/10 backdrop-blur-sm hover:bg-white hover:text-[#1a365d] font-['Nunito_Sans'] font-semibold px-8 py-4 transition-all duration-300"
+              >
+                Learn More About Us
+              </Button>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+}
+</file>
+
 <file path=".github/workflows/deploy.yml">
 name: 🚀 Deploy website on push
 on: 
@@ -14464,7 +14525,7 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./dist/
-          server-dir: public_html/
+          server-dir: /
           protocol: ftps
           port: 21
 </file>
@@ -14476,7 +14537,7 @@ jobs:
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/Ziaratnewlogo1.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ziarat Tours</title>
+    <title>Ziaratnama Travels</title>
 <script type="text/javascript">
   function googleTranslateElementInit() {
     new google.translate.TranslateElement(
