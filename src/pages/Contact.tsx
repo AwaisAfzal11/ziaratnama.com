@@ -2,7 +2,7 @@ import { Card, CardContent, CardHeader } from '../components/ui/card';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import { Textarea } from '../components/ui/textarea';
-import { Phone, Mail, MapPin, Clock, MessageCircle, Send, User, Calendar } from 'lucide-react';
+import { Phone, Mail, MapPin, Clock, MessageCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useState } from "react";
 
