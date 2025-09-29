@@ -87,7 +87,121 @@ export function About() {
         </div>
       </section>
 
+ <section className="bg-gray-50 py-16 px-6 md:px-12 ">
+      <div className="sectionlayout  flex flex-col-reverse md:flex-row gap-10 items-center">
+        
+        {/* Message Content */}
+        <div className='w-full md:w-1/2'>
+          <h2 className="text-3xl font-bold text-gray-800 mb-4">
+            Chairman’s Message
+          </h2>
+          <h3 className="text-xl font-semibold text-primary-700 mb-2">
+            Sarfraz Ahmed Gondal
+          </h3>
+          <p className="text-sm font-medium text-gray-600 mb-6">
+            Chairman – Ziaratnama Group
+          </p>
+          <p className="text-gray-700 leading-relaxed mb-4">
+            It gives me great pride to lead Ziaratnama Group, a platform
+            dedicated to serving the spiritual and travel needs of our people
+            with honesty, commitment, and excellence. Our mission is to make
+            every journey—whether it is for Umrah, Ziyarat, or other travel
+            experiences—a source of peace, comfort, and unforgettable memories.
+          </p>
+          <p className="text-gray-700 leading-relaxed mb-4">
+            At Ziaratnama, we believe in combining faith with service, ensuring
+            that our clients not only reach their destination but also feel a
+            deep connection throughout the journey. Transparency, reliability,
+            and care are the core values on which we stand, and these values
+            guide every step we take.
+          </p>
+          <p className="text-gray-700 leading-relaxed mb-4">
+            As we continue to grow, our vision remains the same: to provide
+            affordable, trustworthy, and well-organized travel solutions while
+            upholding the highest standards of professionalism. With the
+            blessings of Allah Almighty and the trust of our valued clients, we
+            are confident that Ziaratnama Group will remain a symbol of
+            dedication and excellence in the travel industry.
+          </p>
+          <p className="text-gray-700 leading-relaxed">
+            I welcome you all to be a part of our journey, and I assure you that
+            with Ziaratnama, your travel will always be in safe and caring hands.
+          </p>
 
+          {/* Signature */}
+          <div className="mt-6">
+            <p className="font-semibold text-gray-800">Warm regards,</p>
+            <p className="font-bold text-gray-900">
+              Sarfraz Ahmed Gondal
+            </p>
+            <p className="text-sm text-gray-600">
+              Chairman – Ziaratnama Group
+            </p>
+          </div>
+        </div>
+          <div className="flex w-full md:w-1/2">
+          <div className="rounded-2xl overflow-hidden shadow-lg w-full relative">
+            <img
+              src={'/sarfaraz-chairman.jpeg'}
+              alt="Chairman – Ziaratnama Group"
+              className="object-cover"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+     <section className="py-16 bg-gray-50 sectionlayout  shadow-lg rounded-2xl">
+      <div className=" mx-auto px-4">
+        <h2 className="text-3xl md:text-4xl font-['Playfair_Display'] font-bold text-center text-[#1a365d] mb-12">
+          CEO’s Message
+        </h2>
+
+        <Card className=" overflow-hidden bg-white">
+          <div className="grid md:grid-cols-3 gap-6 items-center">
+            {/* CEO Image */}
+            <div className="h-full flex justify-center items-center  ">
+              <img
+                src={'/sajjad ceo.jpeg'}
+                alt="CEO Sajjad Ahmed Gondal"
+                className="rounded-tl-xl object-cover w-full max-h-full md:h-[100%]"
+              />
+            </div>
+
+            {/* Message */}
+            <CardContent className="md:col-span-2 p-8">
+              <h3 className="text-xl font-bold font-['Nunito_Sans'] text-[#2c5530] mb-2">
+                Sajjad Ahmed Gondal
+              </h3>
+              <p className="text-sm font-semibold text-gray-600 mb-6">
+                Chief Executive Officer – Ziaratnama Group
+              </p>
+              <p className="text-gray-700 leading-relaxed mb-4">
+                At Ziaratnama Group, our vision is clear: to serve people with integrity, professionalism, and care by making every journey meaningful and memorable. We are not just providing travel services—we are building trust, ensuring comfort, and creating lifelong experiences for our valued clients.
+              </p>
+              <p className="text-gray-700 leading-relaxed mb-4">
+                As CEO, my commitment is to lead Ziaratnama with innovation, transparency, and dedication. We continuously strive to set new benchmarks in customer satisfaction by offering well-organized, affordable, and reliable travel solutions. Every member of our team works with a single goal: to serve the guests of Allah with the respect and honor they truly deserve.
+              </p>
+              <p className="text-gray-700 leading-relaxed mb-4">
+                The trust of our clients is our greatest asset, and with their support, we aim to expand our services, embrace new technologies, and maintain the highest standards of excellence in the travel industry.
+              </p>
+              <p className="text-gray-700 leading-relaxed mb-4">
+                With Ziaratnama Group, you are not just booking a journey—you are joining a family built on faith, service, and trust.
+              </p>
+
+              <p className="mt-6 font-semibold text-[#1a365d]">
+                Warm regards,
+                <br />
+                <span className="text-[#2c5530]">Sajjad Ahmed Gondal</span>
+                <br />
+                CEO – Ziaratnama Group
+              </p>
+            </CardContent>
+          </div>
+        </Card>
+      </div>
+    </section>
       {/* Features */}
       <section className="py-20 bg-gradient-to-br from-[#1a365d] to-[#2c5530]">
         <div className="container mx-auto px-4">
