@@ -93,7 +93,7 @@ export function About() {
         {/* Message Content */}
         <div className='w-full md:w-1/2'>
           <h2 className="text-3xl font-bold text-gray-800 mb-4">
-            Chairman’s Message
+            Group Chairman’s Message
           </h2>
           <h3 className="text-xl font-semibold text-primary-700 mb-2">
             Sarfraz Ahmed Gondal
